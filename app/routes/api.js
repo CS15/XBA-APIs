@@ -40,7 +40,8 @@ module.exports = function (app, express) {
                             subtitle: $(value).find('.newsNFO').next().text(),
                             imageUrl: baseUrl + $(value).find('img').attr('src'),
                             author: $(value).find('.newsNFO').text(),
-                            link: baseUrl + $(value).find('a').attr('href')
+                            link: baseUrl + $(value).find('a').attr('href'),
+                            permalink: $(value).find('a').attr('href').replace('/news/', '').replace('.html', '')
                         };
 
                         data.push(news);
