@@ -1,0 +1,23 @@
+{
+  "name": "xba",
+  "version": "1.0.0",
+  "description": "XboxAchievements.com API's",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Christian \"iamrelos\" Soler",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.4.7",
+    "angular-loading-bar": "^0.8.0",
+    "angular-route": "^1.4.7",
+    "body-parser": "^1.14.1",
+    "bootstrap": "^3.3.5",
+    "compression": "^1.6.0",
+    "express": "^4.13.3",
+    "mongoose": "^4.1.11",
+    "morgan": "^1.6.1"
+  }
+}
