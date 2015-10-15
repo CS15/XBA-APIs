@@ -1,7 +1,10 @@
 (function(){
     'use strict';
 
-    var modules = ['ngRoute', 'angular-loading-bar'];
+    angular.module('factories', []);
+    angular.module('controllers', []);
+
+    var modules = ['factories','controllers', 'ngRoute', 'angular-loading-bar'];
 
     angular.module('app', modules)
         .config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
