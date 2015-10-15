@@ -20,9 +20,9 @@ module.exports = function (app, express) {
     // prefix api route
     app.use('/api', api);
 
-    api.get('/news', function (req, res) {
+    api.get('/latestnews', function (req, res) {
 
-        var url = 'http://www.xboxachievements.com/archive/gaming-news/1/';
+        var url = 'http://www.xboxachievements.com/archive/gaming-news/' + req.query.page + '/';
 
         request(url, function (error, response, html) {
             if (!error) {
@@ -34,8 +34,6 @@ module.exports = function (app, express) {
 
                 rows.each(function(index, value){
                     if (index % 2 == 0){
-
-                        console.log($(value).find('.newsNFO').next().text());
 
                         var news = {
                             title: $(value).find('.newsTitle a').text(),

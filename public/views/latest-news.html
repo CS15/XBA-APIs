@@ -1,0 +1,29 @@
+<div class="container">
+    <h1 class="page-header">Latest News</h1>
+
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td colspan="4"><strong>URL Endpoint: /api/latestnews</strong></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <strong>Description: </strong>
+                Loads 25 news per page.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">Query</td>
+        </tr>
+        <tr>
+            <td>Page</td>
+            <td>Page number to load</td>
+        </tr>
+    </table>
+
+    <h3 class="page-header">Example</h3>
+    <p><strong>Endpoint: </strong>/api/latestnews?page={{pageNumber}}</p>
+    <input style="max-width: 140px; display: inline; margin-bottom: 10px;" class="form-control" type="number" placeholder="1" ng-model="pageNumber" min="1"/>
+    <button class="btn btn-default" ng-click="getNews()">Submit</button>
+    <pre>{{ news | json }}</pre>
+    <p><strong>Total news: </strong>{{ news.length }}</p>
+</div>

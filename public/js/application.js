@@ -13,6 +13,10 @@
                     templateUrl: '/views/home.html',
                     controller: 'HomeController',
                     caseInsensitiveMatch: true
+                }).when('/news', {
+                    templateUrl: '/views/latest-news.html',
+                    controller: 'LatestNewsController',
+                    caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 
                 $locationProvider.html5Mode(true);
