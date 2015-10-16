@@ -14,6 +14,10 @@
                     controller: 'HomeController',
                     caseInsensitiveMatch: true
                 }).when('/news', {
+                    templateUrl: '/views/news.html',
+                    controller: 'NewsController',
+                    caseInsensitiveMatch: true
+                }).when('/latestnews', {
                     templateUrl: '/views/latest-news.html',
                     controller: 'LatestNewsController',
                     caseInsensitiveMatch: true
