@@ -77,10 +77,16 @@ module.exports = function (app, express) {
             self.data.authorName = $(article).find('table td div.newsNFO span[itemprop=name]').text();
             self.data.datePublished = $(article).find('table td div.newsNFO span[itemprop=datePublished]').text();
             self.data.title = $(article).find('table td h1.newsTitle').text();
-            self.data.content = $(article).find('[itemprop=articleBody] p').text().trim();
+            self.data.content = [];//$(article).find('[itemprop=articleBody] p').text().trim();
             self.data.images = [];
             self.data.videos = [];
             self.data.comments = [];
+
+            $(article).find('[itemprop=articleBody] p').each(function(index, value){
+                if ($(value).text().trim() != '') {
+                    self.data.content.push($(value).text().trim());
+                }
+            });
 
             $(article).find('[itemprop=articleBody] img').each(function (i, value) {
                 self.data.images.push(value.attribs.src);
