@@ -1,17 +1,6 @@
-/**
- * @description : modules
- */
 var request = require('request');
 var cheerio = require('cheerio');
-var config = require('../../config/config');
-var path = require('path');
 
-/**
- * @description : RESTful api's
- *
- * @param app : express app instance.
- * @param express : express module.
- */
 module.exports = function (app, express) {
     // router
     var api = express.Router();
@@ -22,21 +11,22 @@ module.exports = function (app, express) {
 
     api.get('/latestnews', function (req, res) {
 
+        var self = this;
+
         if (!req.query.page)
             req.query.page = 1;
 
-        var url = 'http://www.xboxachievements.com/archive/gaming-news/' + req.query.page + '/';
+        self.url = 'http://www.xboxachievements.com/archive/gaming-news/' + req.query.page + '/';
+        self.data = [];
 
-        request(url, function (error, response, html) {
-            if (error) res.status(404).send(erro);
+        request(self.url, function (error, response, html) {
+            if (error) res.status(404).send(error);
 
             var $ = cheerio.load(html);
 
-            var rows = $('div.bl_la_main div.divtext table[width=638] tr');
+            var root = $('div.bl_la_main div.divtext table[width=638] tr');
 
-            var data = [];
-
-            rows.each(function (index, value) {
+            root.each(function (index, value) {
                 if (index % 2 == 0) {
 
                     var news = {
@@ -58,50 +48,50 @@ module.exports = function (app, express) {
 
     api.get('/news/:permalink', function (req, res) {
 
-        var permalink = req.params.permalink;
-        var url = baseUrl + '/news/' + permalink + '.html';
+        var self = this;
 
-        var nID = permalink.substr(permalink.indexOf('-') + 1);
-        nID = nID.substr(0, nID.indexOf('-'));
+        self.data = {};
+        self.permalink = req.params.permalink;
+        self.url = baseUrl + '/news/' + self.permalink + '.html';
 
-        request(url, function (error, response, html) {
-            var self = this;
+        self.nID = permalink.substr(self.permalink.indexOf('-') + 1);
+        self.nID = self.nID.substr(0, self.nID.indexOf('-'));
+
+        request(self.url, function (error, response, html) {
 
             if (error) return res.status(404).send(error);
 
             var $ = cheerio.load(html);
 
-            var article = $('div.articleText');
+            var root = $('div.articleText');
 
-            self.data = {};
-
-            self.data.nID = nID;
-            self.data.authorAvatar = baseUrl + $(article).find('table td[width=65] img').attr('src');
-            self.data.authorName = $(article).find('table td div.newsNFO span[itemprop=name]').text();
-            self.data.datePublished = $(article).find('table td div.newsNFO span[itemprop=datePublished]').text();
-            self.data.title = $(article).find('table td h1.newsTitle').text();
-            self.data.content = [];//$(article).find('[itemprop=articleBody] p').text().trim();
+            self.data.nID = self.nID;
+            self.data.authorAvatar = baseUrl + $(root).find('table td[width=65] img').attr('src');
+            self.data.authorName = $(root).find('table td div.newsNFO span[itemprop=name]').text();
+            self.data.datePublished = $(root).find('table td div.newsNFO span[itemprop=datePublished]').text();
+            self.data.title = $(root).find('table td h1.newsTitle').text();
+            self.data.content = [];
             self.data.images = [];
             self.data.videos = [];
             self.data.comments = [];
 
-            $(article).find('[itemprop=articleBody] p').each(function(index, value){
+            $(root).find('[itemprop=articleBody] p').each(function(index, value){
                 if ($(value).text().trim() != '') {
                     self.data.content.push($(value).text().trim());
                 }
             });
 
-            $(article).find('[itemprop=articleBody] img').each(function (i, value) {
+            $(root).find('[itemprop=articleBody] img').each(function (i, value) {
                 self.data.images.push(value.attribs.src);
             });
 
-            $(article).find('[itemprop=articleBody] iframe').each(function (i, value) {
+            $(root).find('[itemprop=articleBody] iframe').each(function (i, value) {
                 self.data.videos.push(value.attribs.src);
             });
 
             request.post({
                 url: 'http://www.xboxachievements.com/news2-loadcomments.php',
-                form: {nID: nID}
+                form: {nID: self.nID}
             }, function (error, response, html) {
                 var $ = cheerio.load(html);
 
@@ -132,30 +122,29 @@ module.exports = function (app, express) {
 
     api.get('/latestachievements', function(req, res){
 
+        var self = this;
+
         if (!req.query.page)
             req.query.page = 1;
 
-        var url = 'http://www.xboxachievements.com/archive/achievements/' + req.query.page + '/';
+        self.data = [];
+        self.url = 'http://www.xboxachievements.com/archive/achievements/' + req.query.page + '/';
 
-        request(url, function(error, response, html){
-            if (error) res.status(404).send(erro);
-
-            var self = this;
+        request(self.url, function(error, response, html){
+            if (error) res.status(404).send(error);
 
             var counter = 0;
 
             var $ = cheerio.load(html);
 
-            var rows = $('div.bl_la_main div.divtext table tr');
+            var root = $('div.bl_la_main div.divtext table tr');
 
-            self.data = [];
+            for (var i = 0; i < $(root).find('.newsTitle').length; i++){
 
-            for (var i = 0; i < $(rows).find('.newsTitle').length; i++){
-
-                var title = $(rows).find('.newsTitle a').eq(i).text().replace('Game Added:', '').replace('DLC Added:', '').trim();
-                var imageUrl = $(rows).find('td[width=70] img').eq(i).attr('src');
-                var link = $(rows).find("td[width=442] a").eq(counter).attr('href');
-                var content = $(rows).find("td[width=442]").eq(i);
+                var title = $(root).find('.newsTitle a').eq(i).text().replace('Game Added:', '').replace('DLC Added:', '').trim();
+                var imageUrl = $(root).find('td[width=70] img').eq(i).attr('src');
+                var link = $(root).find("td[width=442] a").eq(counter).attr('href');
+                var content = $(root).find("td[width=442]").eq(i);
 
                 if ($(content).find('p').length > 0) {
                     content = $(content).find('p').text().trim().replace('\r\n\t', ' ') + '.';
@@ -186,14 +175,14 @@ module.exports = function (app, express) {
 
     api.get('/achievements/:permalink', function(req, res){
 
-        var permalink = req.params.permalink;
-        var url = baseUrl + '/game/' + permalink + '/achievements/';
+        var self = this;
 
-        request(url, function(error, response, html){
+        self.data = [];
+        self.permalink = req.params.permalink;
+        self.url = baseUrl + '/game/' + self.permalink + '/achievements/';
+
+        request(self.url, function(error, response, html){
             if (error) return res.status(404).send(error);
-
-            var self = this;
-            self.data = [];
 
             var $ = cheerio.load(html);
 
@@ -204,7 +193,7 @@ module.exports = function (app, express) {
             for (var i = 0; i < $(root).find('td.ac2').length; i++){
                 var title = $(root).find('td.ac2').eq(i).text().trim();
                 var gs = $(root).find("td.ac4 strong").eq(i).text().trim();
-                var perma = $(root).find('td.ac1 a').eq(i).attr('href').replace('/game/' + permalink, '').replace('/achievement/', '').replace('.html', '');
+                var permalink = $(root).find('td.ac1 a').eq(i).attr('href').replace('/game/' + self.permalink, '').replace('/achievement/', '').replace('.html', '');
                 var imageUrl = '';
                 var desc = '';
 
@@ -221,7 +210,7 @@ module.exports = function (app, express) {
                     gamerScore: gs,
                     description: desc,
                     imageUrl: baseUrl + imageUrl,
-                    permalink: perma
+                    permalink: permalink
                 };
 
                 counter += 2;
