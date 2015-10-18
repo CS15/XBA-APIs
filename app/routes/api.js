@@ -42,7 +42,10 @@ module.exports = function (app, express) {
                 }
             });
 
-            res.status(200).send(data);
+            if (self.data.length > 0)
+                return res.status(200).send(self.data);
+
+            return res.status(404).send({ status: 404, message: 'Not Found.'});
         });
     });
 
@@ -114,7 +117,10 @@ module.exports = function (app, express) {
                     }
                 });
 
-                res.status(200).send(self.data);
+                if (self.data.length > 0)
+                    return res.status(200).send(self.data);
+
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
             });
 
         });
@@ -131,7 +137,7 @@ module.exports = function (app, express) {
         self.url = 'http://www.xboxachievements.com/archive/achievements/' + req.query.page + '/';
 
         request(self.url, function(error, response, html){
-            if (error) res.status(404).send(error);
+            if (error) return res.status(404).send(error);
 
             var counter = 0;
 
@@ -169,7 +175,10 @@ module.exports = function (app, express) {
                 counter += 2;
             }
 
-            res.status(200).send(self.data);
+            if (self.data.length > 0)
+                return res.status(200).send(self.data);
+
+            return res.status(404).send({ status: 404, message: 'Not Found.'});
         });
     });
 
@@ -218,7 +227,40 @@ module.exports = function (app, express) {
                 self.data.push(achievement);
             }
 
-            res.status(200).send(self.data);
+            if (self.data.length > 0)
+                return res.status(200).send(self.data);
+
+            return res.status(404).send({ status: 404, message: 'Not Found.'});
+        });
+    });
+
+    api.get('/game/screenshots/:permalink', function (req, res){
+        var self = this;
+
+        if (!req.query.page)
+            req.query.page = 1;
+
+        self.data = [];
+        self.permalink = req.params.permalink;
+        self.url = baseUrl + '/game/' + self.permalink + '/screenshots/' + req.query.page + '/';
+
+        request(self.url, function(error, response, html) {
+            if (error) return res.status(404).send(error);
+
+            var $ = cheerio.load(html);
+
+            var root = $('div.bl_la_main div.divtext table tr img');
+
+            $(root).each(function (index, value){
+                var image = baseUrl + $(value).attr('src').replace('thu', 'med');
+
+                self.data.push(image);
+            });
+
+            if (self.data.length > 0)
+                return res.status(200).send(self.data);
+
+            return res.status(404).send({ status: 404, message: 'Not Found.'});
         });
     });
 };
