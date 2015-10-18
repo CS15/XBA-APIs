@@ -57,7 +57,7 @@ module.exports = function (app, express) {
         self.permalink = req.params.permalink;
         self.url = baseUrl + '/news/' + self.permalink + '.html';
 
-        self.nID = permalink.substr(self.permalink.indexOf('-') + 1);
+        self.nID = self.permalink.substr(self.permalink.indexOf('-') + 1);
         self.nID = self.nID.substr(0, self.nID.indexOf('-'));
 
         request(self.url, function (error, response, html) {
@@ -117,7 +117,7 @@ module.exports = function (app, express) {
                     }
                 });
 
-                if (self.data.length > 0)
+                if (self.data)
                     return res.status(200).send(self.data);
 
                 return res.status(404).send({ status: 404, message: 'Not Found.'});

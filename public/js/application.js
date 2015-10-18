@@ -4,7 +4,7 @@
     angular.module('factories', []);
     angular.module('controllers', []);
 
-    var modules = ['factories','controllers', 'ngRoute', 'angular-loading-bar'];
+    var modules = ['factories','controllers', 'ngRoute', 'ui.bootstrap', 'angular-loading-bar'];
 
     angular.module('app', modules)
         .config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
@@ -25,9 +25,9 @@
                     templateUrl: '/views/latest-achievements.html',
                     controller: 'LatestAchievementsController',
                     caseInsensitiveMatch: true
-                }).when('/achievements', {
-                    templateUrl: '/views/achievements.html',
-                    controller: 'AchievementsController',
+                }).when('/games', {
+                    templateUrl: '/views/games.html',
+                    controller: 'GamesController',
                     caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 

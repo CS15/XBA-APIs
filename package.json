@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-bootstrap": "^0.12.2",
     "angular-loading-bar": "^0.8.0",
     "angular-route": "^1.4.7",
     "body-parser": "^1.14.1",

@@ -3,16 +3,15 @@
 
     <table class="table table-striped table-bordered">
         <tr>
-            <td colspan="4"><strong>URL Endpoint: /api/latest/achievements</strong></td>
+            <td colspan="4"><span class="text-bold">URL Endpoint: </span><span class="endpoint-text">/api/latest/achievements</span></td>
         </tr>
         <tr>
             <td colspan="4">
-                <strong>Description: </strong>
                 Get the Latest Achievements. 25 per page.
             </td>
         </tr>
         <tr>
-            <td colspan="4">Query</td>
+            <td colspan="4"><span class="text-bold">Queries</span></td>
         </tr>
         <tr>
             <td>Page</td>
@@ -21,8 +20,8 @@
     </table>
 
     <h3 class="page-header">Example</h3>
-    <p><strong>Endpoint: </strong>/api/latest/achievements?page={{pageNumber}}</p>
-    <p><strong>Total Latest Achievements: </strong>{{ achievements.length }}</p>
+    <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/latest/achievements</span><span class="endpoint-text-options">?page={{pageNumber}}</span></p>
+    <p><span class="text-bold">Total Latest Achievements: </span><span class="text-primary">{{ achievements.length }}</span></p>
     <input style="max-width: 140px; display: inline; margin-bottom: 10px;" class="form-control" type="number" placeholder="1" ng-model="pageNumber" min="1"/>
     <button class="btn btn-default" ng-click="getLatestAchievements()">Submit</button>
     <pre>{{ achievements | json }}</pre>

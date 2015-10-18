@@ -1,8 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('controllers').controller('AchievementsController', ['$scope', 'ApiServices',
+    angular.module('controllers').controller('GamesController', ['$scope', 'ApiServices',
         function ($scope, ApiServices) {
+            $scope.tabTemplate = '/views/achievements-partial.html';
 
             ApiServices.getLatestAchievements(1).then(function (response) {
                 $scope.achievements = response.data;

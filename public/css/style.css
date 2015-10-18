@@ -1,0 +1,21 @@
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body .page-header {
+  font-weight: 300;
+  color: #e74c3c;
+}
+body .endpoint-text {
+  font-weight: 500;
+  color: #0b97c4;
+}
+body .endpoint-text-options {
+  font-weight: 600;
+  color: #e74c3c;
+}
+body .text-bold {
+  font-weight: 700;
+}
+body .text-primary {
+  color: #e74c3c;
+}
