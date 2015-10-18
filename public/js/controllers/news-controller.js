@@ -16,10 +16,7 @@
 
             function makeNetworkCall() {
                 ApiServices.getNewsDetails($scope.selectedNews.permalink).then(function (response) {
-                    if(!response.status)
-                        $scope.newsDetails = response.data;
-                    else
-                        $scope.newsDetails = response;
+                    $scope.newsDetails = response.data;
                 });
             }
         }]);
