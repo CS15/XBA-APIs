@@ -22,6 +22,9 @@ module.exports = function (app, express) {
 
     api.get('/latestnews', function (req, res) {
 
+        if (!req.query.page)
+            req.query.page = 1;
+
         var url = 'http://www.xboxachievements.com/archive/gaming-news/' + req.query.page + '/';
 
         request(url, function (error, response, html) {
@@ -124,6 +127,54 @@ module.exports = function (app, express) {
                 res.status(200).send(self.data);
             });
 
+        });
+    });
+
+    api.get('/latestachievements', function(req, res){
+
+        if (!req.query.page)
+            req.query.page = 1;
+
+        var url = 'http://www.xboxachievements.com/archive/achievements/' + req.query.page + '/';
+
+        request(url, function(error, response, html){
+            if (error) res.status(404).send(erro);
+
+            var self = this;
+
+            var counter = 0;
+
+            var $ = cheerio.load(html);
+
+            var rows = $('div.bl_la_main div.divtext table tr');
+
+            self.data = [];
+
+            for (var i = 0; i < $(rows).find('.newsTitle').length; i++){
+
+                var title = $(rows).find('.newsTitle a').eq(i).text().replace('Game Added:', '').replace('DLC Added:', '').trim();
+                var imageUrl = $(rows).find('td[width=70] img').eq(i).attr('src');
+                var link = $(rows).find("td[width=442] a").eq(counter).attr('href');
+                var achAdded = $(rows).find("td[width=442]").eq(i);
+
+                if ($(achAdded).find('p').length > 0)
+                    achAdded = $(achAdded).find('p').text().trim();
+                else
+                    achAdded = $(achAdded).text().trim();
+
+                var ach = {
+                    title: title,
+                    imageUrl: baseUrl + imageUrl,
+                    link: baseUrl + link,
+                    achAdded: achAdded
+                };
+
+                self.data.push(ach);
+
+                counter += 2;
+            }
+
+            res.send(self.data);
         });
     });
 };

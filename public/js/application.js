@@ -21,6 +21,10 @@
                     templateUrl: '/views/latest-news.html',
                     controller: 'LatestNewsController',
                     caseInsensitiveMatch: true
+                }).when('/latestachievements', {
+                    templateUrl: '/views/latest-achievements.html',
+                    controller: 'LatestAchievementsController',
+                    caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 
                 $locationProvider.html5Mode(true);
