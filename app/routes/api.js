@@ -155,18 +155,24 @@ module.exports = function (app, express) {
                 var title = $(rows).find('.newsTitle a').eq(i).text().replace('Game Added:', '').replace('DLC Added:', '').trim();
                 var imageUrl = $(rows).find('td[width=70] img').eq(i).attr('src');
                 var link = $(rows).find("td[width=442] a").eq(counter).attr('href');
-                var achAdded = $(rows).find("td[width=442]").eq(i);
+                var content = $(rows).find("td[width=442]").eq(i);
 
-                if ($(achAdded).find('p').length > 0)
-                    achAdded = $(achAdded).find('p').text().trim();
-                else
-                    achAdded = $(achAdded).text().trim();
+                if ($(content).find('p').length > 0) {
+                    content = $(content).find('p').text().trim().replace('\r\n\t', ' ') + '.';
+                }
+                else {
+                    content = $(content).text().trim().substr(0, $(content).text().indexOf('View')) + '.';
+                }
+
+                var contents = content.split('.');
 
                 var ach = {
                     title: title,
                     imageUrl: baseUrl + imageUrl,
                     link: baseUrl + link,
-                    achAdded: achAdded
+                    achievementsAdded: contents[0].trim() + '.',
+                    submittedBy: contents[1].trim() + '.',
+                    permalink: link.replace('/game/', '').replace('/achievements/', '')
                 };
 
                 self.data.push(ach);
