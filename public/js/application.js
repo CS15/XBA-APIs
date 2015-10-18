@@ -25,6 +25,10 @@
                     templateUrl: '/views/latest-achievements.html',
                     controller: 'LatestAchievementsController',
                     caseInsensitiveMatch: true
+                }).when('/achievements', {
+                    templateUrl: '/views/achievements.html',
+                    controller: 'AchievementsController',
+                    caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 
                 $locationProvider.html5Mode(true);

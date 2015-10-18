@@ -22,9 +22,8 @@
 
     <h3 class="page-header">Example</h3>
     <p><strong>Endpoint: </strong>/api/latestachievements?page={{pageNumber}}</p>
+    <p><strong>Total Latest Achievements: </strong>{{ achievements.length }}</p>
     <input style="max-width: 140px; display: inline; margin-bottom: 10px;" class="form-control" type="number" placeholder="1" ng-model="pageNumber" min="1"/>
     <button class="btn btn-default" ng-click="getLatestAchievements()">Submit</button>
     <pre>{{ achievements | json }}</pre>
-
-    <p><strong>Total Latest Achievements: </strong>{{ achievements.length }}</p>
 </div>

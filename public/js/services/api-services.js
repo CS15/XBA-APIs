@@ -13,6 +13,9 @@
             getLatestAchievements: function(page){
                 var pageNumber = (page) ? page : 1;
                 return $http.get('/api/latestachievements?page=' + pageNumber);
+            },
+            getAchievements: function(permalink){
+                return $http.get('/api/achievements/' + permalink);
             }
         }
     }])

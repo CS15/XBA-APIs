@@ -52,7 +52,7 @@ module.exports = function (app, express) {
                 }
             });
 
-            res.send(data);
+            res.status(200).send(data);
         });
     });
 
@@ -180,7 +180,56 @@ module.exports = function (app, express) {
                 counter += 2;
             }
 
-            res.send(self.data);
+            res.status(200).send(self.data);
+        });
+    });
+
+    api.get('/achievements/:permalink', function(req, res){
+
+        var permalink = req.params.permalink;
+        var url = baseUrl + '/game/' + permalink + '/achievements/';
+
+        request(url, function(error, response, html){
+            if (error) return res.status(404).send(error);
+
+            var self = this;
+            self.data = [];
+
+            var $ = cheerio.load(html);
+
+            var root = $('div.bl_la_main div.divtext table tr');
+            var descCounter = $(root).find("td.ac1 a.link_ach").length;
+            var counter = 0;
+
+            for (var i = 0; i < $(root).find('td.ac2').length; i++){
+                var title = $(root).find('td.ac2').eq(i).text().trim();
+                var gs = $(root).find("td.ac4 strong").eq(i).text().trim();
+                var perma = $(root).find('td.ac1 a').eq(i).attr('href').replace('/game/' + permalink, '').replace('/achievement/', '').replace('.html', '');
+                var imageUrl = '';
+                var desc = '';
+
+                if (i < descCounter) {
+                    imageUrl = $(root).find("td.ac1 a img").eq(i).attr("src").replace('lo', 'hi');
+                    desc = $(root).find("td.ac3").eq(counter).text();
+                } else if (title.equals("Secret Achievement")) {
+                    imageUrl = $(root).find("td.ac1 img").eq(i).attr("src").replace('lo', 'hi');
+                    desc = "Continue playing to unlock this secret achievement.";
+                }
+
+                var achievement = {
+                    title: title,
+                    gamerScore: gs,
+                    description: desc,
+                    imageUrl: baseUrl + imageUrl,
+                    permalink: perma
+                };
+
+                counter += 2;
+
+                self.data.push(achievement);
+            }
+
+            res.status(200).send(self.data);
         });
     });
 };
