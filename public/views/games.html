@@ -1,6 +1,8 @@
 <div class="container">
     <h1 class="page-header">Games</h1>
 
+    <select style="max-width: 140px; margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in games" ng-model="selectedGame" ng-change="update()"></select>
+
     <uib-tabset  justified="true">
         <uib-tab heading="Achievements" select="getAchievements()">
             <div ng-include="tabAchievementsTemplate"></div>
