@@ -19,3 +19,11 @@ body .text-bold {
 body .text-primary {
   color: #e74c3c;
 }
+body .tab-content {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+body .nav-tabs {
+  margin-bottom: -1px;
+}
