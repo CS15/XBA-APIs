@@ -260,7 +260,7 @@ module.exports = function (app, express) {
             if (self.data.length > 0)
                 return res.status(200).send(self.data);
 
-            return res.status(404).send({ status: 404, message: 'Not Found.'});
+            return res.status(200).send({ status: 200, message: 'No Images Available.'});
         });
     });
 };

@@ -16,7 +16,7 @@
     <h3 class="page-header">Example</h3>
     <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/game/achievements/</span><span class="endpoint-text-options">{{selectedGame.permalink}}</span></p>
     <p><span class="text-bold">Total Achievements: </span><span class="text-primary">{{details.length}}</span></p>
-    <select style="max-width: 140px; margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in achievements" ng-model="selectedGame" ng-change="update()">
+    <select style="max-width: 140px; margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in achievements" ng-model="selectedGame" ng-change="getAchievements()">
     </select>
     <pre>{{ details | json }}</pre>
 </div>

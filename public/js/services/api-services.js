@@ -16,6 +16,9 @@
             },
             getAchievements: function(permalink){
                 return $http.get('/api/game/achievements/' + permalink);
+            },
+            getScreenshots: function(permalink){
+                return $http.get('/api/game/screenshots/' + permalink);
             }
         }
     }])
