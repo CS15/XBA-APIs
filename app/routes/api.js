@@ -9,7 +9,7 @@ module.exports = function (app, express) {
     // prefix api route
     app.use('/api', api);
 
-    api.get('/latestnews', function (req, res) {
+    api.get('/latest/news', function (req, res) {
 
         var self = this;
 
@@ -120,7 +120,7 @@ module.exports = function (app, express) {
         });
     });
 
-    api.get('/latestachievements', function(req, res){
+    api.get('/latest/achievements', function(req, res){
 
         var self = this;
 
@@ -173,7 +173,7 @@ module.exports = function (app, express) {
         });
     });
 
-    api.get('/achievements/:permalink', function(req, res){
+    api.get('/game/achievements/:permalink', function(req, res){
 
         var self = this;
 

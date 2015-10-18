@@ -1,9 +1,9 @@
 <div class="container">
-    <h1 class="page-header">Achievements</h1>
+    <h1 class="page-header">Game Achievements</h1>
 
     <table class="table table-striped table-bordered">
         <tr>
-            <td colspan="4"><strong>URL Endpoint: /api/achievements/{permalink}</strong></td>
+            <td colspan="4"><strong>URL Endpoint: /api/game/achievements/{permalink}</strong></td>
         </tr>
         <tr>
             <td colspan="4">
@@ -14,7 +14,7 @@
     </table>
 
     <h3 class="page-header">Example</h3>
-    <p><strong>Endpoint: </strong>/api/achievements/{{selectedGame.permalink}}</p>
+    <p><strong>Endpoint: </strong>/api/game/achievements/{{selectedGame.permalink}}</p>
     <p><strong>Total Achievements: </strong>{{details.length}}</p>
     <select style="max-width: 140px; margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in achievements" ng-model="selectedGame" ng-change="update()">
     </select>
