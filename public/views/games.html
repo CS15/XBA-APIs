@@ -4,11 +4,8 @@
     <select style="max-width: 140px; margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in games" ng-model="selectedGame" ng-change="update()"></select>
 
     <uib-tabset  justified="true">
-        <uib-tab heading="Achievements" select="getAchievements()">
-            <div ng-include="tabAchievementsTemplate"></div>
-        </uib-tab>
-        <uib-tab heading="Screenshots" select="getScreenshots()">
-            <div ng-include="tabScreenshotsTemplate"></div>
+        <uib-tab heading="{{tab.title}}" ng-repeat="tab in tabs" select="update(tab[$index])">
+            <div ng-include="tab.templateUrl"></div>
         </uib-tab>
     </uib-tabset>
 

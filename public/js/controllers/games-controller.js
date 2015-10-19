@@ -3,13 +3,14 @@
 
     angular.module('controllers').controller('GamesController', ['$scope', 'ApiServices',
         function ($scope, ApiServices) {
-            $scope.tabAchievementsTemplate = '/views/achievements-partial.html';
-            $scope.tabScreenshotsTemplate = '/views/screenshots-partial.html';
+            $scope.tabs = [
+                { title:'Achievements', templateUrl:'/views/achievements-partial.html' },
+                { title:'Screenshots', templateUrl: '/views/screenshots-partial.html' }
+            ];
 
             ApiServices.getLatestAchievements().then(function (response) {
                 $scope.games = response.data;
                 $scope.selectedGame = $scope.games[0];
-                $scope.getAchievements();
             });
 
             $scope.getAchievements = function () {
@@ -24,9 +25,10 @@
                 });
             };
 
-            $scope.update = function(){
+            $scope.update = function(index){
                 $scope.getAchievements();
                 $scope.getScreenshots();
+                console.log(index);
             };
 
         }]);
