@@ -268,7 +268,7 @@ module.exports = function (app, express) {
         var self = this;
 
         self.data = {};
-        self.permalink = 'project-spark' ;//req.params.permalink || 'batman-arkham-knight';
+        self.permalink = req.params.permalink;
         self.url = baseUrl + '/game/' + self.permalink + '/achievements/';
         
         request(self.url, function(error, response, html) {
@@ -277,18 +277,16 @@ module.exports = function (app, express) {
             var $ = cheerio.load(html);
             
             var root = $('.blr_main .divtext .men_h_content table tr').eq(0);
-            var releaseDates = $(root).find('td').eq(1).find('div').eq(4).text().replace('Release:', '').trim();
             
-            console.log($(root).find('td').eq(1).find('div img[alt=US]'));
-            
+            self.data.title = $('.tt').first().text();
             self.data.coverUrl = baseUrl + $(root).find('td img').eq(0).attr('src');
             self.data.developer = $(root).find('td').eq(1).find('a[title]').eq(0).text();
             self.data.publisher = $(root).find('td').eq(1).find('a[title]').eq(1).text();
             self.data.genre = $(root).find('td').eq(1).find('div').eq(3).text();
             self.data.release = [
-                { usa: $(root).find('td').eq(1).find('div').eq(4).text() || null },
-                { europe: $(root).find('td').eq(1).find('div img[alt=Europe]').text() || null},
-                { japan: $(root).find('td').eq(1).find('div img[alt=Japan]').text() || null },
+                { usa: $(root).find('td').eq(1).find('div').eq(4).contents().eq(3).text().trim() || null },
+                { europe: $(root).find('td').eq(1).find('div').eq(4).contents().eq(6).text().trim() || null},
+                { japan: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null },
             ];
             
             res.status(200).send(self.data);
