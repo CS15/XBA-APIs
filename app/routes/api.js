@@ -68,7 +68,7 @@ module.exports = function (app, express) {
 
             var root = $('div.articleText');
 
-            self.data.nID = self.nID;
+            //self.data.nID = self.nID;
             self.data.authorAvatar = baseUrl + $(root).find('table td[width=65] img').attr('src');
             self.data.authorName = $(root).find('table td div.newsNFO span[itemprop=name]').text();
             self.data.datePublished = $(root).find('table td div.newsNFO span[itemprop=datePublished]').text();
@@ -239,7 +239,7 @@ module.exports = function (app, express) {
 
         if (!req.query.page)
             req.query.page = 1;
-
+            
         self.data = [];
         self.permalink = req.params.permalink;
         self.url = baseUrl + '/game/' + self.permalink + '/screenshots/' + req.query.page + '/' + req.params.page + '/';

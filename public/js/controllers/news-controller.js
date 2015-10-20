@@ -1,37 +1,40 @@
 (function () {
     'use strict';
 
-    angular.module('controllers').controller('NewsController', ['$scope', 'ApiServices',
-        function ($scope, ApiServices) {
-
+    angular.module('controllers').controller('NewsController', ['ApiServices',
+        function (ApiServices) {
+            var vm = this;
+            
             ApiServices.getLatestNews(1).then(function (response) {
-                $scope.news = response.data;
-                $scope.selectedNews = $scope.news[0];
+                vm.news = response.data;
+                vm.selectedNews = vm.news[0];
                 makeNetworkCall();
             });
 
-            $scope.update = function () {
+            vm.update = function () {
                 makeNetworkCall();
             };
 
             function makeNetworkCall() {
-                ApiServices.getNewsDetails($scope.selectedNews.permalink).then(function (response) {
-                    $scope.newsDetails = response.data;
+                ApiServices.getNewsDetails(vm.selectedNews.permalink).then(function (response) {
+                    vm.newsDetails = response.data;
                 });
             }
         }]);
 
-    angular.module('controllers').controller('LatestNewsController', ['$scope', 'ApiServices',
-        function ($scope, ApiServices) {
-            $scope.pageNumber = 1;
+    angular.module('controllers').controller('LatestNewsController', ['ApiServices',
+        function (ApiServices) {
+            var vm = this;
+            
+            vm.pageNumber = 1;
 
             ApiServices.getLatestNews().then(function (response) {
-                $scope.news = response.data;
+                vm.news = response.data;
             });
 
-            $scope.getNews = function () {
-                ApiServices.getLatestNews($scope.pageNumber).then(function (response) {
-                    $scope.news = response.data;
+            vm.getNews = function () {
+                ApiServices.getLatestNews(vm.pageNumber).then(function (response) {
+                    vm.news = response.data;
                 });
             }
         }]);

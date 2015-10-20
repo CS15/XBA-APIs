@@ -10,7 +10,7 @@
             ];
             
             $scope.currentId = $scope.tabs[0].id;
-            $scope.pageNumber = 1;
+            $scope.screenshotsPageNumber = 1;
 
             ApiServices.getLatestAchievements().then(function (response) {
                 $scope.games = response.data;
@@ -29,7 +29,7 @@
             function getScreenshots() {
                 $scope.screenshots = undefined;
                 
-                ApiServices.getScreenshots($scope.selectedGame.permalink, $scope.pageNumber).then(function (response) {
+                ApiServices.getScreenshots($scope.selectedGame.permalink, $scope.screenshotsPageNumber).then(function (response) {
                     $scope.screenshots = response.data;
                 });
             };
@@ -44,7 +44,6 @@
 
             $scope.update = function(id){
                 $scope.currentId = id;
-                $scope.pageNumber = 1;
                 
                 switch (id) {
                     case 1:
@@ -61,17 +60,19 @@
 
         }]);
 
-    angular.module('controllers').controller('LatestAchievementsController', ['$scope', 'ApiServices',
-        function ($scope, ApiServices) {
-            $scope.pageNumber = 1;
+    angular.module('controllers').controller('LatestAchievementsController', ['ApiServices',
+        function (ApiServices) {
+            var vm = this;
+            
+            vm.pageNumber = 1;
 
             ApiServices.getLatestAchievements().then(function (response) {
-                $scope.achievements = response.data;
+                vm.achievements = response.data;
             });
 
-            $scope.getLatestAchievements = function () {
-                ApiServices.getLatestAchievements($scope.pageNumber).then(function (response) {
-                    $scope.achievements = response.data;
+            vm.getLatestAchievements = function () {
+                ApiServices.getLatestAchievements(vm.pageNumber).then(function (response) {
+                    vm.achievements = response.data;
                 });
             }
         }]);
