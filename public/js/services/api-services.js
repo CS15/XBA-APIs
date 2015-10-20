@@ -19,6 +19,9 @@
             },
             getScreenshots: function(permalink){
                 return $http.get('/api/game/screenshots/' + permalink);
+            },
+            getGameInfo: function(permalink){
+                return $http.get('/api/game/info/' + permalink);
             }
         }
     }])

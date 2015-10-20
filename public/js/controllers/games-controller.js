@@ -4,8 +4,9 @@
     angular.module('controllers').controller('GamesController', ['$scope', 'ApiServices',
         function ($scope, ApiServices) {
             $scope.tabs = [
-                { id: 1, title:'Achievements', templateUrl:'/views/achievements-partial.html' },
-                { id: 2, title:'Screenshots', templateUrl: '/views/screenshots-partial.html' }
+                { id: 1, title:'Game Information', templateUrl:'/views/game-info-partial.html' },
+                { id: 2, title:'Achievements', templateUrl:'/views/achievements-partial.html' },
+                { id: 3, title:'Screenshots', templateUrl: '/views/screenshots-partial.html' }
             ];
             
             $scope.currentId = $scope.tabs[0].id;
@@ -31,15 +32,26 @@
                     $scope.screenshots = response.data;
                 });
             };
+            
+            function getGameInfo() {
+                $scope.gameInfo = undefined;
+                
+                ApiServices.getGameInfo($scope.selectedGame.permalink).then(function (response) {
+                    $scope.gameInfo = response.data;
+                });
+            };
 
             $scope.update = function(id){
                 $scope.currentId = id;
                 
                 switch (id) {
                     case 1:
-                        getAchievements();
+                        getGameInfo();
                         break;
                     case 2:
+                        getAchievements();
+                        break;
+                    case 3:
                         getScreenshots();
                         break;
                 }
