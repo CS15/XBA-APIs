@@ -10,6 +10,7 @@
             ];
             
             $scope.currentId = $scope.tabs[0].id;
+            $scope.pageNumber = 1;
 
             ApiServices.getLatestAchievements().then(function (response) {
                 $scope.games = response.data;
@@ -28,7 +29,7 @@
             function getScreenshots() {
                 $scope.screenshots = undefined;
                 
-                ApiServices.getScreenshots($scope.selectedGame.permalink).then(function (response) {
+                ApiServices.getScreenshots($scope.selectedGame.permalink, $scope.pageNumber).then(function (response) {
                     $scope.screenshots = response.data;
                 });
             };
@@ -43,6 +44,7 @@
 
             $scope.update = function(id){
                 $scope.currentId = id;
+                $scope.pageNumber = 1;
                 
                 switch (id) {
                     case 1:

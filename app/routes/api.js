@@ -242,7 +242,7 @@ module.exports = function (app, express) {
 
         self.data = [];
         self.permalink = req.params.permalink;
-        self.url = baseUrl + '/game/' + self.permalink + '/screenshots/' + req.query.page + '/';
+        self.url = baseUrl + '/game/' + self.permalink + '/screenshots/' + req.query.page + '/' + req.params.page + '/';
 
         request(self.url, function(error, response, html) {
             if (error) return res.status(404).send(error);
