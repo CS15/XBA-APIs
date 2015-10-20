@@ -15,7 +15,7 @@
                 makeNetworkCall();
             };
 
-            function makeNetworkCall() {
+            function makeNetworkCall() { 
                 ApiServices.getNewsDetails(vm.selectedNews.permalink).then(function (response) {
                     vm.newsDetails = response.data;
                 });

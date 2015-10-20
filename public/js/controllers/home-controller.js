@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    angular.module('controllers').controller('HomeController',['$scope',
+    angular.module('controllers').controller('HomeController', ['$scope',
         function($scope){
     }]);
 })();
