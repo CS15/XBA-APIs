@@ -6,17 +6,19 @@
             </tr>
             <tr>
                 <td colspan="4">
-                    Get Game Screenshots
+                    Get Game Screenshots. 12 per page
                 </td>
             </tr>
         </table>
     </div>
 
-    <h3 class="page-header">Example</h3>
-    <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/game/screenshots/</span><span class="endpoint-text-options">{{selectedGame.permalink}}?page={{screenshotsPageNumber}}</span></p>
-    <p><span class="text-bold">Total screenshots: </span><span class="text-primary">{{screenshots.length}}</span></p>
-    <input style="max-width: 140px; display: inline; margin-bottom: 10px;" class="form-control" type="number" placeholder="1" ng-model="screenshotsPageNumber" min="1"/>
-    <button class="btn btn-default" ng-click="update(currentId)">Submit</button>
-    </select>
-    <pre>{{ screenshots | json }}</pre>
+    <div ng-if="vm.selectedGame">
+        <h3 class="page-header">Example</h3>
+        <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/game/screenshots/</span><span class="endpoint-text-options">{{vm.selectedGame.permalink}}?page={{vm.screenshotsPageNumber}}</span></p>
+        <p><span class="text-bold">Total screenshots: </span><span class="text-primary">{{vm.screenshots.length}}</span></p>
+        <input style="max-width: 140px; display: inline; margin-bottom: 10px;" class="form-control" type="number" placeholder="1" ng-model="vm.screenshotsPageNumber" min="1"/>
+        <button class="btn btn-default" ng-click="vm.update(vm.currentId)">Submit</button>
+        </select>
+        <pre>{{ vm.screenshots | json }}</pre>
+    </div>
 </div>

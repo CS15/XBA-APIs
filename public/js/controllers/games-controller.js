@@ -1,49 +1,26 @@
 (function () {
     'use strict';
 
-    angular.module('controllers').controller('GamesController', ['$scope', 'ApiServices',
-        function ($scope, ApiServices) {
-            $scope.tabs = [
+    angular.module('controllers').controller('GamesController', ['ApiServices',
+        function (ApiServices) {
+            var vm = this;
+            
+            vm.tabs = [
                 { id: 1, title:'Game Information', templateUrl:'/views/game-info-partial.html' },
                 { id: 2, title:'Achievements', templateUrl:'/views/achievements-partial.html' },
                 { id: 3, title:'Screenshots', templateUrl: '/views/screenshots-partial.html' }
             ];
             
-            $scope.currentId = $scope.tabs[0].id;
-            $scope.screenshotsPageNumber = 1;
+            vm.currentId = vm.tabs[0].id;
+            vm.screenshotsPageNumber = 1;
+            vm.selectedGame = undefined;
 
             ApiServices.getLatestAchievements().then(function (response) {
-                $scope.games = response.data;
-                $scope.selectedGame = $scope.games[0];
-                $scope.update(1);
+                vm.games = response.data;
             });
-
-            function getAchievements() {
-                $scope.achievements = undefined;
-                
-                ApiServices.getAchievements($scope.selectedGame.permalink).then(function (response) {
-                    $scope.achievements = response.data;
-                });
-            };
-
-            function getScreenshots() {
-                $scope.screenshots = undefined;
-                
-                ApiServices.getScreenshots($scope.selectedGame.permalink, $scope.screenshotsPageNumber).then(function (response) {
-                    $scope.screenshots = response.data;
-                });
-            };
             
-            function getGameInfo() {
-                $scope.gameInfo = undefined;
-                
-                ApiServices.getGameInfo($scope.selectedGame.permalink).then(function (response) {
-                    $scope.gameInfo = response.data;
-                });
-            };
-
-            $scope.update = function(id){
-                $scope.currentId = id;
+            vm.update = function(id){
+                vm.currentId = id;
                 
                 switch (id) {
                     case 1:
@@ -57,6 +34,32 @@
                         break;
                 }
             };
+
+            function getAchievements() {
+                vm.achievements = undefined;
+                
+                ApiServices.getAchievements(vm.selectedGame.permalink).then(function (response) {
+                    vm.achievements = response.data;
+                });
+            };
+
+            function getScreenshots() {
+                vm.screenshots = undefined;
+                
+                ApiServices.getScreenshots(vm.selectedGame.permalink, vm.screenshotsPageNumber).then(function (response) {
+                    vm.screenshots = response.data;
+                });
+            };
+            
+            function getGameInfo() {
+                vm.gameInfo = undefined;
+                
+                ApiServices.getGameInfo(vm.selectedGame.permalink).then(function (response) {
+                    vm.gameInfo = response.data;
+                });
+            };
+
+
 
         }]);
 

@@ -23,7 +23,6 @@
                     caseInsensitiveMatch: true
                 }).when('/games', {
                     templateUrl: '/views/games.html',
-                    controller: 'GamesController',
                     caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 
