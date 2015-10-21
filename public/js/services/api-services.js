@@ -24,7 +24,10 @@
             },
             getGameInfo: function(permalink){
                 return $http.get('/api/game/info/' + permalink);
+            },
+            getAchievementComments: function(game, achievement){
+                return $http.get('/api/game/achievement/comments?game=' + game + '&achievement=' + achievement);
             }
         }
-    }])
+    }]);
 })();

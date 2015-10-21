@@ -8,12 +8,14 @@
             vm.tabs = [
                 { id: 1, title:'Game Information', templateUrl:'/views/game-info-partial.html' },
                 { id: 2, title:'Achievements', templateUrl:'/views/achievements-partial.html' },
-                { id: 3, title:'Screenshots', templateUrl: '/views/screenshots-partial.html' }
+                { id: 3, title:'Screenshots', templateUrl: '/views/screenshots-partial.html' },
+                { id: 4, title:'Achievement Comments', templateUrl: '/views/ach-comments-partial.html' }
             ];
             
             vm.currentId = vm.tabs[0].id;
             vm.screenshotsPageNumber = 1;
             vm.selectedGame = undefined;
+            vm.selectedAchievement = undefined;
 
             ApiServices.getLatestAchievements().then(function (response) {
                 vm.games = response.data;
@@ -32,6 +34,9 @@
                     case 3:
                         getScreenshots();
                         break;
+                    case 4:
+                        getAchievementComments();
+                        break;
                 }
             };
 
@@ -40,6 +45,7 @@
                 
                 ApiServices.getAchievements(vm.selectedGame.permalink).then(function (response) {
                     vm.achievements = response.data;
+                    vm.selectedAchievement = vm.achievements[0];
                 });
             };
 
@@ -59,8 +65,17 @@
                 });
             };
 
-
-
+            function getAchievementComments(){
+                
+                ApiServices.getAchievements(vm.selectedGame.permalink).then(function (response) {
+                    vm.achievements = response.data;
+                    vm.selectedAchievement = vm.achievements[0];
+                    
+                    ApiServices.getAchievementComments(vm.selectedGame.permalink, vm.selectedAchievement.permalink).then(function(response){
+                        vm.achievementComments = response.data;
+                    });
+                });
+            }
         }]);
 
     angular.module('controllers').controller('LatestAchievementsController', ['ApiServices',

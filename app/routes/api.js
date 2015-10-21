@@ -260,7 +260,7 @@ module.exports = function (app, express) {
             if (self.data.length > 0)
                 return res.status(200).send(self.data);
 
-            return res.status(200).send({ status: 200, message: 'No Images Available.'});
+            return res.status(200).send({ status: 404, message: 'No Images Available.'});
         });
     });
     
@@ -288,6 +288,46 @@ module.exports = function (app, express) {
                 { europe: $(root).find('td').eq(1).find('div').eq(4).contents().eq(6).text().trim() || null},
                 { japan: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null },
             ];
+            
+            res.status(200).send(self.data);
+        });
+    });
+    
+    api.get('/game/achievement/comments', function(req, res) {
+        var self = this;
+
+        self.data = [];
+        self.url = baseUrl + '/game/' + req.query.game + '/achievement/' + req.query.achievement + '.html';
+
+        request(self.url, function(error, response, html) {
+            if (error) return res.status(404).send(error);
+
+            var $ = cheerio.load(html);
+
+            var comments = $('.bl_la_main .divtext table.ac tr');
+
+            $(comments).each(function(i, value){
+                var author = $(value).find('td.ac a').eq(2).text().trim();
+                var createdAt = $(value).find('td div.newsNFO').text().trim();
+                var content = [];
+                
+                var commentContent = $(value).find('td.ac').contents();
+                
+                for (var i = 5; i < $(commentContent).length; i++) {
+                    if ($(commentContent).eq(i).text().trim())
+                        content.push($(commentContent).eq(i).text().trim());
+                }
+
+                if (author) {
+                    var comment = {
+                        author: author,
+                        createdDate: createdAt,
+                        content: content
+                    };
+
+                    self.data.push(comment);
+                }
+            });
             
             res.status(200).send(self.data);
         });

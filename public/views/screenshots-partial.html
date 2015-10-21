@@ -18,7 +18,6 @@
         <p><span class="text-bold">Total screenshots: </span><span class="text-primary">{{vm.screenshots.length}}</span></p>
         <input style="max-width: 140px; display: inline; margin-bottom: 10px;" class="form-control" type="number" placeholder="1" ng-model="vm.screenshotsPageNumber" min="1"/>
         <button class="btn btn-default" ng-click="vm.update(vm.currentId)">Submit</button>
-        </select>
         <pre>{{ vm.screenshots | json }}</pre>
     </div>
 </div>
