@@ -12,11 +12,13 @@
         </table>
     </div>
 
-    <div ng-if="vm.selectedGame">
+    <div ng-if="vm.selectedGame && vm.achievements">
         <h3 class="page-header">Example</h3>
         <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/game/achievement/comments</span><span class="endpoint-text-options">?game={{vm.selectedGame.permalink}}&achievement={{vm.selectedAchievement.permalink}}</span></p>
         <p><span class="text-bold">Total Comments: </span><span class="text-primary">{{vm.achievementComments.length}}</span></p>
-            <select style="margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in vm.achievements" ng-model="vm.selectedAchievement" ng-change="vm.update(vm.currentId)"></select>
+        <select style="margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in vm.achievements" ng-model="vm.selectedAchievement" ng-change="vm.getAchievementComments()">
+            <option value="">-- Select Achievement --</option>
+        </select>
         <pre>{{ vm.achievementComments | json }}</pre>
     </div>
 </div>

@@ -23,6 +23,10 @@
             
             vm.update = function(id){
                 vm.currentId = id;
+                vm.achievements = undefined;
+                vm.screenshots = undefined;
+                vm.gameInfo = undefined;
+                vm.comments = undefined;
                 
                 switch (id) {
                     case 1:
@@ -35,45 +39,35 @@
                         getScreenshots();
                         break;
                     case 4:
-                        getAchievementComments();
+                        getAchievements();
+                        vm.getAchievementComments();
                         break;
                 }
             };
 
             function getAchievements() {
-                vm.achievements = undefined;
-                
                 ApiServices.getAchievements(vm.selectedGame.permalink).then(function (response) {
                     vm.achievements = response.data;
-                    vm.selectedAchievement = vm.achievements[0];
                 });
             };
 
             function getScreenshots() {
-                vm.screenshots = undefined;
-                
                 ApiServices.getScreenshots(vm.selectedGame.permalink, vm.screenshotsPageNumber).then(function (response) {
                     vm.screenshots = response.data;
                 });
             };
             
             function getGameInfo() {
-                vm.gameInfo = undefined;
-                
                 ApiServices.getGameInfo(vm.selectedGame.permalink).then(function (response) {
                     vm.gameInfo = response.data;
                 });
             };
 
-            function getAchievementComments(){
+            vm.getAchievementComments = function(){
+                vm.comments = undefined;
                 
-                ApiServices.getAchievements(vm.selectedGame.permalink).then(function (response) {
-                    vm.achievements = response.data;
-                    vm.selectedAchievement = vm.achievements[0];
-                    
-                    ApiServices.getAchievementComments(vm.selectedGame.permalink, vm.selectedAchievement.permalink).then(function(response){
-                        vm.achievementComments = response.data;
-                    });
+                ApiServices.getAchievementComments(vm.selectedGame.permalink, vm.selectedAchievement.permalink).then(function(response){
+                    vm.achievementComments = response.data;
                 });
             }
         }]);
