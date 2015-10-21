@@ -2,19 +2,26 @@
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <tr>
-                <td colspan="4"><span class="text-bold">URL Endpoint: </span><span class="endpoint-text">/api/game/info/</span><span class="endpoint-text-options">{permalink}</span></td>
+                <td colspan="4"><span class="text-bold">URL Endpoint: </span><span class="endpoint-text">/api/game/info</span><span class="endpoint-text-options">?game={permalink}</span></td>
             </tr>
             <tr>
                 <td colspan="4">
                     Get Game Information
                 </td>
             </tr>
+            <tr>
+                <td colspan="4"><span class="text-bold">Queries</span></td>
+            </tr>
+            <tr>
+                <td>Game (Required)</td>
+                <td>Game Permalink</td>
+            </tr>
         </table>
     </div>
 
     <div ng-if="vm.selectedGame">
         <h3 class="page-header">Example</h3>
-        <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/game/info/</span><span class="endpoint-text-options">{{vm.selectedGame.permalink}}</span></p>
+        <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/game/info</span><span class="endpoint-text-options">?game={{vm.selectedGame.permalink}}</span></p>
         <pre>{{ vm.gameInfo | json }}</pre>
     </div>
 </div>

@@ -182,12 +182,12 @@ module.exports = function (app, express) {
         });
     });
 
-    api.get('/game/achievements/:permalink', function(req, res){
+    api.get('/game/achievements', function(req, res){
 
         var self = this;
 
         self.data = [];
-        self.permalink = req.params.permalink;
+        self.permalink = req.query.game;
         self.url = baseUrl + '/game/' + self.permalink + '/achievements/';
 
         request(self.url, function(error, response, html){
@@ -234,14 +234,14 @@ module.exports = function (app, express) {
         });
     });
 
-    api.get('/game/screenshots/:permalink', function (req, res){
+    api.get('/game/screenshots', function (req, res){
         var self = this;
 
         if (!req.query.page)
             req.query.page = 1;
             
         self.data = [];
-        self.permalink = req.params.permalink;
+        self.permalink = req.query.game;
         self.url = baseUrl + '/game/' + self.permalink + '/screenshots/' + req.query.page + '/' + req.params.page + '/';
 
         request(self.url, function(error, response, html) {
@@ -264,11 +264,11 @@ module.exports = function (app, express) {
         });
     });
     
-    api.get('/game/info/:permalink', function(req, res) {
+    api.get('/game/info', function(req, res) {
         var self = this;
 
         self.data = {};
-        self.permalink = req.params.permalink;
+        self.permalink = req.query.game;
         self.url = baseUrl + '/game/' + self.permalink + '/achievements/';
         
         request(self.url, function(error, response, html) {

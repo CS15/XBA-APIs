@@ -15,15 +15,15 @@
                 return $http.get('/api/latest/achievements?page=' + pageNumber);
             },
             getAchievements: function(permalink){
-                return $http.get('/api/game/achievements/' + permalink);
+                return $http.get('/api/game/achievements?game=' + permalink);
             },
             getScreenshots: function(permalink, page){
 
                 var pageNumber = (page) ? page : 1;
-                return $http.get('/api/game/screenshots/' + permalink + '?page=' + pageNumber);
+                return $http.get('/api/game/screenshots?game=' + permalink + '&page=' + pageNumber);
             },
             getGameInfo: function(permalink){
-                return $http.get('/api/game/info/' + permalink);
+                return $http.get('/api/game/info?game=' + permalink);
             },
             getAchievementComments: function(game, achievement){
                 return $http.get('/api/game/achievement/comments?game=' + game + '&achievement=' + achievement);
