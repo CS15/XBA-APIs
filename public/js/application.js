@@ -25,6 +25,9 @@
                 }).when('/games', {
                     templateUrl: '/views/games.html',
                     caseInsensitiveMatch: true
+                }).when('/game', {
+                    templateUrl: '/views/game.html',
+                    caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 
                 $locationProvider.html5Mode(true);

@@ -27,6 +27,9 @@
             },
             getAchievementComments: function(game, achievement){
                 return $http.get('/api/game/achievement/comments?game=' + game + '&achievement=' + achievement);
+            },
+            getGameList: function(console, letter, pageNumber) {
+                 return $http.get('/api/games?console=' + console + '&letter=' + letter + '&page=' + pageNumber);
             }
         }
     }]);

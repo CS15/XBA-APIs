@@ -88,4 +88,28 @@
                 });
             }
         }]);
+    
+    angular.module('controllers').controller('GameListController', ['ApiServices', function(ApiServices){
+        var vm = this;
+        
+        vm.system = [
+            { title: 'Xbox One', console: 'xbox-one' }, 
+            { title: 'Xbox 360', console: 'retail' }, 
+            { title: 'Arcade', console: 'arcade' }, 
+            { title: 'Japanese', console: 'japanese' },
+            { title: 'Windows 7', console: 'win7' },
+            { title: 'Windows 8', console: 'win8' },
+            { title: 'GFWL', console: 'pc' },
+        ];
+        
+        vm.selectedSystem = undefined;
+        vm.pageNumber = 1;
+        vm.letter = 'a';
+        
+        vm.getGames = function(){
+            ApiServices.getGameList(vm.selectedSystem.console, vm.letter, vm.pageNumber).then(function(response){
+                vm.games = response.data;
+            });
+        }
+    }]);
 })();

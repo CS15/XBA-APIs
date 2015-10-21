@@ -1,14 +1,43 @@
-<div class="container" ng-controller="GamesController as vm">
-    <h1 class="page-header">Games</h1>
+<div class="container" ng-controller="GameListController as vm">
+    <h1 class="page-header">Game List</h1>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <td colspan="4"><span class="text-bold">URL Endpoint: </span><span class="endpoint-text">/api/games</span><span class="endpoint-text-options">?console={permalink}&letter={alphabeticLetter}&page={pageNumber}</span></td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    Get Game List by alphabetically
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><span class="text-bold">Queries</span></td>
+            </tr>
+            <tr>
+                <td>Console (Required)</td>
+                <td>Console to Search for Games</td>
+            </tr>
+            <tr>
+                <td>Letter (Required)</td>
+                <td>Letter to Display Game List</td>
+            </tr>
+            <tr>
+                <td>Page</td>
+                <td>Page Number</td>
+            </tr>
+        </table>
+    </div>
 
-    <select style="margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in vm.games" ng-model="vm.selectedGame" ng-change="vm.update(vm.currentId)">
-        <option value="">-- Select Game --</option>
+    <select style="margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in vm.system" ng-model="vm.selectedSystem" ng-change="vm.getGames()">
+        <option value="">-- Select Console --</option>
     </select>
-
-    <uib-tabset  justified="true">
-        <uib-tab heading="{{tab.title}}" ng-repeat="tab in vm.tabs" select="vm.update(tab.id)" disable="!vm.selectedGame">
-            <div ng-include="tab.templateUrl"></div>
-        </uib-tab>
-    </uib-tabset>
-
+    
+    <div ng-if="vm.selectedSystem">
+        <h3 class="page-header">Example</h3>
+        <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/games</span><span class="endpoint-text-options">?console={{vm.selectedSystem.console}}&letter={{vm.letter}}&page={{vm.pageNumber}}</span></p>
+        <p><span class="text-bold">Total Games: </span><span class="text-primary">{{vm.games.length}}</span></p>
+        <pre>{{ vm.games | json }}</pre>
+    </div>
+    
 </div>

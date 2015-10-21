@@ -332,4 +332,29 @@ module.exports = function (app, express) {
             res.status(200).send(self.data);
         });
     });
+    
+    api.get('/games', function(req, res) {
+        var self = this;
+
+        if (!req.query.page)
+            req.query.page = 1;
+            
+        if (!req.query.letter)
+            req.query.letter = 'a';
+
+        self.data = {};
+        self.url = baseUrl + '/browsegames/' + req.query.console + '/' + req.query.letter + '/' + req.query.page;
+        
+        request(self.url, function(error, response, html) {
+            if (error) return res.status(404).send(error);
+
+            var $ = cheerio.load(html);
+            
+            var root = $('.bl_la_main .divtext table');
+            
+            self.data.numberOfPages = $(root).eq(1).find('.pagination').contents().last().prev().text();
+            
+            return res.status(200).send(self.data);
+        });
+    });
 };

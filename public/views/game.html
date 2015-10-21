@@ -1,0 +1,14 @@
+<div class="container" ng-controller="GamesController as vm">
+    <h1 class="page-header">Games</h1>
+
+    <select style="margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in vm.games" ng-model="vm.selectedGame" ng-change="vm.update(vm.currentId)">
+        <option value="">-- Select Game --</option>
+    </select>
+
+    <uib-tabset  justified="true">
+        <uib-tab heading="{{tab.title}}" ng-repeat="tab in vm.tabs" select="vm.update(tab.id)" disable="!vm.selectedGame">
+            <div ng-include="tab.templateUrl"></div>
+        </uib-tab>
+    </uib-tabset>
+
+</div>
