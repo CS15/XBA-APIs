@@ -29,14 +29,21 @@
         </table>
     </div>
 
-    <select style="margin-bottom: 10px;" class="form-control" ng-options="item as item.title for item in vm.system" ng-model="vm.selectedSystem" ng-change="vm.getGames()">
-        <option value="">-- Select Console --</option>
-    </select>
+    <div class="text-center">
+        <select style="margin-bottom: 10px; width: 30%; display: inline-block;" class="form-control" ng-options="item as item.title for item in vm.system" ng-model="vm.selectedSystem" ng-change="vm.getGames()">
+            <option value="">-- Select Console --</option>
+        </select>
+        
+        <select style="margin-bottom: 10px; width: 30%; display: inline-block;" class="form-control" ng-options="item as item for item in vm.alphabet" ng-model="vm.letter" ng-change="vm.getGames()">
+            <option value="">-- Select Letter --</option>
+        </select>
+        
+    </div>
     
     <div ng-if="vm.selectedSystem">
         <h3 class="page-header">Example</h3>
         <p><span class="text-bold">Endpoint: </span><span class="endpoint-text">/api/games</span><span class="endpoint-text-options">?console={{vm.selectedSystem.console}}&letter={{vm.letter}}&page={{vm.pageNumber}}</span></p>
-        <p><span class="text-bold">Total Games: </span><span class="text-primary">{{vm.games.length}}</span></p>
+        <p><span class="text-bold">Total Games: </span><span class="text-primary">{{vm.games.games.length}}</span></p>
         <pre>{{ vm.games | json }}</pre>
     </div>
     

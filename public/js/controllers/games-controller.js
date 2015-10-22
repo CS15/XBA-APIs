@@ -46,19 +46,19 @@
             };
 
             function getAchievements() {
-                ApiServices.getAchievements(vm.selectedGame.permalink).then(function (response) {
+                ApiServices.getAchievements(vm.selectedGame.gamePermalink).then(function (response) {
                     vm.achievements = response.data;
                 });
             };
 
             function getScreenshots() {
-                ApiServices.getScreenshots(vm.selectedGame.permalink, vm.screenshotsPageNumber).then(function (response) {
+                ApiServices.getScreenshots(vm.selectedGame.gamePermalink, vm.screenshotsPageNumber).then(function (response) {
                     vm.screenshots = response.data;
                 });
             };
             
             function getGameInfo() {
-                ApiServices.getGameInfo(vm.selectedGame.permalink).then(function (response) {
+                ApiServices.getGameInfo(vm.selectedGame.gamePermalink).then(function (response) {
                     vm.gameInfo = response.data;
                 });
             };
@@ -66,7 +66,7 @@
             vm.getAchievementComments = function(){
                 vm.comments = undefined;
                 
-                ApiServices.getAchievementComments(vm.selectedGame.permalink, vm.selectedAchievement.permalink).then(function(response){
+                ApiServices.getAchievementComments(vm.selectedGame.gamePermalink, vm.selectedAchievement.achievementPermalink).then(function(response){
                     vm.achievementComments = response.data;
                 });
             }
@@ -101,6 +101,8 @@
             { title: 'Windows 8', console: 'win8' },
             { title: 'GFWL', console: 'pc' },
         ];
+        
+        vm.alphabet = ['0-9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
         
         vm.selectedSystem = undefined;
         vm.pageNumber = 1;

@@ -167,7 +167,7 @@ module.exports = function (app, express) {
                     link: baseUrl + link,
                     achievementsAdded: contents[0].trim() + '.',
                     submittedBy: contents[1].trim() + '.',
-                    permalink: link.replace('/game/', '').replace('/achievements/', '')
+                    gamePermalink: link.replace('/game/', '').replace('/achievements/', '')
                 };
 
                 self.data.push(ach);
@@ -219,7 +219,8 @@ module.exports = function (app, express) {
                     gamerScore: gs,
                     description: desc,
                     imageUrl: baseUrl + imageUrl,
-                    permalink: permalink
+                    gamePermalink: self.permalink,
+                    achievementPermalink: permalink
                 };
 
                 counter += 2;
@@ -240,7 +241,9 @@ module.exports = function (app, express) {
         if (!req.query.page)
             req.query.page = 1;
             
-        self.data = [];
+        self.data = {};    
+        self.data.images = [];
+        self.data.gamePermalink = self.permalink;
         self.permalink = req.query.game;
         self.url = baseUrl + '/game/' + self.permalink + '/screenshots/' + req.query.page + '/' + req.params.page + '/';
 
@@ -254,10 +257,10 @@ module.exports = function (app, express) {
             $(root).each(function (index, value){
                 var image = baseUrl + $(value).attr('src').replace('thu', 'med');
 
-                self.data.push(image);
+                self.data.images.push(image);
             });
 
-            if (self.data.length > 0)
+            if (self.data.images.length > 0)
                 return res.status(200).send(self.data);
 
             return res.status(200).send({ status: 404, message: 'No Images Available.'});
@@ -288,6 +291,7 @@ module.exports = function (app, express) {
                 { europe: $(root).find('td').eq(1).find('div').eq(4).contents().eq(6).text().trim() || null},
                 { japan: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null },
             ];
+            self.data.gamePermalink = self.permalink;
             
             res.status(200).send(self.data);
         });
@@ -322,7 +326,9 @@ module.exports = function (app, express) {
                     var comment = {
                         author: author,
                         createdDate: createdAt,
-                        content: content
+                        content: content,
+                        gamePermalink: req.query.game,
+                        achievementPermalink: req.query.achievement
                     };
 
                     self.data.push(comment);
@@ -341,7 +347,10 @@ module.exports = function (app, express) {
             
         if (!req.query.letter)
             req.query.letter = 'a';
-
+            
+        if (req.query.letter === '0-9')
+            req.query.letter = '-';
+        
         self.data = {};
         self.url = baseUrl + '/browsegames/' + req.query.console + '/' + req.query.letter + '/' + req.query.page;
         
@@ -352,7 +361,23 @@ module.exports = function (app, express) {
             
             var root = $('.bl_la_main .divtext table');
             
-            self.data.numberOfPages = $(root).eq(1).find('.pagination').contents().last().prev().text();
+            var rows = $(root).eq(0).find('tr[class]');
+            
+            self.data.games = [];
+            self.data.numberOfPages = $(root).eq(1).find('.pagination').contents().last().prev().text() || 1;
+            
+            for (var i = 0; i < $(rows).length; i++) {
+                 var game = {
+                    title: $(rows).eq(i).find("strong").text().trim(),
+                    coverUrl: baseUrl + $(rows).eq(i).find("td a img").attr("src").replace('ico', 'cover').trim(),
+                    icoUrl: baseUrl + $(rows).eq(i).find("td a img").attr("src").trim(),
+                    numberOfAchievements: $(rows).eq(i).find("td[align]").eq(0).text().trim(),
+                    gamerScore: $(rows).eq(i).find("td[align]").eq(1).text().trim(),
+                    gamePermalink: $(rows).eq(i).find("a").eq(0).attr('href').trim().replace('/game/', '').replace('/achievements/', '')
+                 }
+                 
+                 self.data.games.push(game);
+            }
             
             return res.status(200).send(self.data);
         });
