@@ -1,5 +1,6 @@
 var request = require('request');
 var cheerio = require('cheerio');
+var config = require('../../config/config');
 
 module.exports = function (app, express) {
     // router
@@ -10,6 +11,9 @@ module.exports = function (app, express) {
     app.use('/api', api);
 
     api.get('/latest/news', function (req, res) {
+
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
 
         var self = this;
 
@@ -41,16 +45,19 @@ module.exports = function (app, express) {
                     data.push(news);
                 }
             });
-
-            if (self.data.length > 0)
-                return res.status(200).send(self.data);
-
-            return res.status(404).send({ status: 404, message: 'Not Found.'});
+            
+            if (self.data.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+                
+            return res.status(200).send(self.data);
         });
     });
 
     api.get('/news/:permalink', function (req, res) {
-
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+            
         var self = this;
 
         self.data = {};
@@ -117,16 +124,19 @@ module.exports = function (app, express) {
                     }
                 });
 
-                if (self.data)
-                    return res.status(200).send(self.data);
+                if (self.data === {})
+                    return res.status(404).send({ status: 404, message: 'Not Found.'});
 
-                return res.status(404).send({ status: 404, message: 'Not Found.'});
+                return res.status(200).send(self.data);
             });
 
         });
     });
 
     api.get('/latest/achievements', function(req, res){
+
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
 
         var self = this;
 
@@ -175,14 +185,17 @@ module.exports = function (app, express) {
                 counter += 2;
             }
 
-            if (self.data.length > 0)
-                return res.status(200).send(self.data);
-
-            return res.status(404).send({ status: 404, message: 'Not Found.'});
+            if (self.data.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+                
+            return res.status(200).send(self.data);
         });
     });
 
     api.get('/game/achievements', function(req, res){
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
 
         var self = this;
 
@@ -228,14 +241,18 @@ module.exports = function (app, express) {
                 self.data.push(achievement);
             }
 
-            if (self.data.length > 0)
-                return res.status(200).send(self.data);
-
-            return res.status(404).send({ status: 404, message: 'Not Found.'});
+            if (self.data.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+                
+            return res.status(200).send(self.data);
         });
     });
 
     api.get('/game/screenshots', function (req, res){
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+        
         var self = this;
 
         if (!req.query.page)
@@ -260,14 +277,18 @@ module.exports = function (app, express) {
                 self.data.images.push(image);
             });
 
-            if (self.data.images.length > 0)
-                return res.status(200).send(self.data);
-
-            return res.status(200).send({ status: 404, message: 'No Images Available.'});
+            if (self.data.images.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+            
+            return res.status(200).send(self.data);
         });
     });
     
     api.get('/game/info', function(req, res) {
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+        
         var self = this;
 
         self.data = {};
@@ -293,11 +314,18 @@ module.exports = function (app, express) {
             ];
             self.data.gamePermalink = self.permalink;
             
+            if (self.data === {})
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+            
             res.status(200).send(self.data);
         });
     });
     
     api.get('/game/achievement/comments', function(req, res) {
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+        
         var self = this;
 
         self.data = [];
@@ -335,11 +363,18 @@ module.exports = function (app, express) {
                 }
             });
             
+            if (self.data.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+            
             res.status(200).send(self.data);
         });
     });
     
     api.get('/games', function(req, res) {
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+        
         var self = this;
 
         if (!req.query.page)
@@ -378,6 +413,9 @@ module.exports = function (app, express) {
                  
                  self.data.games.push(game);
             }
+            
+            if (self.data === {})
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
             
             return res.status(200).send(self.data);
         });
