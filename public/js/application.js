@@ -33,5 +33,5 @@
                 $locationProvider.html5Mode(true);
 
                 cfpLoadingBarProvider.includeSpinner = false;
-        }])
+        }]);
 })();
