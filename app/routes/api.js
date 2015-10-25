@@ -92,7 +92,9 @@ module.exports = function (app, express) {
             });
 
             $(root).find('[itemprop=articleBody] img').each(function (i, value) {
-                self.data.images.push(value.attribs.src);
+                var imageUrl = baseUrl + value.attribs.src.replace(baseUrl, '');
+                
+                self.data.images.push(imageUrl);
             });
 
             $(root).find('[itemprop=articleBody] iframe').each(function (i, value) {
