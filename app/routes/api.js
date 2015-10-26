@@ -78,6 +78,8 @@ module.exports = function (app, express) {
             //self.data.nID = self.nID;
             self.data.authorAvatar = baseUrl + $(root).find('table td[width=65] img').attr('src');
             self.data.authorName = $(root).find('table td div.newsNFO span[itemprop=name]').text();
+            self.data.authorFirstName = self.data.authorName.substr(0, self.data.authorName.indexOf(' '));
+            self.data.authorLastName = self.data.authorName.substr(self.data.authorName.indexOf(' ') + 1);
             self.data.datePublished = $(root).find('table td div.newsNFO span[itemprop=datePublished]').text();
             self.data.title = $(root).find('table td h1.newsTitle').text();
             self.data.content = [];
