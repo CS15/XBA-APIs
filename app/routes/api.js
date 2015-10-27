@@ -179,7 +179,8 @@ module.exports = function (app, express) {
                     title: title,
                     imageUrl: baseUrl + imageUrl,
                     link: baseUrl + link,
-                    achievementsAdded: contents[0].substr(0, contents[0].indexOf(',')),
+                    achievementsAdded: contents[0].substr(0, contents[0].indexOf(',')).trim(),
+                    gamerScoreAdded: contents[0].substr(contents[0].indexOf(',') + 1).trim(),
                     submittedBy: contents[1].trim(),
                     gamePermalink: link.replace('/game/', '').replace('/achievements/', '')
                 };
