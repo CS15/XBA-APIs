@@ -152,7 +152,7 @@ module.exports = function (app, express) {
 
         request(self.url, function(error, response, html){
             if (error) return res.status(404).send(error);
-
+            
             var counter = 0;
 
             var $ = cheerio.load(html);
@@ -174,7 +174,9 @@ module.exports = function (app, express) {
                 }
 
                 var contents = content.split('.');
-
+                
+                var commentsPermanlink = $(root).find('td[width=442] div[align=right] a').eq(0).attr('href');
+                
                 var ach = {
                     title: title,
                     imageUrl: baseUrl + imageUrl,
@@ -182,18 +184,55 @@ module.exports = function (app, express) {
                     achievementsAdded: contents[0].substr(0, contents[0].indexOf(',')).trim(),
                     gamerScoreAdded: contents[0].substr(contents[0].indexOf(',') + 1).trim(),
                     submittedBy: contents[1].trim(),
-                    gamePermalink: link.replace('/game/', '').replace('/achievements/', '')
+                    gamePermalink: link.replace('/game/', '').replace('/achievements/', ''),
+                    commentsPermanlink: commentsPermanlink,
+                    comments: []
                 };
-
+                    
                 self.data.push(ach);
 
                 counter += 2;
             }
+            
+            for (var i = 0; i < self.data.length; i++){
+               (function(index){
+                    var url = baseUrl + self.data[index].commentsPermanlink;
 
-            if (self.data.length === 0)
-                return res.status(404).send({ status: 404, message: 'Not Found.'});
+                    request.post(url, function (error, response, html) {
+                       
+                        var $ = cheerio.load(html);
+        
+                        var comments = $('.bl_la_main .divtext table tr');
+                        
+                        if ($(comments)){
+                            $(comments).each(function(pos, value){
+        
+                                var author = $(value).find('td[width=334] a').eq(1).text().trim();
+                                var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
+                                var content = $(value).next().find('td[colspan=3]').text().trim() || '';
+                                
+                                if (author) {
+                                    var comment = {
+                                        author: author,
+                                        createdDate: createdAt,
+                                        content: content
+                                    };
+                        
+                                    self.data[index].comments.push(comment);
+                                }
+                            });
+                        }
+                        
+                        if (index + 1 === self.data.length)
+                        {
+                            if (self.data.length === 0)
+                                return res.status(404).send({ status: 404, message: 'Not Found.'});
                 
-            return res.status(200).send(self.data);
+                            return res.status(200).send(self.data);
+                        }
+                    });
+               })(i);
+            }
         });
     });
 
