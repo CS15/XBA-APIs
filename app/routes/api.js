@@ -477,7 +477,7 @@ module.exports = function (app, express) {
         });
     });
     
-    api.post('/latest/achievements/comments/:permalink', function(req, res) {
+    api.get('/latest/achievements/comments', function(req, res) {
         
         if (!config.checkApiKey(req.query.key))
             return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
