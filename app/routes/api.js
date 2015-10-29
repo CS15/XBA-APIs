@@ -512,6 +512,5 @@ module.exports = function (app, express) {
             return res.status(200).send(self.data);
         });
 
-        });
     });
 };
