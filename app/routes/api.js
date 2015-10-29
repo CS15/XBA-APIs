@@ -85,7 +85,6 @@ module.exports = function (app, express) {
             self.data.content = [];
             self.data.images = [];
             self.data.videos = [];
-            self.data.comments = [];
 
             $(root).find('[itemprop=articleBody] p').each(function(index, value){
                 if ($(value).text().trim() != '') {
@@ -103,36 +102,6 @@ module.exports = function (app, express) {
                 self.data.videos.push(value.attribs.src);
             });
 
-            // request.post({
-            //     url: 'http://www.xboxachievements.com/news2-loadcomments.php',
-            //     form: {nID: self.nID}
-            // }, function (error, response, html) {
-            //     var $ = cheerio.load(html);
-
-            //     var comments = $('table tr');
-
-            //     $(comments).each(function(i, value){
-
-            //         var author = $(value).find('td[width=334] a').eq(1).text().trim();
-            //         var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
-            //         var content = $(value).next().find('td[colspan=3]').text().trim();
-
-            //         if (author) {
-            //             var comment = {
-            //                 author: author,
-            //                 createdDate: createdAt,
-            //                 content: content
-            //             };
-
-            //             self.data.comments.push(comment);
-            //         }
-            //     });
-
-            //     if (self.data === {})
-            //         return res.status(404).send({ status: 404, message: 'Not Found.'});
-
-            //     return res.status(200).send(self.data);
-            // });
             
             if (self.data === {})
                 return res.status(404).send({ status: 404, message: 'Not Found.'});
