@@ -133,6 +133,11 @@ module.exports = function (app, express) {
 
             //     return res.status(200).send(self.data);
             // });
+            
+            if (self.data === {})
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+
+            return res.status(200).send(self.data);
 
         });
     });
