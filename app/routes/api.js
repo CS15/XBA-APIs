@@ -177,7 +177,7 @@ module.exports = function (app, express) {
 
                 var contents = content.split('.');
                 
-                var commentsPermanlink = $(root).find('td[width=442] div[align=right] a').eq(0).attr('href');
+                var commentsPermalink = $(root).find('td[width=442] div[align=right] a').eq(0).attr('href');
                 
                 var ach = {
                     title: title,
@@ -187,7 +187,7 @@ module.exports = function (app, express) {
                     gamerScoreAdded: contents[0].substr(contents[0].indexOf(',') + 1).trim(),
                     submittedBy: contents[1].trim(),
                     gamePermalink: link.replace('/game/', '').replace('/achievements/', ''),
-                    commentsPermanlink: commentsPermanlink
+                    commentsPermalink: commentsPermalink
                 };
                     
                 self.data.push(ach);
