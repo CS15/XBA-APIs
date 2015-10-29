@@ -150,6 +150,8 @@ module.exports = function (app, express) {
         self.data = [];
         self.url = 'http://www.xboxachievements.com/archive/achievements/' + req.query.page + '/';
 
+        var counter = 1;
+
         request(self.url, function(error, response, html){
             if (error) return res.status(404).send(error);
             
@@ -185,8 +187,7 @@ module.exports = function (app, express) {
                     gamerScoreAdded: contents[0].substr(contents[0].indexOf(',') + 1).trim(),
                     submittedBy: contents[1].trim(),
                     gamePermalink: link.replace('/game/', '').replace('/achievements/', ''),
-                    commentsPermanlink: commentsPermanlink,
-                    comments: []
+                    commentsPermanlink: commentsPermanlink
                 };
                     
                 self.data.push(ach);
@@ -194,45 +195,10 @@ module.exports = function (app, express) {
                 counter += 2;
             }
             
-            for (var i = 0; i < self.data.length; i++){
-               (function(index){
-                    var url = baseUrl + self.data[index].commentsPermanlink;
-
-                    request.post(url, function (error, response, html) {
-                       
-                        var $ = cheerio.load(html);
-        
-                        var comments = $('.bl_la_main .divtext table tr');
-                        
-                        if ($(comments)){
-                            $(comments).each(function(pos, value){
-        
-                                var author = $(value).find('td[width=334] a').eq(1).text().trim();
-                                var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
-                                var content = $(value).next().find('td[colspan=3]').text().trim() || '';
-                                
-                                if (author) {
-                                    var comment = {
-                                        author: author,
-                                        createdDate: createdAt,
-                                        content: content
-                                    };
-                        
-                                    self.data[index].comments.push(comment);
-                                }
-                            });
-                        }
-                        
-                        if (index + 1 === self.data.length)
-                        {
-                            if (self.data.length === 0)
-                                return res.status(404).send({ status: 404, message: 'Not Found.'});
-                
-                            return res.status(200).send(self.data);
-                        }
-                    });
-               })(i);
-            }
+            if (self.data.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+            
+            return res.status(200).send(self.data);
         });
     });
 
@@ -461,6 +427,47 @@ module.exports = function (app, express) {
             if (self.data === {})
                 return res.status(404).send({ status: 404, message: 'Not Found.'});
             
+            return res.status(200).send(self.data);
+        });
+    });
+    
+    api.get('/latest/achievements/comments/:permalink', function(req, res) {
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+            
+        var self = this;
+
+        self.data = [];
+        self.url = baseUrl + '/' + req.params.permalink;
+
+        request.post(self.url, function (error, response, html) {
+                       
+            var $ = cheerio.load(html);
+
+            var comments = $('.bl_la_main .divtext table tr');
+            
+            $(comments).each(function(pos, value){
+                if (error) return res.status(404).send(error);
+                
+                var author = $(value).find('td[width=334] a').eq(1).text().trim();
+                var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
+                var content = $(value).next().find('td[colspan=3]').text().trim() || '';
+                
+                if (author) {
+                    var comment = {
+                        author: author,
+                        createdDate: createdAt,
+                        content: content
+                    };
+        
+                    self.data.push(comment);
+                }
+            });
+            
+            if (self.data.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+
             return res.status(200).send(self.data);
         });
     });
