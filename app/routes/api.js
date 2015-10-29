@@ -15,15 +15,15 @@ module.exports = function (app, express) {
         if (!config.checkApiKey(req.query.key))
             return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
 
-        var self = this;
-
         if (!req.query.page)
             req.query.page = 1;
-
-        self.url = 'http://www.xboxachievements.com/archive/gaming-news/' + req.query.page + '/';
+            
+        var url = baseUrl + '/archive/gaming-news/' + req.query.page + '/';
+        var self = this;
+        
         self.data = [];
 
-        request(self.url, function (error, response, html) {
+        request(url, function (error, response, html) {
             if (error) res.status(404).send(error);
 
             var $ = cheerio.load(html);
@@ -38,11 +38,10 @@ module.exports = function (app, express) {
                         subtitle: $(value).find('.newsNFO').next().text(),
                         imageUrl: baseUrl + $(value).find('img').attr('src'),
                         author: $(value).find('.newsNFO').text(),
-                        link: baseUrl + $(value).find('a').attr('href'),
-                        permalink: $(value).find('a').attr('href').replace('/news/', '').replace('.html', '')
+                        newsPermalink: $(value).find('a').attr('href').replace('/news/', '').replace('.html', '')
                     };
 
-                    data.push(news);
+                    self.data.push(news);
                 }
             });
             
@@ -53,7 +52,7 @@ module.exports = function (app, express) {
         });
     });
 
-    api.get('/news/:permalink', function (req, res) {
+    api.get('/news', function (req, res) {
         
         if (!config.checkApiKey(req.query.key))
             return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
@@ -61,7 +60,7 @@ module.exports = function (app, express) {
         var self = this;
 
         self.data = {};
-        self.permalink = req.params.permalink;
+        self.permalink = req.query.permalink;
         self.url = baseUrl + '/news/' + self.permalink + '.html';
 
         self.nID = self.permalink.substr(self.permalink.indexOf('-') + 1);
@@ -122,7 +121,7 @@ module.exports = function (app, express) {
             req.query.page = 1;
 
         self.data = [];
-        self.url = 'http://www.xboxachievements.com/archive/achievements/' + req.query.page + '/';
+        self.url = baseUrl + '/archive/achievements/' + req.query.page + '/';
 
         var counter = 1;
 
@@ -478,7 +477,6 @@ module.exports = function (app, express) {
                 return res.status(200).send(self.data);
             });
         }
-
-        
     });
+     
 };
