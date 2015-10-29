@@ -177,7 +177,7 @@ module.exports = function (app, express) {
 
                 var contents = content.split('.');
                 
-                var commentsPermalink = $(root).find('td[width=442] div[align=right] a').eq(0).attr('href');
+                var commentsPermalink = $(root).find('td[width=442] div[align=right] a').eq(i).attr('href');
                 
                 var ach = {
                     title: title,
