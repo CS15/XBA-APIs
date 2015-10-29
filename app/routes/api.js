@@ -405,86 +405,80 @@ module.exports = function (app, express) {
         });
     });
     
-    api.get('/latest/achievements/comments/:permalink', function(req, res) {
+    api.get('/comments', function(req, res) {
         
         if (!config.checkApiKey(req.query.key))
             return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
             
         var self = this;
-
+        
         self.data = [];
-        self.url = baseUrl + '/' + req.params.permalink;
-
-        request.post(self.url, function (error, response, html) {
+        
+        if (req.query.permalink){
+            var url = baseUrl + '/' + req.query.permalink;
+            
+            request.get(url, function (error, response, html) {
                        
-            var $ = cheerio.load(html);
-
-            var comments = $('.bl_la_main .divtext table tr');
-            
-            $(comments).each(function(pos, value){
-                if (error) return res.status(404).send(error);
-                
-                var author = $(value).find('td[width=334] a').eq(1).text().trim();
-                var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
-                var content = $(value).next().find('td[colspan=3]').text().trim() || '';
-                
-                if (author) {
-                    var comment = {
-                        author: author,
-                        createdDate: createdAt,
-                        content: content
-                    };
-        
-                    self.data.push(comment);
-                }
-            });
-            
-            if (self.data.length === 0)
-                return res.status(404).send({ status: 404, message: 'Not Found.'});
-
-            return res.status(200).send(self.data);
-        });
-    });
+                var $ = cheerio.load(html);
     
-    api.get('/latest/achievements/comments', function(req, res) {
-        
-        if (!config.checkApiKey(req.query.key))
-            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+                var comments = $('.bl_la_main .divtext table tr');
+                
+                $(comments).each(function(pos, value){
+                    if (error) return res.status(404).send(error);
+                    
+                    var author = $(value).find('td[width=334] a').eq(1).text().trim();
+                    var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
+                    var content = $(value).next().find('td[colspan=3]').text().trim() || '';
+                    
+                    if (author) {
+                        var comment = {
+                            author: author,
+                            createdDate: createdAt,
+                            content: content
+                        };
             
-        var self = this;
-
-        self.data = [];
-        
-        request.post({
-            url: 'http://www.xboxachievements.com/news2-loadcomments.php',
-            form: {nID: req.query.nID}
-        }, function (error, response, html) {
-            var $ = cheerio.load(html);
-
-            var comments = $('table tr');
-
-            $(comments).each(function(i, value){
-
-                var author = $(value).find('td[width=334] a').eq(1).text().trim();
-                var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
-                var content = $(value).next().find('td[colspan=3]').text().trim();
-
-                if (author) {
-                    var comment = {
-                        author: author,
-                        createdDate: createdAt,
-                        content: content
-                    };
-
-                    self.data.push(comment);
-                }
+                        self.data.push(comment);
+                    }
+                });
+                
+                if (self.data.length === 0)
+                    return res.status(404).send({ status: 404, message: 'Not Found.'});
+    
+                return res.status(200).send(self.data);
             });
+        } else if (req.query.nID){
+            request.post({
+                url: 'http://www.xboxachievements.com/news2-loadcomments.php',
+                form: {nID: req.query.nID}
+            }, function (error, response, html) {
+                var $ = cheerio.load(html);
+    
+                var comments = $('table tr');
+    
+                $(comments).each(function(i, value){
+    
+                    var author = $(value).find('td[width=334] a').eq(1).text().trim();
+                    var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
+                    var content = $(value).next().find('td[colspan=3]').text().trim();
+    
+                    if (author) {
+                        var comment = {
+                            author: author,
+                            createdDate: createdAt,
+                            content: content
+                        };
+    
+                        self.data.push(comment);
+                    }
+                });
+    
+                if (self.data === {})
+                    return res.status(404).send({ status: 404, message: 'Not Found.'});
+    
+                return res.status(200).send(self.data);
+            });
+        }
 
-            if (self.data === {})
-                return res.status(404).send({ status: 404, message: 'Not Found.'});
-
-            return res.status(200).send(self.data);
-        });
-
+        
     });
 };
