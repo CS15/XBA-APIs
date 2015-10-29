@@ -75,7 +75,7 @@ module.exports = function (app, express) {
 
             var root = $('div.articleText');
 
-            //self.data.nID = self.nID;
+            self.data.nID = self.nID;
             self.data.authorAvatar = baseUrl + $(root).find('table td[width=65] img').attr('src');
             self.data.authorName = $(root).find('table td div.newsNFO span[itemprop=name]').text();
             self.data.authorFirstName = self.data.authorName.substr(0, self.data.authorName.indexOf(' '));
@@ -103,36 +103,36 @@ module.exports = function (app, express) {
                 self.data.videos.push(value.attribs.src);
             });
 
-            request.post({
-                url: 'http://www.xboxachievements.com/news2-loadcomments.php',
-                form: {nID: self.nID}
-            }, function (error, response, html) {
-                var $ = cheerio.load(html);
+            // request.post({
+            //     url: 'http://www.xboxachievements.com/news2-loadcomments.php',
+            //     form: {nID: self.nID}
+            // }, function (error, response, html) {
+            //     var $ = cheerio.load(html);
 
-                var comments = $('table tr');
+            //     var comments = $('table tr');
 
-                $(comments).each(function(i, value){
+            //     $(comments).each(function(i, value){
 
-                    var author = $(value).find('td[width=334] a').eq(1).text().trim();
-                    var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
-                    var content = $(value).next().find('td[colspan=3]').text().trim();
+            //         var author = $(value).find('td[width=334] a').eq(1).text().trim();
+            //         var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
+            //         var content = $(value).next().find('td[colspan=3]').text().trim();
 
-                    if (author) {
-                        var comment = {
-                            author: author,
-                            createdDate: createdAt,
-                            content: content
-                        };
+            //         if (author) {
+            //             var comment = {
+            //                 author: author,
+            //                 createdDate: createdAt,
+            //                 content: content
+            //             };
 
-                        self.data.comments.push(comment);
-                    }
-                });
+            //             self.data.comments.push(comment);
+            //         }
+            //     });
 
-                if (self.data === {})
-                    return res.status(404).send({ status: 404, message: 'Not Found.'});
+            //     if (self.data === {})
+            //         return res.status(404).send({ status: 404, message: 'Not Found.'});
 
-                return res.status(200).send(self.data);
-            });
+            //     return res.status(200).send(self.data);
+            // });
 
         });
     });
@@ -469,6 +469,49 @@ module.exports = function (app, express) {
                 return res.status(404).send({ status: 404, message: 'Not Found.'});
 
             return res.status(200).send(self.data);
+        });
+    });
+    
+    api.post('/latest/achievements/comments/:permalink', function(req, res) {
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+            
+        var self = this;
+
+        self.data = [];
+        
+        request.post({
+            url: 'http://www.xboxachievements.com/news2-loadcomments.php',
+            form: {nID: req.query.nID}
+        }, function (error, response, html) {
+            var $ = cheerio.load(html);
+
+            var comments = $('table tr');
+
+            $(comments).each(function(i, value){
+
+                var author = $(value).find('td[width=334] a').eq(1).text().trim();
+                var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
+                var content = $(value).next().find('td[colspan=3]').text().trim();
+
+                if (author) {
+                    var comment = {
+                        author: author,
+                        createdDate: createdAt,
+                        content: content
+                    };
+
+                    self.data.push(comment);
+                }
+            });
+
+            if (self.data === {})
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+
+            return res.status(200).send(self.data);
+        });
+
         });
     });
 };
