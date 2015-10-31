@@ -478,5 +478,40 @@ module.exports = function (app, express) {
             });
         }
     });
-     
+    
+    api.get('/upcoming/games', function(req, res) {
+        
+        // category: NTSC, PAL, Arcade, xbox-one, xbox-360
+        
+        if (!config.checkApiKey(req.query.key))
+            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
+        
+        var self = this;
+        self.data = [];
+
+        if (!req.query.category)
+            req.query.category = 'NTSC';
+            
+        var url = (req.query.category.toUpperCase() === 'NTSC') ? baseUrl + '/upcoming/' : baseUrl + '/upcoming/' + req.query.category + '/'; 
+            
+        request(url, function(error, response, html) {
+            if (error) return res.status(404).send(error);
+
+            var $ = cheerio.load(html);
+            
+            var root = $('.bl_la_main .divtext table tr');
+            
+            for (var i = 2; i < $(root).length; i++) {
+                var game = {
+                    date: $(root).eq(i).find('td').eq(0).text().trim(),
+                    game: $(root).eq(i).find('td').eq(1).text().trim(),
+                    gamePermalink: $(root).eq(i).find('td a').eq(0).attr('href').trim().replace('/game/', '').replace('/overview/', '')
+                }
+                
+                self.data.push(game);
+            }
+            
+            return res.status(200).send(self.data);
+        });
+    });
 };
