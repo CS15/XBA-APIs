@@ -432,7 +432,7 @@ module.exports = function (app, express) {
                     for (var i = 0; i < $(value).next().find('td[colspan=3]').eq(0).contents().length; i++) {
                         var text = $(value).next().find('td[colspan=3]').eq(0).contents().eq(i).text().trim();
                         
-                        content = (text) ? content + text : content + "\r\n";
+                        content = (text) ? content + text : content + "\n";
                     }
                     
                     if (author) {
@@ -469,7 +469,7 @@ module.exports = function (app, express) {
                     for (var i = 0; i < $(value).next().find('td[colspan=3]').eq(0).contents().length; i++) {
                         var text = $(value).next().find('td[colspan=3]').eq(0).contents().eq(i).text().trim();
                         
-                        content = (text) ? content + text : content + "\r\n";
+                        content = (text) ? content + text : content + "\n";
                     }
     
                     if (author) {
