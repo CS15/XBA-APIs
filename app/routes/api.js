@@ -427,13 +427,12 @@ module.exports = function (app, express) {
                     
                     var author = $(value).find('td[width=334] a').eq(1).text().trim();
                     var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
-                    var content = [];
+                    var content = '';
                     
                     for (var i = 0; i < $(value).next().find('td[colspan=3]').eq(0).contents().length; i++) {
                         var text = $(value).next().find('td[colspan=3]').eq(0).contents().eq(i).text().trim();
                         
-                        if (text)
-                            content.push(text);
+                        content = (text) ? text : "\n";
                     }
                     
                     if (author) {
@@ -465,13 +464,12 @@ module.exports = function (app, express) {
     
                     var author = $(value).find('td[width=334] a').eq(1).text().trim();
                     var createdAt = $(value).find('td[width=334] .newsNFO').text().trim();
-                    var content = [];
+                    var content = '';
                     
                     for (var i = 0; i < $(value).next().find('td[colspan=3]').eq(0).contents().length; i++) {
                         var text = $(value).next().find('td[colspan=3]').eq(0).contents().eq(i).text().trim();
                         
-                        if (text)
-                            content.push(text);
+                        content = (text) ? text : "\n";
                     }
     
                     if (author) {
