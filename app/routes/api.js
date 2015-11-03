@@ -81,6 +81,7 @@ module.exports = function (app, express) {
             self.data.authorLastName = self.data.authorName.substr(self.data.authorName.indexOf(' ') + 1);
             self.data.datePublished = $(root).find('table td div.newsNFO span[itemprop=datePublished]').text();
             self.data.title = $(root).find('table td h1.newsTitle').text();
+            self.data.link = self.url;
             self.data.content = [];
             self.data.images = [];
             self.data.videos = [];
