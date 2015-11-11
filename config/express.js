@@ -6,6 +6,7 @@ var morgan = require('morgan');
 var config = require('../config/config');
 var path = require('path');
 var compression = require('compression');
+var Parse = require('parse/node').Parse;
 
 // instantiate express app
 var app = express();
@@ -22,6 +23,8 @@ module.exports = function () {
     // use body parser & cookie parser
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
+    
+    Parse.initialize("ZbsmNrnAoWvV4miJsVzkr4qwSlodOyFzhYWHECbI", "PdB18ikRbBJPjuErs8b2I8kNwczL17bGceMc7qD8");
 
     // static roots
     app.use('/css', express.static(path.resolve('./public/css')));

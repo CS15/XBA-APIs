@@ -16,4 +16,16 @@ module.exports = function() {
         link = link.substr(0, link.indexOf('.'));
         self.gameId = link;
     };
+    self.toJSON = function() {
+        return {
+            gameId: self.gameId,
+            title: self.title,
+            imageUrl: self.imageUrl,
+            developer: self.developer,
+            publisher: self.publisher,
+            genre: self.genre,
+            release: self.release,
+            permalink: self.permalink
+        }
+    }
 };

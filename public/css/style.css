@@ -5,25 +5,28 @@ body .page-header {
   font-weight: 300;
   color: #e74c3c;
 }
-body .endpoint-text {
-  font-weight: 500;
-  color: #0b97c4;
-}
-body .endpoint-text-options {
-  font-weight: 600;
-  color: #e74c3c;
-}
 body .text-bold {
   font-weight: 700;
+}
+body .text-thin {
+  font-weight: 100;
 }
 body .text-primary {
   color: #e74c3c;
 }
-body .tab-content {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 20px;
+body .text-size-title {
+  font-size: 24px;
 }
-body .nav-tabs {
-  margin-bottom: -1px;
+body .login-wrapper {
+  background-color: #f1f1f1;
+  padding: 40px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, 50%, 0);
+  max-width: 500px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+}
+body .login-wrapper input.form-control {
+  margin-bottom: 10px;
 }

@@ -9,6 +9,12 @@ module.exports = function (app, express) {
 
     // prefix api route
     app.use('/api', api);
+    
+    app.post('/profile/login', function(req, res){
+        console.log('Trying to login.');
+        
+        return res.status(200).send({ message: 'Yeah!!!'});
+    });
 
     api.get('/latest/news', function (req, res) {
 

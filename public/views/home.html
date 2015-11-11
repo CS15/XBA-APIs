@@ -1,3 +1,12 @@
-<div>
+<div class="container" ng-controller="HomeController as vm">
     <h1 class="text-center text-primary">XBA API's</h1>
+    
+    <div class="login-wrapper" ng-submit="vm.submit(vm.user)">
+        <p class="page-title text-primary text-size-title margin-bottom-10">Login<p>
+        <form class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="email" ng-model="vm.user.email" />
+            <input class="form-control" type="password" name="password" placeholder="password" ng-model="vm.user.password"/>
+            <input class="btn btn-default" type="submit" value="Submit"/>
+        </form>
+    </div>
 </div>
