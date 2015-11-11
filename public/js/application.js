@@ -1,6 +1,8 @@
 (function(){
     'use strict';
 
+    Parse.initialize("ZbsmNrnAoWvV4miJsVzkr4qwSlodOyFzhYWHECbI", "PdB18ikRbBJPjuErs8b2I8kNwczL17bGceMc7qD8");
+
     angular.module('services', []);
     angular.module('controllers', []);
 
@@ -11,6 +13,9 @@
             function($routeProvider, $locationProvider, cfpLoadingBarProvider){
                 $routeProvider.when('/', {
                     templateUrl: '/views/home.html',
+                    caseInsensitiveMatch: true
+                }).when('/dashboard', {
+                    templateUrl: '/views/dashboard.html',
                     caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 

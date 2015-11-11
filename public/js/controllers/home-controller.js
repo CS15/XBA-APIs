@@ -1,16 +1,21 @@
-(function(){
+(function () {
     'use strict';
-    
-    angular.module('controllers').controller('HomeController', ['UserServices', function(UserServices){
-        
+
+    angular.module('controllers').controller('HomeController', ['$location', function ($location) {
+
         var vm = this;
-        
-        vm.submit = function(user){
-            UserServices.login(user)
-            .then(function(response){
-                console.log(response);
-            }, function(err){
-                console.log(err);
+
+        if (Parse.User.current()) $location.path('/dashboard');
+
+        vm.submit = function (user) {
+
+            Parse.User.logIn(user.email, user.password, {
+                success: function () {
+                    $location.path('/dashboard');
+                },
+                error: function (user, error) {
+                    console.log(error);
+                }
             });
         };
     }]);
