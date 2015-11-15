@@ -1,21 +1,21 @@
 <div ng-include="'/views/navbar.html'"></div>
 
-<div class="container" ng-controller="GameInfoController as vm">
-    <h2 class="page-header">{{vm.gameInfo.title}}</h2>
+<div class="container container-bg" ng-controller="GameInfoController as vm">
+    <h2 class="page-header" ng-bind="vm.gameInfo.title"></h2>
 
     <div class="media">
         <div class="media-left">
-            <a href="#">
-                <img class="media-object" ng-src="{{vm.gameInfo.imageUrl}}" alt="Cover">
+            <a target="_blank" href="{{vm.gameInfo.imageUrl}}">
+                <img class="media-object" src="{{vm.gameInfo.imageUrl}}"/>
             </a>
         </div>
         <div class="media-body">
-            <h4 class="media-heading">{{vm.gameInfo.title}}</h4>
-            <p>Game Id: {{vm.gameInfo.gameId}}</p>
-            <p>Developer: {{vm.gameInfo.developer}}</p>
-            <p>Publisher: {{vm.gameInfo.publisher}}</p>
-            <p>Genre: {{vm.gameInfo.genre}}</p>
-            <p>{{vm.achievements.length}} achievements</p>
+            <h4 class="media-heading" ng-bind="vm.gameInfo.title"></h4>
+            <p ng-bind="'Game Id: ' + vm.gameInfo.gameId"></p>
+            <p ng-bind="'Developer: ' + vm.gameInfo.developer"></p>
+            <p ng-bind="'Publisher: ' + vm.gameInfo.publisher"></p>
+            <p ng-bind="'Genre: ' + vm.gameInfo.genre"></p>
+            <p ng-bind="vm.achievements.length + ' achievements'"></p>
         </div>
     </div>
 
@@ -24,10 +24,10 @@
     <div class="row">
         <div class="col-md-4 col-sm-6" ng-repeat="ach in vm.achievements">
             <div class="achievement-wrapper">
-                <img class="img-responsive" ng-src="{{ach.imageUrl}}" alt="Cover">
+                <img class="img-responsive" src="{{ach.imageUrl}}" alt="Cover">
                 <div class="gradient">
-                    <h4 class="media-heading">{{ach.title}}</h4>
-                    <p>{{ach.description}}</p>
+                    <h4 class="media-heading" ng-bind="ach.title"></h4>
+                    <p ng-bind="ach.description"></p>
                 </div>
             </div>
         </div>
