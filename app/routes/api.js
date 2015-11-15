@@ -116,9 +116,6 @@ module.exports = function (app, express) {
 
     api.get('/latest/achievements', function(req, res){
 
-        if (!config.checkApiKey(req.query.key))
-            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
-
         var self = this;
 
         if (!req.query.page)
@@ -180,9 +177,6 @@ module.exports = function (app, express) {
     });
 
     api.get('/game/achievements', function(req, res){
-        
-        if (!config.checkApiKey(req.query.key))
-            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
 
         var self = this;
 
@@ -228,9 +222,6 @@ module.exports = function (app, express) {
                 self.data.push(achievement);
             }
 
-            if (self.data.length === 0)
-                return res.status(404).send({ status: 404, message: 'Not Found.'});
-                
             return res.status(200).send(self.data);
         });
     });
@@ -273,9 +264,6 @@ module.exports = function (app, express) {
     
     api.get('/game/info', function(req, res) {
         
-        if (!config.checkApiKey(req.query.key))
-            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
-        
         var self = this;
 
         self.data = {};
@@ -300,11 +288,8 @@ module.exports = function (app, express) {
                 { japan: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null },
             ];
             self.data.gamePermalink = self.permalink;
-            
-            if (self.data === {})
-                return res.status(404).send({ status: 404, message: 'Not Found.'});
-            
-            res.status(200).send(self.data);
+
+            return res.status(200).send(self.data);
         });
     });
     

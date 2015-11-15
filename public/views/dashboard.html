@@ -1,3 +1,23 @@
-<div ng-controller="DashboardController as vm">
-    <button class="btn btn-default" ng-click="vm.logout()">Logout</button>
+<div ng-include="'/views/navbar.html'"></div>
+
+<div class="container" ng-controller="DashboardController as vm">
+    <h2 class="page-header">Latest Achievements - XBA</h2>
+
+    <div class="row">
+        <div class="col-md-6" ng-repeat="ach in vm.latestAchievements">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" ng-src="{{ach.imageUrl}}" alt="Cover">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ach.title}}</h4>
+                    <p>{{ach.achievementsAdded}}</p>
+                    <a href="/gameinfo/{{ach.gamePermalink}}">Game Info</a>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </div>
 </div>

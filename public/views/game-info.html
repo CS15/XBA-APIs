@@ -1,0 +1,33 @@
+<div ng-include="'/views/navbar.html'"></div>
+
+<div class="container" ng-controller="GameInfoController as vm">
+    <h2 class="page-header">{{vm.gameInfo.title}}</h2>
+    <div class="media">
+        <div class="media-left">
+            <a href="#">
+                <img class="media-object" ng-src="{{vm.gameInfo.coverUrl}}" alt="Cover">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{vm.gameInfo.title}}</h4>
+            <p>{{vm.gameInfo.developer}}</p>
+            <p>{{vm.gameInfo.publisher}}</p>
+            <p>{{vm.gameInfo.genre}}</p>
+            <p>{{vm.achievements.length}} achievements</p>
+        </div>
+    </div>
+
+    <h2 class="page-header">Achievements</h2>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-6" ng-repeat="ach in vm.achievements">
+            <div class="achievement-wrapper">
+                <img class="img-responsive" ng-src="{{ach.imageUrl}}" alt="Cover">
+                <div class="gradient">
+                    <h4 class="media-heading">{{ach.title}}</h4>
+                    <p>{{ach.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

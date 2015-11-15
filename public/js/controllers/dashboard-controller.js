@@ -1,15 +1,14 @@
 (function () {
     'use strict';
 
-    angular.module('controllers').controller('DashboardController', ['$location', function ($location) {
+    angular.module('controllers').controller('DashboardController', ['$location', 'XaServices', function ($location, XaServices) {
 
         var vm = this;
 
         if (!Parse.User.current()) $location.path('/');
 
-        vm.logout = function () {
-            Parse.User.logOut();
-            $location.path('/');
-        };
+        XaServices.getLatestAchievements().then(function(response){
+            vm.latestAchievements = response.data;
+        });
     }]);
 })();

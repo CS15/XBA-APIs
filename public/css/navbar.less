@@ -1,0 +1,33 @@
+@import "variables";
+
+.navi {
+  background-color: @navbar-bg;
+  color: white;
+  width: 100%;
+  height: @navbar-height;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-weight: 300;
+
+  ul {
+    padding: 0;
+    text-align: right;
+
+    li {
+      display: inline-block;
+      line-height: @navbar-height;
+      padding: 0 20px;
+      
+      a {
+        color: white;
+        font-size: 1.4em;
+
+        &:hover {
+          color: #cccccc;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

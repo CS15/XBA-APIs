@@ -11,6 +11,7 @@
 
             Parse.User.logIn(user.email, user.password, {
                 success: function () {
+                    console.log('Logged');
                     $location.path('/dashboard');
                 },
                 error: function (user, error) {

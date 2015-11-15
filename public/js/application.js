@@ -17,6 +17,9 @@
                 }).when('/dashboard', {
                     templateUrl: '/views/dashboard.html',
                     caseInsensitiveMatch: true
+                }).when('/gameinfo/:permalink', {
+                    templateUrl: '/views/game-info.html',
+                    caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 
                 $locationProvider.html5Mode(true);
