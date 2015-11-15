@@ -17,7 +17,8 @@
             <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>
             <span ng-bind="vm.achievements.length + ' achievements'"></span><br/>
             <span>Linked to Parse: </span>
-            <span class="text-primary" ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span>
+            <span class="text-primary" ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span><br/>
+            <span><a href="" ng-click="vm.updateGameInfo(vm.gameInfo)">Upload to parse</a></span>
         </div>
     </div>
 

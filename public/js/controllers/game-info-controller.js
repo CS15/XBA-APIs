@@ -22,5 +22,11 @@
                     vm.achievements = response.data;
                 });
             });
+
+            vm.updateGameInfo = function(game) {
+                ParseServices.updateGameInfo(game).then(function (response) {
+                    console.log(response);
+                });
+            };
     }]);
 })();

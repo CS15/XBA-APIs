@@ -29,18 +29,18 @@ module.exports = function (app, express) {
 
     api.post('/game/info', function (req, res) {
 
-        console.log(req.body);
+        //console.log(req.body);
 
         var ParseGame = Parse.Object.extend("Games");
         var parseGame = new ParseGame();
 
-        //parseGame.save(game.toJSON(), {
-        //  success: function(response) {
-        //    return res.status(200).send(response);
-        //  },
-        //  error: function(response, error) {
-        //    return res.status(404).send(response);
-        //  }
-        //});
+        parseGame.save(req.body, {
+          success: function(response) {
+            return res.status(200).send(response);
+          },
+          error: function(response, error) {
+            return res.status(404).send(response);
+          }
+        });
     });
 };
