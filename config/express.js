@@ -32,11 +32,9 @@ module.exports = function () {
     app.use('/scripts', express.static(path.resolve('./node_modules')));
     app.use('/views', express.static(path.resolve('./public/views')));
 
-    // create database
-    //mongoose.connect(config.server.db);
-
     // routes
     require('../app/routes/api')(app, express);
+    require('../app/routes/parse-apis')(app, express);
     require('../app/routes/xbox-apis')(app, express);
     require('../app/routes/ps-apis')(app, express);
     require('../app/routes/routes')(app);
