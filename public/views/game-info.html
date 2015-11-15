@@ -15,7 +15,9 @@
             <span ng-bind="'Developer: ' + vm.gameInfo.developer"></span><br/>
             <span ng-bind="'Publisher: ' + vm.gameInfo.publisher"></span><br/>
             <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>
-            <span ng-bind="vm.achievements.length + ' achievements'"></span>
+            <span ng-bind="vm.achievements.length + ' achievements'"></span><br/>
+            <span>Linked to Parse: </span>
+            <span class="text-primary" ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span>
         </div>
     </div>
 
@@ -27,6 +29,7 @@
             <tr>
                 <th>Image</th>
                 <th>Description</th>
+                <th>Achievement Id</th>
                 <th>In Parse</th>
             </tr>
             </thead>
@@ -37,7 +40,12 @@
                     <span class="text-bold text-primary">{{ach.title}}</span><br/>
                     <span>{{ach.description}}</span>
                 </td>
-                <td><input type="checkbox"/></td>
+                <td>
+                    {{ach.achievementId}}
+                </td>
+                <td>
+                    <span class="text-primary" ng-class="ach.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span>
+                </td>
             </tr>
             </tbody>
         </table>
