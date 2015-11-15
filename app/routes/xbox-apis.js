@@ -2,6 +2,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var Parse = require('parse/node').Parse;
 var Game = require("../../app/models/Game");
+var GameBrowse = require("../../app/models/GameBrowse");
 var Achievement = require("../../app/models/Achievement");
 
 module.exports = function (app, express) {
@@ -98,7 +99,7 @@ module.exports = function (app, express) {
             game.release = [
                 { usa: $(root).find('td').eq(1).find('div').eq(4).contents().eq(3).text().trim() || null },
                 { europe: $(root).find('td').eq(1).find('div').eq(4).contents().eq(6).text().trim() || null},
-                { japan: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null },
+                { japan: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null }
             ];
             game.permalink = self.permalink;
             game.setGameId(baseUrl, game.imageUrl);
@@ -140,6 +141,51 @@ module.exports = function (app, express) {
             //         return res.status(404).send(error);
             //     }
             // });
+        });
+    });
+
+    api.get('/games', function(req, res) {
+
+        var self = this;
+
+        if (!req.query.page)
+            req.query.page = 1;
+
+        if (!req.query.letter)
+            req.query.letter = 'a';
+
+        if (req.query.letter === '0-9')
+            req.query.letter = '-';
+
+        self.data = {};
+        self.url = baseUrl + '/browsegames/' + req.query.console + '/' + req.query.letter + '/' + req.query.page;
+
+        request(self.url, function(error, response, html) {
+            if (error) return res.status(404).send(error);
+
+            var $ = cheerio.load(html);
+
+            var root = $('.bl_la_main .divtext table');
+
+            var rows = $(root).eq(0).find('tr[class]');
+
+            self.data = [];
+
+            for (var i = 0; i < $(rows).length; i++) {
+
+                var game = new GameBrowse();
+                game.title = $(rows).eq(i).find("strong").text().trim();
+                game.imageUrl = baseUrl + $(rows).eq(i).find("td a img").attr("src").replace('ico', 'cover').trim();
+                game.icoUrl = baseUrl + $(rows).eq(i).find("td a img").attr("src").trim();
+                game.numberOfAchievements = $(rows).eq(i).find("td[align]").eq(0).text().trim();
+                game.gamerScore = $(rows).eq(i).find("td[align]").eq(1).text().trim();
+                game.permalink = $(rows).eq(i).find("a").eq(0).attr('href').trim().replace('/game/', '').replace('/achievements/', '');
+                game.setGameId(baseUrl, game.imageUrl);
+
+                self.data.push(game);
+            }
+
+            return res.status(200).send(self.data);
         });
     });
 };

@@ -13,6 +13,6 @@
             });
         };
 
-        vm.getGames('0-9');
+        vm.getGames('a');
     }]);
 })();

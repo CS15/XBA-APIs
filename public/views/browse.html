@@ -34,7 +34,26 @@
 
     <h2 class="page-header">Games</h2>
 
-    <div>
-        <pre>{{vm.games | json}}</pre>
+    <div class="table-responsive">
+        <table class="table table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th>Cover</th>
+                    <th>Title</th>
+                    <th>Game Id</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="game in vm.games">
+                  <td><img src="{{game.icoUrl}}"/></td>
+                  <td>
+                      <span class="text-bold"><a href="/gameinfo/{{game.permalink}}">{{game.title}}</a></span><br/>
+                      <span ng-bind="game.numberOfAchievements + ' achievements'"></span><br/>
+                      <span ng-bind="game.gamerScore + ' GS'"></span>
+                  </td>
+                  <td><a href="/gameinfo/{{game.permalink}}">{{game.gameId}}</a></td>
+              </tr>
+            </tbody>
+        </table>
     </div>
 </div>

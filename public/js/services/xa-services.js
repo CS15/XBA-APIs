@@ -14,7 +14,7 @@
             },
             getGames: function(letter){
                 var page = 1;
-                return $http.get('/api/games?page=' + page + '&letter=' + letter + '&console=xbox-one');
+                return $http.get('/api/xbox/games?page=' + page + '&letter=' + letter + '&console=xbox-one');
             }
         }
     }]);
