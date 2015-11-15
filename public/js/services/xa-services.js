@@ -11,6 +11,10 @@
             },
             getGameAchievements: function(game) {
                 return $http.get('/api/xbox/game/achievements?permalink=' + game);
+            },
+            getGames: function(letter){
+                var page = 1;
+                return $http.get('/api/games?page=' + page + '&letter=' + letter + '&console=xbox-one');
             }
         }
     }]);

@@ -344,9 +344,6 @@ module.exports = function (app, express) {
     
     api.get('/games', function(req, res) {
         
-        if (!config.checkApiKey(req.query.key))
-            return res.status(403).send({ status: 403, message: 'Forbidden: Wrong or No API Key provided.'});
-        
         var self = this;
 
         if (!req.query.page)

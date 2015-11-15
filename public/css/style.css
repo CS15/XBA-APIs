@@ -67,6 +67,14 @@
 .login-wrapper input.form-control {
   margin-bottom: 10px;
 }
+.browse-alphabetic {
+  padding: 0;
+  text-align: center;
+}
+.browse-alphabetic li {
+  display: inline-block;
+  padding: 5px;
+}
 body {
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #fafafa;

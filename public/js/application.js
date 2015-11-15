@@ -20,6 +20,9 @@
                 }).when('/gameinfo/:permalink', {
                     templateUrl: '/views/game-info.html',
                     caseInsensitiveMatch: true
+                }).when('/browse', {
+                    templateUrl: '/views/browse.html',
+                    caseInsensitiveMatch: true
                 }).otherwise({redirectTo: '/'});
 
                 $locationProvider.html5Mode(true);

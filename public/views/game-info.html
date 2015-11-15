@@ -11,11 +11,11 @@
         </div>
         <div class="media-body">
             <h4 class="media-heading" ng-bind="vm.gameInfo.title"></h4>
-            <p ng-bind="'Game Id: ' + vm.gameInfo.gameId"></p>
-            <p ng-bind="'Developer: ' + vm.gameInfo.developer"></p>
-            <p ng-bind="'Publisher: ' + vm.gameInfo.publisher"></p>
-            <p ng-bind="'Genre: ' + vm.gameInfo.genre"></p>
-            <p ng-bind="vm.achievements.length + ' achievements'"></p>
+            <span ng-bind="'Game Id: ' + vm.gameInfo.gameId"></span><br/>
+            <span ng-bind="'Developer: ' + vm.gameInfo.developer"></span><br/>
+            <span ng-bind="'Publisher: ' + vm.gameInfo.publisher"></span><br/>
+            <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>
+            <span ng-bind="vm.achievements.length + ' achievements'"></span>
         </div>
     </div>
 
