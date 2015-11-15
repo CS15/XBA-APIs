@@ -2,17 +2,19 @@
 
 <div class="container" ng-controller="GameInfoController as vm">
     <h2 class="page-header">{{vm.gameInfo.title}}</h2>
+
     <div class="media">
         <div class="media-left">
             <a href="#">
-                <img class="media-object" ng-src="{{vm.gameInfo.coverUrl}}" alt="Cover">
+                <img class="media-object" ng-src="{{vm.gameInfo.imageUrl}}" alt="Cover">
             </a>
         </div>
         <div class="media-body">
             <h4 class="media-heading">{{vm.gameInfo.title}}</h4>
-            <p>{{vm.gameInfo.developer}}</p>
-            <p>{{vm.gameInfo.publisher}}</p>
-            <p>{{vm.gameInfo.genre}}</p>
+            <p>Game Id: {{vm.gameInfo.gameId}}</p>
+            <p>Developer: {{vm.gameInfo.developer}}</p>
+            <p>Publisher: {{vm.gameInfo.publisher}}</p>
+            <p>Genre: {{vm.gameInfo.genre}}</p>
             <p>{{vm.achievements.length}} achievements</p>
         </div>
     </div>

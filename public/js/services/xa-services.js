@@ -7,10 +7,10 @@
                 return $http.get('/api/latest/achievements');
             },
             getGameInfo: function(game) {
-                return $http.get('/api/game/info?game=' + game);
+                return $http.get('/api/xbox/game/info?permalink=' + game);
             },
             getGameAchievements: function(game) {
-                return $http.get('/api/game/achievements?game=' + game);
+                return $http.get('/api/xbox/game/achievements?permalink=' + game);
             }
         }
     }]);

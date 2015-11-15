@@ -142,9 +142,4 @@ module.exports = function (app, express) {
             // });
         });
     });
-    
-    api.get('/test/get', function(req, res) {
-        
-        
-    });
 };

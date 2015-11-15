@@ -12,11 +12,9 @@
 
             XaServices.getGameInfo(gamePermalink).then(function(response){
                 vm.gameInfo = response.data;
-                console.log(vm.gameInfo);
 
                 XaServices.getGameAchievements(gamePermalink).then(function(response){
                     vm.achievements = response.data;
-                    console.log(response.data);
                 });
             });
     }]);
