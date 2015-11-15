@@ -8,7 +8,7 @@
         if (!Parse.User.current()) $location.path('/');
 
         XaServices.getLatestAchievements().then(function(response){
-            vm.latestAchievements = response.data;
+            vm.latestAchievements = response;
         });
     }]);
 })();

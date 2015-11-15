@@ -1,20 +1,64 @@
-(function(){
+(function () {
     'use strict';
 
-    angular.module('services').factory('XaServices', ['$http', function($http){
+    angular.module('services').factory('XaServices', ['$http', '$q', function ($http, $q) {
         return {
             getLatestAchievements: function () {
-                return $http.get('/api/latest/achievements');
+
+                var q = $q.defer();
+
+                $http.get('/api/latest/achievements')
+                    .success(function (response) {
+                        q.resolve(response);
+                    })
+                    .error(function (error) {
+                        q.reject(error);
+                    });
+
+                return q.promise;
             },
-            getGameInfo: function(game) {
-                return $http.get('/api/xbox/game/info?permalink=' + game);
+            getGameInfo: function (game) {
+
+                var q = $q.defer();
+
+                $http.get('/api/xbox/game/info?permalink=' + game)
+                    .success(function (response) {
+                        q.resolve(response);
+                    })
+                    .error(function (error) {
+                        q.reject(error);
+                    });
+
+                return q.promise;
             },
-            getGameAchievements: function(game) {
-                return $http.get('/api/xbox/game/achievements?permalink=' + game);
+            getGameAchievements: function (game) {
+
+                var q = $q.defer();
+
+                $http.get('/api/xbox/game/achievements?permalink=' + game)
+                    .success(function (response) {
+                        q.resolve(response);
+                    })
+                    .error(function (error) {
+                        q.reject(error);
+                    });
+
+                return q.promise;
             },
-            getGames: function(letter){
+            getGames: function (letter) {
                 var page = 1;
-                return $http.get('/api/xbox/games?page=' + page + '&letter=' + letter + '&console=xbox-one');
+
+                var q = $q.defer();
+
+                $http.get('/api/xbox/games?page=' + page + '&letter=' + letter + '&console=xbox-one')
+                    .success(function (response) {
+                        q.resolve(response);
+                    })
+                    .error(function (error) {
+                        q.reject(error);
+                    });
+
+                return q.promise;
             }
         }
     }]);

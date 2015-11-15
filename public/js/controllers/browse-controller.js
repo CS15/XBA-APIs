@@ -9,7 +9,7 @@
 
         vm.getGames = function (letter) {
             XaServices.getGames(letter).then(function(response){
-                vm.games = response.data;
+                vm.games = response;
             });
         };
 

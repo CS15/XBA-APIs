@@ -105,42 +105,7 @@ module.exports = function (app, express) {
             game.setGameId(baseUrl, game.imageUrl);
             
             return res.status(200).send(game);
-            
-            /**
-             * Post to Parse
-             */
-             
-            // var ParseGame = Parse.Object.extend("Games");
-            // var parseGame = new ParseGame();
-            
-            // parseGame.save(game.toJSON(), {
-            //   success: function(response) {
-            //     return res.status(200).send(response);
-            //   },
-            //   error: function(response, error) {
-            //     return res.status(404).send(response);
-            //   }
-            // });
-            
-            /**
-             * Get from Parse
-             */
-             
-            // var GameScore = Parse.Object.extend("Games");
-            // var query = new Parse.Query(GameScore);
-            
-            // query.find({
-            //     success: function(results) {
-            //         for (var i = 0; i < results.length; i++) {
-            //           var object = results[i];
-            //         }
-                
-            //         return res.status(200).send(results);
-            //     },
-            //     error: function(error) {
-            //         return res.status(404).send(error);
-            //     }
-            // });
+
         });
     });
 
