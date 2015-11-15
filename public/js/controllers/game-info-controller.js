@@ -62,8 +62,8 @@
 
                     ParseServices.uploadAchievements(vm.achievements).then(function (response){
                         alert('Achievements Uploaded');
+                        $route.reload();
                     }, function(error){
-                        console.log(error);
                         alert('Error');
                     });
                 }

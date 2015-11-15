@@ -85,25 +85,27 @@ module.exports = function (app, express) {
                 var Achievement = Parse.Object.extend("Achievements");
 
                 for (var i = 0; i < data.length; i++){
-                    var ach = new Achievement();
-                    ach.set('achievementId', data[i].achievementId);
-                    ach.set('title', data[i].title);
-                    ach.set('description', data[i].description);
-                    ach.set('game', game);
-                    ach.set('gameId', data[i].gameId);
-                    ach.set('gamerScore', data[i].gamerScore);
-                    ach.set('imageUrl', data[i].imageUrl);
-                    ach.set('permalink', data[i].permalink);
+                    if (!data[i].inParse) {
+                        var ach = new Achievement();
+                        ach.set('achievementId', data[i].achievementId);
+                        ach.set('title', data[i].title);
+                        ach.set('description', data[i].description);
+                        ach.set('game', game);
+                        ach.set('gameId', data[i].gameId);
+                        ach.set('gamerScore', data[i].gamerScore);
+                        ach.set('imageUrl', data[i].imageUrl);
+                        ach.set('permalink', data[i].permalink);
 
-                    achievements.push(ach);
+                        achievements.push(ach);
+                    }
                 }
 
                 Parse.Object.saveAll(achievements, {
                     success: function(objs) {
+                        console.log(objs);
                         return res.status(200).send();
                     },
                     error: function(error) {
-                        console.log(error);
                         return res.status(error.code).send(error.message);
                     }
                 });
