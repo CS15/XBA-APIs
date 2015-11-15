@@ -16,6 +16,19 @@
 
                 return q.promise;
             },
+            getGameAchievements: function (gameId) {
+                var q = $q.defer();
+
+                $http.get('/api/parse/game/achievements?gameId=' + gameId)
+                    .success(function(response){
+                        q.resolve(response);
+                    })
+                    .error(function(error){
+                        q.reject(error)
+                    });
+
+                return q.promise;
+            },
             updateGameInfo: function (game) {
                 var q = $q.defer();
 

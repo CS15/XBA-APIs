@@ -22,7 +22,7 @@ module.exports = function (app, express) {
                 return res.status(200).send(results);
             },
             error: function (error) {
-                return res.status(404).send(error);
+                return res.status(200).send(error);
             }
         });
     });
@@ -55,6 +55,22 @@ module.exports = function (app, express) {
         });
     });
 
+    api.get('/game/achievements', function (req, res) {
+
+        var obj = Parse.Object.extend("Achievements");
+        var query = new Parse.Query(obj);
+
+        query.equalTo("gameId", req.query.gameId);
+        query.find({
+            success: function (results) {
+                return res.status(200).send(results);
+            },
+            error: function (error) {
+                return res.status(200).send(error);
+            }
+        });
+    });
+
     api.post('/game/achievements', function (req, res) {
 
         var data = req.body;
@@ -74,6 +90,7 @@ module.exports = function (app, express) {
                     ach.set('title', data[i].title);
                     ach.set('description', data[i].description);
                     ach.set('game', game);
+                    ach.set('gameId', data[i].gameId);
                     ach.set('gamerScore', data[i].gamerScore);
                     ach.set('imageUrl', data[i].imageUrl);
                     ach.set('permalink', data[i].permalink);

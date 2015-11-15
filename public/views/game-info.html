@@ -1,6 +1,7 @@
 <div ng-include="'/views/navbar.html'"></div>
 
 <div class="container container-bg" ng-controller="GameInfoController as vm">
+    <div ng-if="vm.gameInfoChecked && vm.gameAchievementsChecked">
     <h2 class="page-header" ng-bind="vm.gameInfo.title"></h2>
 
     <div class="media">
@@ -23,8 +24,10 @@
     </div>
 
     <h2 class="page-header">Achievements</h2>
-    <a href="" target="_self" ng-click="vm.uploadAllAchievements()" ng-if="vm.inParse">Upload All Achievements</a>
-    <hr/>
+    <div ng-if="vm.achievements.length != vm.parseAchievements.length && vm.inParse">
+        <a href="" target="_self" ng-click="vm.uploadAllAchievements()">Upload All Achievements</a>
+        <hr/>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-striped table-condensed">
@@ -65,4 +68,5 @@
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
+    </div>
 </div>
