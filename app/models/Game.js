@@ -7,7 +7,7 @@ module.exports = function() {
     self.developer = null;
     self.publisher = null;
     self.genre = null;
-    self.release = null;
+    self.releases = null;
     self.permalink = null;
     self.setGameId = function (baseUrl, link){
         if (!baseUrl || !link) return;
@@ -24,7 +24,7 @@ module.exports = function() {
             developer: self.developer,
             publisher: self.publisher,
             genre: self.genre,
-            release: self.release,
+            releases: self.releases,
             permalink: self.permalink
         }
     }
