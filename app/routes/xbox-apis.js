@@ -96,7 +96,7 @@ module.exports = function (app, express) {
             game.developer = $(root).find('td').eq(1).find('a[title]').eq(0).text();
             game.publisher = $(root).find('td').eq(1).find('a[title]').eq(1).text();
             game.genre = $(root).find('td').eq(1).find('div').eq(3).text().replace(/\s/g, '').split('/');
-            game.release = [
+            game.releases = [
                 { region: 'usa', date: $(root).find('td').eq(1).find('div').eq(4).contents().eq(3).text().trim() || null },
                 { region: 'europe', date: $(root).find('td').eq(1).find('div').eq(4).contents().eq(6).text().trim() || null},
                 { region: 'japan', date: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null }
