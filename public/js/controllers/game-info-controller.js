@@ -12,6 +12,8 @@
 
             XaServices.getGameInfo(gamePermalink).then(function(response){
                 vm.gameInfo = response;
+                
+                console.log(vm.gameInfo);
 
                 ParseServices.getGameInfo(vm.gameInfo.gameId).then(function(response){
                     if (response.length > 0) {

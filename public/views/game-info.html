@@ -16,6 +16,9 @@
             <span ng-bind="'Developer: ' + vm.gameInfo.developer"></span><br/>
             <span ng-bind="'Publisher: ' + vm.gameInfo.publisher"></span><br/>
             <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>
+            <div ng-repeat="release in vm.releases">
+                <span ng-bind="release.region + ': ' + release.date"></span>
+            </div>
             <span ng-bind="vm.achievements.length + ' achievements'"></span><br/>
             <span>Linked to Parse: </span>
             <span class="text-primary" ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span><br/>
