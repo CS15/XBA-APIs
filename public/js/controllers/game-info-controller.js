@@ -9,13 +9,12 @@
             var gamePermalink = $routeParams.permalink;
 
             var vm = this;
-
             
             vm.loadData = function(){
                 XaServices.getGameInfo(gamePermalink).then(function(response){
                     vm.gameInfo = response;
                     
-                    ParseServices.getGameInfo(vm.gameInfo.gameId).then(function(response){
+                    ParseServices.getGameInformation(vm.gameInfo.gameId).then(function(response){
                         if (response.length > 0) {
                             vm.inParse = true;
                             vm.parseObjectId = response[0].objectId;
@@ -29,7 +28,7 @@
     
                         ParseServices.getGameAchievements(vm.gameInfo.gameId).then(function(response){
                             vm.parseAchievements = response;
-    
+                            
                             if (response.length > 0) {
                                 angular.forEach(vm.achievements, function(value, key){
     
@@ -48,7 +47,7 @@
             }
             
             vm.addGameInfoToParse = function(game) {
-                ParseServices.updateGameInfo(game).then(function (response) {
+                ParseServices.addGameInfoToParse(game).then(function (response) {
                     vm.loadData();
                 });
             };
@@ -61,7 +60,7 @@
                         value.gameId = vm.gameInfo.gameId;
                     });
 
-                    ParseServices.uploadAchievements(vm.achievements).then(function (response){
+                    ParseServices.addAchievementsToParse(vm.achievements).then(function (response){
                         vm.loadData();
                     }, function(error){
                         alert('Error');
