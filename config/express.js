@@ -34,7 +34,6 @@ module.exports = function () {
 
     // routes
     require('../app/routes/api')(app, express);
-    require('../app/routes/parse-apis')(app, express);
     require('../app/routes/xbox-apis')(app, express);
     require('../app/routes/routes')(app);
 
