@@ -1,4 +1,4 @@
-(function(){
+(function() {
     'use strict';
 
     Parse.initialize("ZbsmNrnAoWvV4miJsVzkr4qwSlodOyFzhYWHECbI", "PdB18ikRbBJPjuErs8b2I8kNwczL17bGceMc7qD8");
@@ -6,11 +6,11 @@
     angular.module('services', []);
     angular.module('controllers', []);
 
-    var modules = ['services','controllers', 'ngRoute', 'ui.bootstrap', 'angular-loading-bar', 'ngAnimate'];
+    var modules = ['services', 'controllers', 'ngRoute', 'ui.bootstrap', 'angular-loading-bar', 'ngAnimate'];
 
     angular.module('app', modules)
         .config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
-            function($routeProvider, $locationProvider, cfpLoadingBarProvider){
+            function($routeProvider, $locationProvider, cfpLoadingBarProvider) {
                 $routeProvider.when('/', {
                     templateUrl: '/views/home.html',
                     caseInsensitiveMatch: true
@@ -23,10 +23,35 @@
                 }).when('/browse', {
                     templateUrl: '/views/browse.html',
                     caseInsensitiveMatch: true
-                }).otherwise({redirectTo: '/'});
+                }).when('/no-access', {
+                    templateUrl: '/views/no-access.html',
+                    caseInsensitiveMatch: true
+                }).otherwise({
+                    redirectTo: '/'
+                });
 
                 $locationProvider.html5Mode(true);
 
                 cfpLoadingBarProvider.includeSpinner = false;
-        }]);
+            }
+
+        ]).run(['$rootScope', '$location',
+            function($rootScope, $location) {
+
+                $rootScope.$on('$routeChangeStart', function(event, next, current) {
+                    if (Parse.User.current()) {
+                        var query = (new Parse.Query(Parse.Role));
+                        query.equalTo("name", "Admin");
+                        query.equalTo("users", Parse.User.current());
+                        query.first().then(function(adminRole) {
+                            if (!adminRole) {
+                                $location.path('/no-access');
+                            }
+                        });
+                    } else {
+                        $location.path('/');
+                    }
+                });
+            }
+        ]);
 })();

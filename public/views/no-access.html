@@ -1,0 +1,28 @@
+<div class="container">
+    <h1>You have no access to this part of the page.</h1>
+    <div>
+        <h3>You will be redirected to login page in <span id="seconds">8</span> seconds.</h3>
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function(){
+        'use strict';
+        
+        var counter = 8;
+        
+        Parse.User.logOut();
+            
+        setInterval(function(){
+            counter--;
+            
+            if (counter <= 0) {
+            
+                window.location.href = "/";
+            } else {
+                document.getElementById('seconds').innerHTML = counter;
+            }
+            
+        }, 1000);
+    })();
+</script>
