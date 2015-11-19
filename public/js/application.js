@@ -17,7 +17,7 @@
                 }).when('/dashboard', {
                     templateUrl: '/views/dashboard.html',
                     caseInsensitiveMatch: true
-                }).when('/gameinfo/:permalink', {
+                }).when('/game-info/:permalink', {
                     templateUrl: '/views/game-info.html',
                     caseInsensitiveMatch: true
                 }).when('/browse', {

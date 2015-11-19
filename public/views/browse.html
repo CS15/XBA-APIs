@@ -47,11 +47,11 @@
               <tr ng-repeat="game in vm.games">
                   <td><img src="{{game.icoUrl}}"/></td>
                   <td>
-                      <span class="text-bold"><a href="/gameinfo/{{game.permalink}}">{{game.title}}</a></span><br/>
+                      <span class="text-bold"><a href="/game-info/{{game.permalink}}">{{game.title}}</a></span><br/>
                       <span ng-bind="game.numberOfAchievements + ' achievements'"></span><br/>
                       <span ng-bind="game.gamerScore + ' GS'"></span>
                   </td>
-                  <td><a href="/gameinfo/{{game.permalink}}">{{game.gameId}}</a></td>
+                  <td><a href="/game-info/{{game.permalink}}">{{game.gameId}}</a></td>
               </tr>
             </tbody>
         </table>
