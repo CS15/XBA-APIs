@@ -53,6 +53,7 @@
                     var ParseGame = Parse.Object.extend("Games");
                     var parseGame = new ParseGame();
                     game.achievementCount = 0;
+                    game.show = false
     
                     parseGame.save(game).then(function(results) {
                         q.resolve(results.toJSON());
