@@ -2,30 +2,46 @@
 
 <div class="container container-bg" ng-controller="GameInfoController as vm">
     <div ng-if="vm.gameInfoChecked && vm.gameAchievementsChecked">
-    <h2 class="page-header" ng-bind="vm.gameInfo.title"></h2>
-
-    <div class="media">
-        <div class="media-left">
-            <a target="_blank" href="{{vm.gameInfo.imageUrl}}">
-                <img class="media-object" src="{{vm.gameInfo.imageUrl}}" width="120px;"/>
-            </a>
+   
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="page-header" ng-bind="vm.gameInfo.title"></h2>
+        
+            <div class="media">
+                <div class="media-left">
+                    <a target="_blank" href="{{vm.gameInfo.imageUrl}}">
+                        <img class="media-object" src="{{vm.gameInfo.imageUrl}}" width="120px;"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" ng-bind="vm.gameInfo.title"></h4>
+                    <span ng-bind="'Game Id: ' + vm.gameInfo.gameId"></span><br/>
+                    <span ng-bind="'Developer: ' + vm.gameInfo.developer"></span><br/>
+                    <span ng-bind="'Publisher: ' + vm.gameInfo.publisher"></span><br/>
+                    <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>
+                    <span ng-bind="vm.achievements.length + ' achievements'"></span><br/>
+                    <a target="_blank" href="http://www.xboxachievements.com/game/{{vm.gameInfo.permalink}}/achievements/">XBA Link</a><br />
+                    <span ng-bind="vm.inParse ? 'Linked to Parse: ' : 'Not Linked to Parse: '"></span>
+                    <span class="text-primary" ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span><br/>
+                </div>
+            </div>
+            
+            <div class="btn-group" role="group" style="margin-top: 20px;">
+              <button type="button" class="btn btn-default" ng-disabled="vm.inParse" ng-click="vm.addGameInfoToParse(vm.gameInfo)">Add Game Info to Parse</button>
+              <button type="button" class="btn btn-default" ng-disabled="vm.achievements.length == vm.parseAchievements.length && vm.inParse || !vm.inParse" ng-click="vm.uploadAllAchievements()">Add Achievements to Parse</button>
+            </div>
         </div>
-        <div class="media-body">
-            <h4 class="media-heading" ng-bind="vm.gameInfo.title"></h4>
-            <span ng-bind="'Game Id: ' + vm.gameInfo.gameId"></span><br/>
-            <span ng-bind="'Developer: ' + vm.gameInfo.developer"></span><br/>
-            <span ng-bind="'Publisher: ' + vm.gameInfo.publisher"></span><br/>
-            <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>
-            <span ng-bind="vm.achievements.length + ' achievements'"></span><br/>
-            <a target="_blank" href="http://www.xboxachievements.com/game/{{vm.gameInfo.permalink}}/achievements/">XBA Link</a><br />
-            <span ng-bind="vm.inParse ? 'Linked to Parse: ' : 'Not Linked to Parse: '"></span>
-            <span class="text-primary" ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span><br/>
+        
+        <div class="col-md-6">
+            <h2 class="page-header">Extras</h2>
+            
+            <img src=""/>
+            
+            <div class="form-group">
+                <label>Game Banner Image Url</label>
+                <input style="max-width: 240px;" type="text" class="form-control" placeholder="Banner Image URL"/>
+            </div>
         </div>
-    </div>
-    
-    <div class="btn-group" role="group" style="margin-top: 20px;">
-      <button type="button" class="btn btn-default" ng-disabled="vm.inParse" ng-click="vm.addGameInfoToParse(vm.gameInfo)">Add Game Info to Parse</button>
-      <button type="button" class="btn btn-default" ng-disabled="vm.achievements.length == vm.parseAchievements.length && vm.inParse || !vm.inParse" ng-click="vm.uploadAllAchievements()">Add Achievements to Parse</button>
     </div>
 
     <h2 class="page-header">Achievements</h2>

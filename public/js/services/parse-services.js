@@ -93,8 +93,6 @@
                         }
                         
                         game.set("achievementCount", (game.get("achievementCount") + content.length));
-                        
-                        //console.log(game.toJSON());
         
                         Parse.Object.saveAll(content, {
                             success: function(objs) {
