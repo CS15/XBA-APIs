@@ -27,7 +27,7 @@
             </div>
             
             <div class="btn-group" role="group" style="margin-top: 20px;">
-              <button type="button" class="btn btn-default" ng-disabled="vm.inParse" ng-click="vm.addGameInfoToParse(vm.gameInfo)">Add Game Info to Parse</button>
+              <button type="button" class="btn btn-default" ng-disabled="vm.inParse || !vm.gameInfo.bannerImageUrl" ng-click="vm.addGameInfoToParse(vm.gameInfo)">Add Game Info to Parse</button>
               <button type="button" class="btn btn-default" ng-disabled="vm.achievements.length == vm.parseAchievements.length && vm.inParse || !vm.inParse" ng-click="vm.uploadAllAchievements()">Add Achievements to Parse</button>
             </div>
         </div>
@@ -39,7 +39,8 @@
             
             <div class="form-group">
                 <label>Game Banner Image Url</label>
-                <input style="max-width: 240px;" type="text" class="form-control" placeholder="Banner Image URL"/>
+                <input style="max-width: 240px;" type="text" class="form-control" placeholder="Banner Image URL" ng-model="vm.gameInfo.bannerImageUrl"/><br/>
+                <img ng-show="vm.gameInfo.bannerImageUrl" class="img-responsive" ng-src="{{vm.gameInfo.bannerImageUrl}}"/>
             </div>
         </div>
     </div>

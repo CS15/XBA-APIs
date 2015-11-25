@@ -27,6 +27,7 @@
                         if (response.length > 0) {
                             vm.inParse = true;
                             vm.parseObjectId = response[0].objectId;
+                            vm.gameInfo.bannerImageUrl = response[0].bannerImageUrl
                         }
 
                         vm.gameInfoChecked = true;
