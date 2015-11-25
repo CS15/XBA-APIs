@@ -53,6 +53,7 @@
                     var ParseGame = Parse.Object.extend("Games");
                     var parseGame = new ParseGame();
                     game.achievementCount = 0;
+                    game.gamerScore = 0;
                     game.show = false
     
                     parseGame.save(game).then(function(results) {
@@ -73,6 +74,8 @@
                 query.get(data[0].game, {
                     success: function(game) {
                         var content = [];
+                        
+                        var totalGamerScore = game.toJSON().gamerScore;
         
                         var Achievement = Parse.Object.extend("Achievements");
         
@@ -89,19 +92,22 @@
                                 ach.set('permalink', data[i].permalink);
         
                                 content.push(ach);
+                                
+                                totalGamerScore += Number(data[i].gamerScore);
                             }
                         }
                         
                         game.set("achievementCount", (game.get("achievementCount") + content.length));
-        
+                        game.set("gamerScore", totalGamerScore);
+                        
                         Parse.Object.saveAll(content, {
                             success: function(objs) {
                                 var relation = game.relation("achievements");
-                                
+
                                 for(var i = 0; i < objs.length; i++){
                                     relation.add(objs[i]);
                                 }
-                                
+
                                 game.save();
                                 
                                 q.resolve(parseToJSON(objs));
