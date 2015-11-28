@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-    angular.module('controllers').controller('GameInfoController', ['$location', '$routeParams', 'XaServices', 'ParseServices',
-        function($location, $routeParams, XaServices, ParseServices) {
+    angular.module('controllers').controller('GameInfoController', ['$location', '$routeParams', 'XaServices', 'ParseServices', 'GiantBombServices',
+        function($location, $routeParams, XaServices, ParseServices, GiantBombServices) {
 
             if (!Parse.User.current()) $location.path('/');
 
@@ -100,6 +100,16 @@
                         alert('Error');
                     });
                 }
+            };
+
+            vm.getGiantBombData = function() {
+
+                GiantBombServices.getGameData(vm.gameInfo.gbGameId)
+                    .then(function(response) {
+                        console.log(response);
+                    }, function(error) {
+                        alert('Error');
+                    });
             };
 
             init();
