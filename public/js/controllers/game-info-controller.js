@@ -114,8 +114,8 @@
 
                 GiantBombServices.getGameData(vm.gameInfo.gbGameId)
                     .then(function(response) {
-                        vm.gameInfo.description = parseGameDescription(response.data.results.description).replace('Overview', '').trim();
-                        //..vm.gameInfo.description = response.data.results.description;
+                        //vm.gameInfo.description = parseGameDescription(response.data.results.description).replace('Overview', '').trim();
+                        vm.gameInfo.description = response.data.results.deck.trim();
                         vm.gameInfo.coverImageUrl = response.data.results.image.small_url;
 
                         vm.doneGettingGbData = true;
