@@ -40,14 +40,14 @@ module.exports = function (app, express) {
             for (var i = 0; i < $(root).find('td.ac2').length; i++){
                 var title = $(root).find('td.ac2').eq(i).text().trim();
                 var gs = $(root).find("td.ac4 strong").eq(i).text().trim();
-                var slug = $(root).find('td.ac1 a').eq(i).attr('href').replace('/game/' + self.permalink, '').replace('/achievement/', '').replace('.html', '');
+                var slug = ($(root).find('td.ac1 a').eq(i).attr('href')) ? $(root).find('td.ac1 a').eq(i).attr('href').replace('/game/' + self.permalink, '').replace('/achievement/', '').replace('.html', '') : '';
                 var imageUrl = '';
                 var desc = '';
 
                 if (i < descCounter) {
                     imageUrl = $(root).find("td.ac1 a img").eq(i).attr("src").replace('lo', 'hi');
                     desc = $(root).find("td.ac3").eq(counter).text();
-                } else if (title.equals("Secret Achievement")) {
+                } else if (title === "Secret Achievement") {
                     imageUrl = $(root).find("td.ac1 img").eq(i).attr("src").replace('lo', 'hi');
                     desc = "Continue playing to unlock this secret achievement.";
                 }

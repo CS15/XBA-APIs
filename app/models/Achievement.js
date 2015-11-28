@@ -8,7 +8,10 @@ module.exports = function() {
     self.imageUrl = null;
     self.permalink = null;
     self.setAchievementId = function(slug) {
-        if (!slug) return;
+        if (!slug) {
+            self.achievementId = '000000';
+            return;
+        }
         
         self.achievementId = slug.substr(0, slug.indexOf('-'));
     };
