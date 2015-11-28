@@ -45,7 +45,7 @@
             </thead>
             <tbody>
               <tr ng-repeat="game in vm.games">
-                  <td><img class="img-responsive" src="{{game.icoUrl}}" width="100px"/></td>
+                  <td><img class="img-responsive" src="{{game.icoUrl}}" width="64px"/></td>
                   <td>
                       <span class="text-bold"><a href="/game-info/{{game.permalink}}">{{game.title}}</a></span><br/>
                       <span ng-bind="game.numberOfAchievements + ' achievements'"></span><br/>
