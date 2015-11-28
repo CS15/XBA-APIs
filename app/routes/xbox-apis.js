@@ -153,4 +153,66 @@ module.exports = function (app, express) {
             return res.status(200).send(self.data);
         });
     });
+
+    api.get('/latest/achievements', function(req, res){
+
+        var self = this;
+
+        if (!req.query.page)
+            req.query.page = 1;
+
+        self.data = [];
+        self.url = baseUrl + '/archive/achievements/' + req.query.page + '/';
+
+        var counter = 1;
+
+        request(self.url, function(error, response, html){
+            if (error) return res.status(404).send(error);
+
+            var counter = 0;
+
+            var $ = cheerio.load(html);
+
+            var root = $('div.bl_la_main div.divtext table tr');
+
+            for (var i = 0; i < $(root).find('.newsTitle').length; i++){
+
+                var title = $(root).find('.newsTitle a').eq(i).text().replace('Game Added:', '').replace('DLC Added:', '').trim();
+                var imageUrl = $(root).find('td[width=70] img').eq(i).attr('src');
+                var link = $(root).find("td[width=442] a").eq(counter).attr('href');
+                var content = $(root).find("td[width=442]").eq(i);
+
+                if ($(content).find('p').length > 0) {
+                    content = $(content).find('p').text().trim().replace('\r\n\t', ' ') + '.';
+                }
+                else {
+                    content = $(content).text().trim().substr(0, $(content).text().indexOf('View')) + '.';
+                }
+
+                var contents = content.split('.');
+
+                var commentsPermalink = $(root).find('td[width=442] div[align=right] a').eq(i).attr('href');
+
+                var ach = {
+                    title: title,
+                    imageUrl: baseUrl + imageUrl,
+                    link: baseUrl + link,
+                    achievementsAdded: contents[0].substr(0, contents[0].indexOf(',')).trim(),
+                    gamerScoreAdded: contents[0].substr(contents[0].indexOf(',') + 1).trim(),
+                    submittedBy: contents[1].trim(),
+                    gamePermalink: link.replace('/game/', '').replace('/achievements/', ''),
+                    commentsPermalink: commentsPermalink
+                };
+
+                self.data.push(ach);
+
+                counter += 2;
+            }
+
+            if (self.data.length === 0)
+                return res.status(404).send({ status: 404, message: 'Not Found.'});
+
+            return res.status(200).send(self.data);
+        });
+    });
 };

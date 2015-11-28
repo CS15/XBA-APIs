@@ -7,7 +7,7 @@
 
                 var q = $q.defer();
 
-                $http.get('/api/latest/achievements')
+                $http.get('/api/xbox/latest/achievements')
                     .success(function (response) {
                         q.resolve(response);
                     })
