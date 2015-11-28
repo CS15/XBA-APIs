@@ -46,22 +46,32 @@
 
                 <div class="form-group">
                     <label>Giant Bomb Game Id</label>
-
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Giant Bomb Game Id" ng-model="vm.gameInfo.gbGameId">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="vm.getGiantBombData()" ng-disabled="!vm.gameInfo.gbGameId">Get Data</button>
+                            <button class="btn btn-default" type="button" ng-click="vm.getGiantBombData()" ng-disabled="!vm.gameInfo.gbGameId || vm.inParse">Get Data</button>
                           </span>
+                    </div>
+                    <br>
+                    <label>Game Banner Image Url</label>
+                    <div class="form-group">
+                        <input style="max-width: 240px;" type="text" class="form-control" placeholder="Banner Image URL"
+                               ng-model="vm.gameInfo.bannerImageUrl"/><br/>
+                        <img ng-show="vm.gameInfo.bannerImageUrl" class="img-responsive"
+                             ng-src="{{vm.gameInfo.bannerImageUrl}}"/>
+                    </div>
+
+                    <div ng-show="vm.doneGettingGbData || vm.inParse">
+                        <h3>Game Cover</h3>
+                        <img class="img-responsive"
+                             ng-src="{{vm.gameInfo.coverImageUrl}}"/>
+
+                        <h3>Game Description</h3>
+                        <span>{{ vm.gameInfo.description | htmlTotext}}</span>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Game Banner Image Url</label>
-                    <input style="max-width: 240px;" type="text" class="form-control" placeholder="Banner Image URL"
-                           ng-model="vm.gameInfo.bannerImageUrl"/><br/>
-                    <img ng-show="vm.gameInfo.bannerImageUrl" class="img-responsive"
-                         ng-src="{{vm.gameInfo.bannerImageUrl}}"/>
-                </div>
+
             </div>
         </div>
 

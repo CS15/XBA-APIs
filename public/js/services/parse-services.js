@@ -54,7 +54,8 @@
                     var parseGame = new ParseGame();
                     game.achievementCount = 0;
                     game.gamerScore = 0;
-                    game.show = false
+                    game.show = false;
+                    delete game.imageUrl;
     
                     parseGame.save(game).then(function(results) {
                         q.resolve(results.toJSON());

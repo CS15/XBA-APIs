@@ -19,7 +19,7 @@
                     }, function(error) {
                         console.log(error);
                     });
-            };
+            }
 
             function getGameInfoFromParse(parseGameId) {
                 ParseServices.getGameInformation(parseGameId)
@@ -27,14 +27,16 @@
                         if (response.length > 0) {
                             vm.inParse = true;
                             vm.parseObjectId = response[0].objectId;
-                            vm.gameInfo.bannerImageUrl = response[0].bannerImageUrl
+                            vm.gameInfo.bannerImageUrl = response[0].bannerImageUrl;
+                            vm.gameInfo.description = response[0].description;
+                            vm.gameInfo.coverImageUrl = response[0].coverImageUrl;
                         }
 
                         vm.gameInfoChecked = true;
                     }, function(error) {
                         console.log(error);
                     });
-            };
+            }
 
             function getGameAchievementsFromXA(permalink, callback) {
                 XaServices.getGameAchievements(gamePermalink)
@@ -45,7 +47,7 @@
                     }, function(error) {
                         console.log(error);
                     });
-            };
+            }
 
             function getGameAchievementsFromParse(parseGameId) {
                 ParseServices.getGameAchievements(parseGameId).then(function(response) {
@@ -66,7 +68,7 @@
                 }, function(error) {
                     console.log(error);
                 });
-            };
+            }
 
             function init() {
                 
@@ -78,7 +80,11 @@
                     });
                 });
                 
-            };
+            }
+
+            function parseGameDescription(text) {
+                return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+            }
 
             vm.addGameInfoToParse = function(game) {
                 ParseServices.addGameInfoToParse(game).then(function(response) {
@@ -97,6 +103,8 @@
                     ParseServices.addAchievementsToParse(vm.achievements).then(function(response) {
                         init();
                     }, function(error) {
+                        console.log(error);
+
                         alert('Error');
                     });
                 }
@@ -106,7 +114,10 @@
 
                 GiantBombServices.getGameData(vm.gameInfo.gbGameId)
                     .then(function(response) {
-                        console.log(response);
+                        vm.gameInfo.description = parseGameDescription(response.data.results.description).replace('Overview', '').trim();
+                        vm.gameInfo.coverImageUrl = response.data.results.image.small_url;
+
+                        vm.doneGettingGbData = true;
                     }, function(error) {
                         alert('Error');
                     });

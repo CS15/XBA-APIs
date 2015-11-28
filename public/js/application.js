@@ -5,8 +5,9 @@
 
     angular.module('services', []);
     angular.module('controllers', []);
+    angular.module('filters', []);
 
-    var modules = ['services', 'controllers', 'ngRoute', 'ui.bootstrap', 'angular-loading-bar', 'ngAnimate'];
+    var modules = ['services', 'controllers', 'filters', 'ngRoute', 'ui.bootstrap', 'angular-loading-bar', 'ngAnimate'];
 
     angular.module('app', modules)
         .config(['$routeProvider', '$locationProvider', 'cfpLoadingBarProvider',
