@@ -158,7 +158,7 @@ module.exports = function (app, express) {
 
         var self = this;
 
-        if (!req.query.page)
+        if (!req.query.page || req.query.page === 0)
             req.query.page = 1;
 
         self.data = [];

@@ -3,11 +3,11 @@
 
     angular.module('services').factory('XaServices', ['$http', '$q', function ($http, $q) {
         return {
-            getLatestAchievements: function () {
+            getLatestAchievements: function (page) {
 
                 var q = $q.defer();
 
-                $http.get('/api/xbox/latest/achievements')
+                $http.get('/api/xbox/latest/achievements?page=' + page)
                     .success(function (response) {
                         q.resolve(response);
                     })
