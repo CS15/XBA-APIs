@@ -5,7 +5,7 @@ module.exports = function() {
     self.title = null;
     self.gamerscore = null;
     self.description = null;
-    self.imageUrl = null;
+    self.artworkUrl = null;
     self.permalink = null;
     self.setAchievementId = function(slug) {
         if (!slug) {

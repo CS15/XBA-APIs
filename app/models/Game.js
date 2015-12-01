@@ -3,7 +3,7 @@ module.exports = function() {
     
     self.gameId = null;
     self.title = null;
-    self.imageUrl = null;
+    self.artworkUrl = null;
     self.developer = null;
     self.publisher = null;
     self.genre = null;
@@ -20,7 +20,7 @@ module.exports = function() {
         return {
             gameId: self.gameId,
             title: self.title,
-            imageUrl: self.imageUrl,
+            artworkUrl: self.artworkUrl,
             developer: self.developer,
             publisher: self.publisher,
             genre: self.genre,

@@ -56,7 +56,7 @@ module.exports = function (app, express) {
                 achievement.title = title;
                 achievement.gamerscore = gs;
                 achievement.description = desc;
-                achievement.imageUrl = baseUrl + imageUrl;
+                achievement.artworkUrl = baseUrl + imageUrl;
                 achievement.permalink = self.permalink;
                 achievement.setAchievementId(slug);
 
@@ -92,7 +92,7 @@ module.exports = function (app, express) {
             
             var game = new Game();
             game.title = $('.tt').first().text();
-            game.imageUrl = baseUrl + $(root).find('td img').eq(0).attr('src');
+            game.artworkUrl = baseUrl + $(root).find('td img').eq(0).attr('src');
             game.developer = $(root).find('td').eq(1).find('a[title]').eq(0).text();
             game.publisher = $(root).find('td').eq(1).find('a[title]').eq(1).text();
             game.genre = $(root).find('td').eq(1).find('div').eq(3).text().replace(/\s/g, '').split('/');
@@ -102,7 +102,7 @@ module.exports = function (app, express) {
                 { region: 'japan', date: $(root).find('td').eq(1).find('div').eq(4).contents().eq(9).text().trim() || null }
             ];
             game.permalink = self.permalink;
-            game.setGameId(baseUrl, game.imageUrl);
+            game.setGameId(baseUrl, game.artworkUrl);
             
             return res.status(200).send(game);
 
@@ -140,12 +140,12 @@ module.exports = function (app, express) {
 
                 var game = new GameBrowse();
                 game.title = $(rows).eq(i).find("strong").text().trim();
-                game.imageUrl = baseUrl + $(rows).eq(i).find("td a img").attr("src").replace('ico', 'cover').trim();
+                game.artworkUrl = baseUrl + $(rows).eq(i).find("td a img").attr("src").replace('ico', 'cover').trim();
                 game.icoUrl = baseUrl + $(rows).eq(i).find("td a img").attr("src").trim();
                 game.numberOfAchievements = $(rows).eq(i).find("td[align]").eq(0).text().trim();
                 game.gamerScore = $(rows).eq(i).find("td[align]").eq(1).text().trim();
                 game.permalink = $(rows).eq(i).find("a").eq(0).attr('href').trim().replace('/game/', '').replace('/achievements/', '');
-                game.setGameId(baseUrl, game.imageUrl);
+                game.setGameId(baseUrl, game.artworkUrl);
 
                 self.data.push(game);
             }
