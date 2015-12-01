@@ -18,7 +18,7 @@
             };
 
             vm.isGameAchievementsUpToDate = function () {
-                return vm.gameXA.achievements.length === vm.gameParse.achievements.length;
+                return (vm.gameXA.achievements.length === vm.gameParse.achievements.length);
             };
 
             vm.init = function () {
