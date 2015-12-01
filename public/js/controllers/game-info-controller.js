@@ -3,128 +3,100 @@
 
     angular.module('controllers').controller('GameInfoController', ['$location', '$routeParams', 'XaServices', 'ParseServices', 'GiantBombServices',
         function($location, $routeParams, XaServices, ParseServices, GiantBombServices) {
+            
+            var permalink = $routeParams.permalink;
 
             if (!Parse.User.current()) $location.path('/');
 
-            var gamePermalink = $routeParams.permalink;
-
             var vm = this;
-
-            function getGameInfoFromXA(permalink, callback) {
-                XaServices.getGameInfo(permalink)
-                    .then(function(response) {
-                        vm.gameInfo = response;
-                        
-                        callback(vm.gameInfo.gameId);
-                    }, function(error) {
-                        console.log(error);
-                    });
-            }
-
-            function getGameInfoFromParse(parseGameId) {
-                ParseServices.getGameInformation(parseGameId)
-                    .then(function(response) {
-                        if (response.length > 0) {
-                            vm.inParse = true;
-                            vm.parseObjectId = response[0].objectId;
-                            vm.gameInfo.bannerImageUrl = response[0].bannerImageUrl;
-                            vm.gameInfo.description = response[0].description;
-                            vm.gameInfo.coverImageUrl = response[0].coverImageUrl;
-                        }
-
-                        vm.gameInfoChecked = true;
-                    }, function(error) {
-                        console.log(error);
-                    });
-            }
-
-            function getGameAchievementsFromXA(permalink, callback) {
-                XaServices.getGameAchievements(gamePermalink)
-                    .then(function(response) {
-                        vm.achievements = response;
-                        
-                        callback();
-                    }, function(error) {
-                        console.log(error);
-                    });
-            }
-
-            function getGameAchievementsFromParse(parseGameId) {
-                ParseServices.getGameAchievements(parseGameId).then(function(response) {
-                    vm.parseAchievements = response;
-
-                    if (response.length > 0) {
-                        angular.forEach(vm.achievements, function(value, key) {
-
-                            for (var i in vm.parseAchievements) {
-                                if (value.achievementId === response[i].achievementId) {
-                                    value.inParse = true;
-                                }
-                            }
-                        });
-                    }
-
-                    vm.gameAchievementsChecked = true;
-                }, function(error) {
-                    console.log(error);
-                });
-            }
-
-            function init() {
-                
-                getGameInfoFromXA(gamePermalink, function(gameId){
-                    getGameInfoFromParse(gameId);
-                    
-                    getGameAchievementsFromXA(gamePermalink, function(){
-                        getGameAchievementsFromParse(gameId);
-                    });
-                });
-                
-            }
-
-            function parseGameDescription(text) {
-                return text ? String(text).replace(/<[^>]+>/gm, '') : '';
-            }
-
-            vm.addGameInfoToParse = function(game) {
-                ParseServices.addGameInfoToParse(game).then(function(response) {
-                    init();
-                });
+            vm.gameXA = {};
+            vm.gameParse = {};
+            vm.show = false;
+            
+            vm.isGameInParse = function(){
+                return vm.gameXA.gameId === vm.gameParse.gameId;
             };
-
-            vm.uploadAllAchievements = function() {
-                if (vm.achievements.length > 0) {
-
-                    angular.forEach(vm.achievements, function(value, key) {
-                        value.game = vm.parseObjectId;
-                        value.gameId = vm.gameInfo.gameId;
-                    });
-
-                    ParseServices.addAchievementsToParse(vm.achievements).then(function(response) {
-                        init();
-                    }, function(error) {
-                        console.log(error);
-
-                        alert('Error');
-                    });
-                }
+            
+            vm.isGameAchievementsUpToDate = function(){
+                return vm.gameXA.achievements.length === vm.gameParse.achievements.length;
             };
-
-            vm.getGiantBombData = function() {
-
-                GiantBombServices.getGameData(vm.gameInfo.gbGameId)
-                    .then(function(response) {
-                        //vm.gameInfo.description = parseGameDescription(response.data.results.description).replace('Overview', '').trim();
-                        vm.gameInfo.description = response.data.results.deck.trim();
-                        vm.gameInfo.coverImageUrl = response.data.results.image.small_url;
-
-                        vm.doneGettingGbData = true;
-                    }, function(error) {
-                        alert('Error');
-                    });
+            
+            vm.init = function(){
+                  XaServices.getGameInfo(permalink).then(function(data){
+                   vm.gameXA = data;
+                   
+                   XaServices.getGameAchievements(permalink).then(function(data){
+                       vm.gameXA.achievements = data;
+                       
+                       ParseServices.getGameInformation(vm.gameXA.gameId).then(function(data){
+                           
+                           if (data) {
+                                vm.gameParse = data;
+    
+                                ParseServices.getGameAchievements(vm.gameXA.gameId).then(function(data){
+                                  vm.gameParse.achievements = data;
+                                       
+                                    angular.forEach(vm.gameXA.achievements, function(value, key) {
+                                
+                                        for (var i in vm.gameParse.achievements) {
+                                            if (value.achievementId === vm.gameParse.achievements[i].achievementId) {
+                                                value.inParse = true;
+                                            }
+                                        }
+                                    });
+                                   
+                                  vm.show = true;
+                                });
+                           } else {
+                               vm.show = true;
+                           }
+                       });
+                   });
+                });  
             };
+            
+            vm.init();
 
-            init();
+
+
+            // vm.addGameInfoToParse = function(game) {
+            //     ParseServices.addGameInfoToParse(game).then(function(response) {
+            //         init();
+            //     });
+            // };
+
+            // vm.uploadAllAchievements = function() {
+            //     if (vm.achievements.length > 0) {
+
+            //         angular.forEach(vm.achievements, function(value, key) {
+            //             value.game = vm.parseObjectId;
+            //             value.gameId = vm.gameInfo.gameId;
+            //         });
+
+            //         ParseServices.addAchievementsToParse(vm.achievements).then(function(response) {
+            //             init();
+            //         }, function(error) {
+            //             console.log(error);
+
+            //             alert('Error');
+            //         });
+            //     }
+            // };
+
+            // vm.getGiantBombData = function() {
+
+            //     GiantBombServices.getGameData(vm.gameInfo.gbGameId)
+            //         .then(function(response) {
+            //             vm.gameInfo.description = response.data.results.deck.trim();
+            //             vm.gameInfo.coverImageUrl = response.data.results.image.small_url;
+
+            //             vm.doneGettingGbData = true;
+            //         }, function(error) {
+            //             alert('Error');
+            //         });
+            // };
+
+            // init();
         }
     ]);
 })();

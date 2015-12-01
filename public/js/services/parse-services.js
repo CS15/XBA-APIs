@@ -21,7 +21,7 @@
                 var query = new Parse.Query(Parse.Object.extend("Games"));
                 query.equalTo("gameId", gameId);
                 query.find().then(function(results){
-                    q.resolve(parseToJSON(results));
+                    q.resolve(parseToJSON(results)[0]);
                 }, function (error){
                     q.reject(error)
                 });

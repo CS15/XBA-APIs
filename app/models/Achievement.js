@@ -3,7 +3,7 @@ module.exports = function() {
     
     self.achievementId = null;
     self.title = null;
-    self.gamerScore = null;
+    self.gamerscore = null;
     self.description = null;
     self.imageUrl = null;
     self.permalink = null;

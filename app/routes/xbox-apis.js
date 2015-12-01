@@ -54,7 +54,7 @@ module.exports = function (app, express) {
 
                 var achievement = new Achievement();
                 achievement.title = title;
-                achievement.gamerScore = gs;
+                achievement.gamerscore = gs;
                 achievement.description = desc;
                 achievement.imageUrl = baseUrl + imageUrl;
                 achievement.permalink = self.permalink;

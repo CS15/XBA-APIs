@@ -17,11 +17,11 @@
 
                 return q.promise;
             },
-            getGameInfo: function (game) {
+            getGameInfo: function (permalink) {
 
                 var q = $q.defer();
 
-                $http.get('/api/xbox/game/info?permalink=' + game)
+                $http.get('/api/xbox/game/info?permalink=' + permalink)
                     .success(function (response) {
                         q.resolve(response);
                     })
@@ -31,11 +31,11 @@
 
                 return q.promise;
             },
-            getGameAchievements: function (game) {
+            getGameAchievements: function (permalink) {
 
                 var q = $q.defer();
 
-                $http.get('/api/xbox/game/achievements?permalink=' + game)
+                $http.get('/api/xbox/game/achievements?permalink=' + permalink)
                     .success(function (response) {
                         q.resolve(response);
                     })

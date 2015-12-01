@@ -1,123 +1,247 @@
 <div ng-include="'/views/navbar.html'"></div>
 
-<div class="container container-bg" ng-controller="GameInfoController as vm">
-    <div ng-if="vm.gameInfoChecked && vm.gameAchievementsChecked">
-
-        <div class="row">
-            <div class="col-md-6">
-                <h2 class="page-header" ng-bind="vm.gameInfo.title"></h2>
-
-                <div class="media">
-                    <div class="media-left">
-                        <a target="_blank" href="{{vm.gameInfo.imageUrl}}">
-                            <img class="media-object" src="{{vm.gameInfo.imageUrl}}" width="120px;"/>
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading" ng-bind="vm.gameInfo.title"></h4>
-                        <span ng-bind="'Game Id: ' + vm.gameInfo.gameId"></span><br/>
-                        <span ng-bind="'Developer: ' + vm.gameInfo.developer"></span><br/>
-                        <span ng-bind="'Publisher: ' + vm.gameInfo.publisher"></span><br/>
-                        <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>
-                        <span ng-bind="vm.achievements.length + ' achievements'"></span><br/>
-                        <a target="_blank"
-                           href="http://www.xboxachievements.com/game/{{vm.gameInfo.permalink}}/achievements/">XBA
-                            Link</a><br/>
-                        <span ng-bind="vm.inParse ? 'Linked to Parse: ' : 'Not Linked to Parse: '"></span>
-                        <span class="text-primary"
-                              ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span><br/>
-                    </div>
+<div ng-controller="GameInfoController as vm">
+    
+    <div class="container container-bg" ng-if="vm.show">
+        
+        <section>
+            <h2 class="page-header"><strong>{{vm.gameXA.title}}</strong></h2>
+                    
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="media">
+                <div class="media-left">
+                    <a target="_blank" href="{{vm.gameXA.imageUrl}}">
+                        <img class="media-object" src="{{vm.gameXA.imageUrl}}" width="150px;"/>
+                    </a>
                 </div>
-
-                <div class="btn-group" role="group" style="margin-top: 20px;">
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="vm.inParse || !vm.gameInfo.bannerImageUrl"
-                            ng-click="vm.addGameInfoToParse(vm.gameInfo)">Add Game Info to Parse
-                    </button>
-                    <button type="button" class="btn btn-default"
-                            ng-disabled="vm.achievements.length == vm.parseAchievements.length && vm.inParse || !vm.inParse"
-                            ng-click="vm.uploadAllAchievements()">Add Achievements to Parse
-                    </button>
+                <div class="media-body">
+                    <h4 class="media-heading" ng-bind="vm.gameXA.title"></h4>
+                    <span><strong>Game Id: </strong>{{vm.gameXA.title}}</span><br/>
+                    <span ng-if="vm.gameParse.objectId"><strong>Parse Id: </strong>{{vm.gameParse.objectId}}<br/></span>
+                    <span ng-if="vm.gameParse.gbGameId"><strong>Giant Bomb Id: </strong>{{vm.gameParse.gbGameId}}<br/></span>
+                    <span><strong>Developer: </strong>{{vm.gameXA.developer}}</span><br/>
+                    <span><strong>Publisher: </strong>{{vm.gameXA.publisher}}</span><br/>
+                    <span><strong>Genre: </strong>{{vm.gameXA.genre}}</span><br/>
+                    <span><strong>Achievements Total: </strong>{{vm.gameXA.achievements.length}}</span><br/>
+                    <span><strong>Game in Parse: </strong>{{vm.isGameInParse() ? 'Linked to Parse: ' : 'Not Linked to Parse: '}}</span>
+                    <span class="text-primary" ng-class="vm.isGameInParse() ? 'fa fa-link' : 'fa fa-chain-broken'"></span><br/>
+                    <a target="_blank" href="http://www.xboxachievements.com/game/{{vm.gameXA.permalink}}/achievements/">XBA Link</a> 
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <h2 class="page-header">Extras</h2>
-
-                <div class="form-group">
-                    <label>Giant Bomb Game Id</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Giant Bomb Game Id" ng-model="vm.gameInfo.gbGameId">
-                          <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="vm.getGiantBombData()" ng-disabled="!vm.gameInfo.gbGameId || vm.inParse">Get Data</button>
-                          </span>
-                    </div>
-                    <br>
-                    <label>Game Banner Image Url</label>
-                    <div class="form-group">
-                        <input style="max-width: 240px;" type="text" class="form-control" placeholder="Banner Image URL"
-                               ng-model="vm.gameInfo.bannerImageUrl"/><br/>
-                        <img ng-show="vm.gameInfo.bannerImageUrl" class="img-responsive"
-                             ng-src="{{vm.gameInfo.bannerImageUrl}}"/>
-                    </div>
-
-                    <div ng-show="vm.doneGettingGbData || vm.inParse">
-                        <h3>Game Cover</h3>
-                        <img class="img-responsive"
-                             ng-src="{{vm.gameInfo.coverImageUrl}}"/>
-
-                        <h3>Game Description</h3>
-                        <span>{{ vm.gameInfo.description }}</span>
-                    </div>
                 </div>
-
-
-            </div>
-        </div>
-
-        <h2 class="page-header">Achievements</h2>
-
-        <div class="table-responsive hidden-sm hidden-xs">
-            <table class="table table-striped table-condensed">
-                <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Description</th>
-                    <th>Achievement Id</th>
-                    <th>In Parse</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="ach in vm.achievements">
-                    <td><img width="150px;" class="" src="{{ach.imageUrl}}"/></td>
-                    <td>
-                        <span class="text-bold text-primary">{{ach.title}}</span><br/>
-                        <span>{{ach.description}}</span>
-                    </td>
-                    <td>
-                        {{ach.achievementId}}
-                    </td>
-                    <td>
-                        <span class="text-primary" ng-class="ach.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="row visible-sm visible-xs">
-            <div class="col-md-4 col-sm-6" ng-repeat="ach in vm.achievements">
-                <div class="achievement-wrapper">
-                    <img class="img-responsive" src="{{ach.imageUrl}}" alt="Cover">
-
-                    <div class="gradient">
-                        <h4 class="media-heading">{{ach.title}} - <span
-                                ng-class="ach.inParse ? 'fa fa-link text-primary' : 'fa fa-chain-broken'"></span></h4>
-
-                        <p ng-bind="ach.description"></p>
-                    </div>
+                <div class="col-sm-6">
+                    <div class="media">
+                <div class="media-left">
+                    <a target="_blank" href="{{vm.gameParse.coverImageUrl}}">
+                        <img class="media-object" src="{{vm.gameParse.coverImageUrl}}" width="150px;"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" ng-bind="vm.gameParse.title"></h4>
+                    <span><strong>Game Id: </strong>{{vm.gameParse.title}}</span><br/>
+                    <span ng-if="vm.gameParse.objectId"><strong>Parse Id: </strong>{{vm.gameParse.objectId}}<br/></span>
+                    <span ng-if="vm.gameParse.gbGameId"><strong>Giant Bomb Id: </strong>{{vm.gameParse.gbGameId}}<br/></span>
+                    <span><strong>Developer: </strong>{{vm.gameParse.developer}}</span><br/>
+                    <span><strong>Publisher: </strong>{{vm.gameParse.publisher}}</span><br/>
+                    <span><strong>Genre: </strong>{{vm.gameParse.genre}}</span><br/>
+                    <span><strong>Achievements Total: </strong>{{vm.gameParse.achievementCount}}</span><br/>
                 </div>
             </div>
-        </div>
+                </div>
+            </div>
+            
+            
+            
+            <div ng-if="!vm.isGameInParse()">
+                <label>Giant Bomb Game Id</label>
+                <div class="input-group">
+                    <input type="number" class="form-control" placeholder="Giant Bomb Game Id" ng-model="vm.gameParse.gbGameId">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="vm.getGiantBombData()" ng-disabled="vm.isGameInParse() || !vm.gameParse.gbGameId">Get Data</button>
+                      </span>
+                </div>
+                <br>
+            </div>
+            
+            <div class="btn-group" role="group" style="margin-top: 20px;">
+                <button type="button" class="btn btn-default"
+                        ng-if="!vm.isGameInParse()"
+                        ng-click="vm.addGameInfoToParse(vm.gameInfo)">Add Game Info to Parse
+                </button>
+                <button type="button" class="btn btn-default"
+                        ng-disabled="!vm.isGameInParse() || vm.isGameAchievementsUpToDate()"
+                        ng-click="vm.uploadAllAchievements()">Add Achievements to Parse
+                </button>
+            </div>
+            
+        </section>
+        
+        <section>
+            <h2 class="page-header">Achievements</h2>
+    
+            <div class="table-responsive hidden-sm hidden-xs">
+                <table class="table table-striped table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Achievement Id</th>
+                        <th>In Parse</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="ach in vm.gameXA.achievements">
+                        <td><img width="150px;" class="" src="{{ach.imageUrl}}"/></td>
+                        <td>
+                            <span class="text-bold text-primary">{{ach.title}}</span><br/>
+                            <span>{{ach.description}}</span>
+                        </td>
+                        <td>
+                            {{ach.achievementId}}
+                        </td>
+                        <td>
+                            <span class="text-primary" ng-class="ach.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="row visible-sm visible-xs">
+                <div class="col-md-4 col-sm-6" ng-repeat="ach in vm.gameXA.achievements">
+                    <div class="achievement-wrapper">
+                        <img class="img-responsive" src="{{ach.imageUrl}}" alt="Cover">
+    
+                        <div class="gradient">
+                            <h4 class="media-heading">{{ach.title}} - <span
+                                    ng-class="ach.inParse ? 'fa fa-link text-primary' : 'fa fa-chain-broken'"></span></h4>
+    
+                            <p ng-bind="ach.description"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
     </div>
+    <!--<div class="container container-bg" ng-if="vm.gameInfoChecked && vm.gameAchievementsChecked">-->
+
+    <!--    <div class="row">-->
+    <!--        <div class="col-md-6">-->
+    <!--            <h2 class="page-header" ng-bind="vm.gameInfo.title"></h2>-->
+
+    <!--            <div class="media">-->
+    <!--                <div class="media-left">-->
+    <!--                    <a target="_blank" href="{{vm.gameInfo.imageUrl}}">-->
+    <!--                        <img class="media-object" src="{{vm.gameInfo.imageUrl}}" width="120px;"/>-->
+    <!--                    </a>-->
+    <!--                </div>-->
+    <!--                <div class="media-body">-->
+    <!--                    <h4 class="media-heading" ng-bind="vm.gameInfo.title"></h4>-->
+    <!--                    <span ng-bind="'Game Id: ' + vm.gameInfo.gameId"></span><br/>-->
+    <!--                    <span ng-bind="'Developer: ' + vm.gameInfo.developer"></span><br/>-->
+    <!--                    <span ng-bind="'Publisher: ' + vm.gameInfo.publisher"></span><br/>-->
+    <!--                    <span ng-bind="'Genre: ' + vm.gameInfo.genre"></span><br/>-->
+    <!--                    <span ng-bind="vm.achievements.length + ' achievements'"></span><br/>-->
+    <!--                    <a target="_blank"-->
+    <!--                       href="http://www.xboxachievements.com/game/{{vm.gameInfo.permalink}}/achievements/">XBA-->
+    <!--                        Link</a><br/>-->
+    <!--                    <span ng-bind="vm.inParse ? 'Linked to Parse: ' : 'Not Linked to Parse: '"></span>-->
+    <!--                    <span class="text-primary"-->
+    <!--                          ng-class="vm.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span><br/>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--            <div class="btn-group" role="group" style="margin-top: 20px;">-->
+    <!--                <button type="button" class="btn btn-default"-->
+    <!--                        ng-disabled="vm.inParse || !vm.gameInfo.bannerImageUrl"-->
+    <!--                        ng-click="vm.addGameInfoToParse(vm.gameInfo)">Add Game Info to Parse-->
+    <!--                </button>-->
+    <!--                <button type="button" class="btn btn-default"-->
+    <!--                        ng-disabled="vm.achievements.length == vm.parseAchievements.length && vm.inParse || !vm.inParse"-->
+    <!--                        ng-click="vm.uploadAllAchievements()">Add Achievements to Parse-->
+    <!--                </button>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <div class="col-md-6">-->
+    <!--            <h2 class="page-header">Extras</h2>-->
+
+    <!--            <div class="form-group">-->
+    <!--                <label>Giant Bomb Game Id</label>-->
+    <!--                <div class="input-group">-->
+    <!--                    <input type="text" class="form-control" placeholder="Giant Bomb Game Id" ng-model="vm.gameInfo.gbGameId">-->
+    <!--                      <span class="input-group-btn">-->
+    <!--                        <button class="btn btn-default" type="button" ng-click="vm.getGiantBombData()" ng-disabled="!vm.gameInfo.gbGameId || vm.inParse">Get Data</button>-->
+    <!--                      </span>-->
+    <!--                </div>-->
+    <!--                <br>-->
+    <!--                <label>Game Banner Image Url</label>-->
+    <!--                <div class="form-group">-->
+    <!--                    <input style="max-width: 240px;" type="text" class="form-control" placeholder="Banner Image URL"-->
+    <!--                           ng-model="vm.gameInfo.bannerImageUrl"/><br/>-->
+    <!--                    <img ng-show="vm.gameInfo.bannerImageUrl" class="img-responsive"-->
+    <!--                         ng-src="{{vm.gameInfo.bannerImageUrl}}"/>-->
+    <!--                </div>-->
+
+    <!--                <div ng-show="vm.doneGettingGbData || vm.inParse">-->
+    <!--                    <h3>Game Cover</h3>-->
+    <!--                    <img class="img-responsive"-->
+    <!--                         ng-src="{{vm.gameInfo.coverImageUrl}}"/>-->
+
+    <!--                    <h3>Game Description</h3>-->
+    <!--                    <span>{{ vm.gameInfo.description }}</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <!--    <h2 class="page-header">Achievements</h2>-->
+
+    <!--    <div class="table-responsive hidden-sm hidden-xs">-->
+    <!--        <table class="table table-striped table-condensed">-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--                <th>Image</th>-->
+    <!--                <th>Description</th>-->
+    <!--                <th>Achievement Id</th>-->
+    <!--                <th>In Parse</th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <tr ng-repeat="ach in vm.achievements">-->
+    <!--                <td><img width="150px;" class="" src="{{ach.imageUrl}}"/></td>-->
+    <!--                <td>-->
+    <!--                    <span class="text-bold text-primary">{{ach.title}}</span><br/>-->
+    <!--                    <span>{{ach.description}}</span>-->
+    <!--                </td>-->
+    <!--                <td>-->
+    <!--                    {{ach.achievementId}}-->
+    <!--                </td>-->
+    <!--                <td>-->
+    <!--                    <span class="text-primary" ng-class="ach.inParse ? 'fa fa-link' : 'fa fa-chain-broken'"></span>-->
+    <!--                </td>-->
+    <!--            </tr>-->
+    <!--            </tbody>-->
+    <!--        </table>-->
+    <!--    </div>-->
+
+    <!--    <div class="row visible-sm visible-xs">-->
+    <!--        <div class="col-md-4 col-sm-6" ng-repeat="ach in vm.achievements">-->
+    <!--            <div class="achievement-wrapper">-->
+    <!--                <img class="img-responsive" src="{{ach.imageUrl}}" alt="Cover">-->
+
+    <!--                <div class="gradient">-->
+    <!--                    <h4 class="media-heading">{{ach.title}} - <span-->
+    <!--                            ng-class="ach.inParse ? 'fa fa-link text-primary' : 'fa fa-chain-broken'"></span></h4>-->
+
+    <!--                    <p ng-bind="ach.description"></p>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</div>-->
 </div>
