@@ -33,6 +33,7 @@
                  
                 var query = new Parse.Query(Parse.Object.extend("Achievement"));
                 query.equalTo("gameId", gameId);
+                query.limit(1000);
                 query.find().then(function(results){
                     q.resolve(parseToJSON(results));
                 }, function (error){
