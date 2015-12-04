@@ -85,7 +85,7 @@ module.exports = function (app, express) {
         
         request(self.url, function(error, response, html) {
             if (error) return res.status(404).send(error);
-
+            
             var $ = cheerio.load(html);
             
             var root = $('.blr_main .divtext .men_h_content table tr').eq(0);
