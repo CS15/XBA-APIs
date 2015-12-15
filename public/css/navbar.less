@@ -1,33 +1,49 @@
 @import "variables";
 
-.navi {
-  background-color: @navbar-bg;
-  color: white;
-  width: 100%;
-  height: @navbar-height;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  font-weight: 300;
-
-  ul {
-    padding: 0;
-    text-align: center;
-
-    li {
-      display: inline-block;
-      line-height: @navbar-height;
-      padding: 0 20px;
+.navigation-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid @ACCENT_COLOR;
+  background-color: @PRIMARY_COLOR;
+  color: @font-color-light;
+  min-height: @height-navigation-bar;
+  min-width: 100%;
+  overflow: hidden;
+  z-index: 200;
+  
+  .navigation-brand {
+    font-weight: 100;
+    padding: 0 20px;
+    display: inline-block;
+    
+    a {
+      color: @font-color-light;
+      text-decoration: none;
       
-      a {
-        color: white;
-        font-size: 1.4em;
-
-        &:hover {
-          color: #cccccc;
-          text-decoration: none;
-        }
+      &:hover {
+        color: @ACCENT_COLOR;
       }
+      
+      .navigation-brand-title {
+        position: relative;
+        font-size: 30px;
+        font-weight: 100;
+        line-height: @height-navigation-bar;
+      }
+    }
+  }
+  
+  .navigation-menu-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    font-size: 25px;
+    transform: translate3d(0, -50%, 0);
+    
+    &:hover {
+      color: @ACCENT_COLOR;
+      cursor: pointer;
     }
   }
 }
