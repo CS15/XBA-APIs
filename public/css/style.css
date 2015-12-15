@@ -177,11 +177,6 @@ a:hover {
   border-radius: 4px;
   margin-bottom: 10px;
 }
-#home-wrapper .login-wrapper form .email-input:hover input,
-#home-wrapper .login-wrapper form .email-input:focus input,
-#home-wrapper .login-wrapper form .email-input:active input {
-  width: 235px;
-}
 #home-wrapper .login-wrapper form .email-input input {
   background-color: rgba(0, 0, 0, 0.2);
   border: none;
@@ -192,16 +187,7 @@ a:hover {
   border-right: 1px solid #f9d406;
   box-shadow: none;
   outline: none;
-  width: 0;
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  -ms-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  transition: all 0.2s;
-}
-#home-wrapper .login-wrapper form .email-input input:focus,
-#home-wrapper .login-wrapper form .email-input input:active {
-  width: 235px;
+  width: 80%;
 }
 #home-wrapper .login-wrapper form .email-input i {
   color: #f9d406;
