@@ -85,6 +85,20 @@ a:hover {
   color: #f9d406;
   text-decoration: none;
 }
+a.accent-color {
+  color: #f9d406;
+}
+a.accent-color:hover {
+  color: #f2f2f2;
+  text-decoration: none;
+}
+a.primary-color {
+  color: #097c9c;
+}
+a.primary-color:hover {
+  color: #f9d406;
+  text-decoration: none;
+}
 .achievement-wrapper {
   position: relative;
   margin-bottom: 20px;

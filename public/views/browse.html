@@ -4,32 +4,32 @@
     <h2 class="page-header">Browse</h2>
 
     <ul class="browse-alphabetic">
-        <li><a href="" target="_self" ng-click="vm.getGames('0-9')">0-9</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('a')">A</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('b')">B</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('c')">C</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('d')">D</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('e')">E</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('f')">F</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('g')">G</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('h')">H</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('j')">J</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('i')">I</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('k')">K</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('l')">L</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('m')">M</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('n')">N</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('o')">O</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('p')">P</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('r')">R</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('s')">S</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('t')">T</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('u')">U</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('v')">V</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('w')">W</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('x')">X</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('y')">Y</a></li>
-        <li><a href="" target="_self" ng-click="vm.getGames('z')">Z</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('0-9')">0-9</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('a')">A</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('b')">B</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('c')">C</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('d')">D</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('e')">E</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('f')">F</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('g')">G</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('h')">H</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('j')">J</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('i')">I</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('k')">K</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('l')">L</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('m')">M</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('n')">N</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('o')">O</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('p')">P</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('r')">R</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('s')">S</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('t')">T</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('u')">U</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('v')">V</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('w')">W</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('x')">X</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('y')">Y</a></li>
+        <li><a class="primary-color" href="" target="_self" ng-click="vm.getGames('z')">Z</a></li>
     </ul>
 
     <h2 class="page-header">Games</h2>
@@ -47,7 +47,7 @@
               <tr ng-repeat="game in vm.games">
                   <td><img class="img-responsive" src="{{game.icoUrl}}" width="64px"/></td>
                   <td>
-                      <span class="text-bold"><a href="/game-info/{{game.permalink}}">{{game.title}}</a></span><br/>
+                      <span class="text-bold"><a class="primary-color" href="/game-info/{{game.permalink}}">{{game.title}}</a></span><br/>
                       <span ng-bind="game.numberOfAchievements + ' achievements'"></span><br/>
                       <span ng-bind="game.gamerScore + ' GS'"></span>
                   </td>
