@@ -51,11 +51,11 @@
   width: 50%;
   background-color: #097c9c;
   z-index: 199;
-  -webkit-transition: all .4s ease;
-  -moz-transition: all .4s ease;
-  -ms-transition: all .4s ease;
-  -o-transition: all .4s ease;
-  transition: all .4s ease;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 .side-bar ul {
   list-style: none;
