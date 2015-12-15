@@ -11,7 +11,7 @@
 
             Parse.User.logIn(user.email, user.password)
                 .then(function() {
-                        $location.path('/dashboard');
+                        window.location = "/dashboard";
                     },
                     function(user, error) {
                         console.log(error);
