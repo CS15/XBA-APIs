@@ -3,8 +3,8 @@
         <div class="login-wrapper animated fadeIn">
             <span class="text-center text-thin text-size-huge">releet</span>
             <form name="form" class="form-group" ng-submit="vm.submit(vm.user)">
-                <input class="form-control" type="email" name="email" placeholder="email" ng-model="vm.user.email" required/>
-                <input class="form-control" type="password" name="password" placeholder="password" ng-model="vm.user.password" ng-minlength="6" required/>
+                <input type="email" name="email" placeholder="email" ng-model="vm.user.email" required/>
+                <input type="password" name="password" placeholder="password" ng-model="vm.user.password" ng-minlength="6" required/>
                 <input class="btn btn-relos-trans-accent btn-block" type="submit" value="Submit" ng-disabled="form.$invalid"/>
             </form>
         </div>
