@@ -143,6 +143,12 @@ a:hover {
   position: relative;
   background-color: #097c9c;
   min-height: 100vh;
+  background: #49c0f0;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, #49c0f0 0%, #097c9c 100%);
+  background: -webkit-linear-gradient(-45deg, #49c0f0 0%, #097c9c 100%);
+  background: linear-gradient(135deg, #49c0f0 0%, #097c9c 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#49c0f0', endColorstr='#097c9c', GradientType=1);
 }
 #home-wrapper i:first-child {
   color: #f9d406;
