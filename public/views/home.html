@@ -1,12 +1,12 @@
-<div class="container container-bg" ng-controller="HomeController as vm">
-    <h1 class="text-center text-primary">XBA API's</h1>
-
-    <div class="login-wrapper">
-        <p class="page-title text-primary text-size-title margin-bottom-10">Login<p>
-        <form name="form" class="form-group" ng-submit="vm.submit(vm.user)">
-            <input class="form-control" type="email" name="email" placeholder="email" ng-model="vm.user.email" required/>
-            <input class="form-control" type="password" name="password" placeholder="password" ng-model="vm.user.password" ng-minlength="6" required/>
-            <input class="btn btn-default" type="submit" value="Submit" ng-disabled="form.$invalid" />
-        </form>
+<div ng-controller="HomeController as vm">
+    <div id="home-wrapper">
+        <div class="login-wrapper animated fadeIn">
+            <span class="text-center text-thin text-size-huge">releet</span>
+            <form name="form" class="form-group" ng-submit="vm.submit(vm.user)">
+                <input class="form-control" type="email" name="email" placeholder="email" ng-model="vm.user.email" required/>
+                <input class="form-control" type="password" name="password" placeholder="password" ng-model="vm.user.password" ng-minlength="6" required/>
+                <input class="btn btn-relos-trans-accent btn-block" type="submit" value="Submit" ng-disabled="form.$invalid"/>
+            </form>
+        </div>
     </div>
 </div>

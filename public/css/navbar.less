@@ -1,13 +1,13 @@
-@import "variables";
+@import "variables.less";
 
 .navigation-bar {
   position: fixed;
   top: 0;
   left: 0;
-  border-bottom: 1px solid @ACCENT_COLOR;
-  background-color: @PRIMARY_COLOR;
+  border-bottom: 1px solid @accent-color;
+  background-color: @primary-color;
   color: @font-color-light;
-  min-height: @height-navigation-bar;
+  height: @height-navigation-bar;
   min-width: 100%;
   overflow: hidden;
   z-index: 200;
@@ -22,28 +22,73 @@
       text-decoration: none;
       
       &:hover {
-        color: @ACCENT_COLOR;
+        color: @accent-color;
       }
       
       .navigation-brand-title {
         position: relative;
-        font-size: 30px;
+        font-size: @font-size-x-large;
         font-weight: 100;
         line-height: @height-navigation-bar;
       }
     }
   }
-  
-  .navigation-menu-icon {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    font-size: 25px;
-    transform: translate3d(0, -50%, 0);
-    
-    &:hover {
-      color: @ACCENT_COLOR;
-      cursor: pointer;
+
+  .navigation-menu {
+    display: inline-block;
+    float: right;
+
+    .navigation-menu-icon {
+      line-height: @height-navigation-bar;
+      font-size: 26px;
+      transform: translate3d(0, -50%, 0);
+
+      &:hover {
+        color: @accent-color;
+        cursor: pointer;
+      }
     }
   }
+}
+
+.side-bar {
+  padding-top: @height-navigation-bar;
+  position: fixed;
+  top: 0;
+  right: -50%;
+  bottom: 0;
+  min-height: 100%;
+  width: 50%;
+  background-color: @primary-color;
+  z-index: 199;
+  -webkit-transition: all .4s ease;
+  -moz-transition: all .4s ease;
+  -ms-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 30px;
+      border-bottom: 1px solid @accent-color;
+
+      a {
+        font-size: @font-size-semi-large;
+      }
+    }
+  }
+}
+
+.side-bar-toggle-show {
+  -webkit-transform: translate3d(-100%, 0, 0);
+  -moz-transform: translate3d(-100%, 0, 0);
+  -ms-transform: translate3d(-100%, 0, 0);
+  -o-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
 }

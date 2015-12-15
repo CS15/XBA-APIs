@@ -10,6 +10,6 @@ app.listen(config.server.port, function (err) {
 	if (err) {
 		throw err;
 	} else {
-		console.info('XBAck server running at port: ' + config.server.port);
+		console.info('releet server running at port: ' + config.server.port);
 	}
 });

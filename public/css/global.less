@@ -1,15 +1,26 @@
-@import "variables.l";
+@import "variables.less";
 
-.alert {
-  border-radius: 0;
+a {
+  color: @font-color-light;
+
+
+  &:hover {
+    color: @accent-color;
+    text-decoration: none;
+  }
 }
 
-.container-bg {
-  background-color: white;
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .2);
-  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .2);
-  box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+form {
+  max-width: 240px;
 }
+
+
+
+
+
+
+
+
 
 .achievement-wrapper {
   position: relative;
@@ -52,6 +63,10 @@
   font-size: 24px;
 }
 
+.text-size-huge {
+  font-size: @font-size-huge;
+}
+
 .login-wrapper {
   input.form-control {
     margin-bottom: 10px;
@@ -68,14 +83,14 @@
   }
 }
 
-.btn-relos-trans {
+.btn-relos-trans-accent {
   background-color: rgba(0,0,0,0);
-  border: 2px solid @ACCENT_COLOR;
-  color: @ACCENT_COLOR;
+  border: 1px solid @accent-color;
+  color: @accent-color;
   
   &:hover {
-    color: darken(@ACCENT_COLOR, 10%);    
-    border: 2px solid darken(@ACCENT_COLOR, 10%);
+    color: darken(@accent-color, 10%);
+    border: 1px solid darken(@accent-color, 10%);
 
   }
 }

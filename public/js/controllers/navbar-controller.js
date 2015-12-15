@@ -9,5 +9,9 @@
             Parse.User.logOut();
             $location.path('/');
         };
+
+        vm.toggleSideBar = function(){
+            angular.element(document.querySelector('.side-bar')).toggleClass('side-bar-toggle-show');
+        }
     }]);
 })();

@@ -1,12 +1,24 @@
 <div ng-controller="NavbarController as vm">
     <header class="navigation-bar">
-      <div class="navigation-brand">
-        <a href="#">
-          <span class="navigation-brand-title animated fadeIn">releet</span>
-        </a>
-      </div>
-      <span class="navigation-menu-icon animated fadeIn">
-        <i class="glyphicon glyphicon-option-vertical"></i>
-      </span>
+        <div class="container">
+            <div class="navigation-brand">
+                <a href="#">
+                    <span class="navigation-brand-title animated fadeIn">releet</span>
+                </a>
+            </div>
+            <div class="navigation-menu">
+                <span class="navigation-menu-icon animated fadeIn" ng-click="vm.toggleSideBar()">
+                    <i class="glyphicon glyphicon-option-vertical"></i>
+                </span>
+            </div>
+        </div>
     </header>
+
+    <aside class="side-bar">
+        <ul>
+            <li><a href="/dashboard">Latest Achievements</a></li>
+            <li><a href="/browse">Browse</a></li>
+            <li><a href="" target="_self" ng-click="vm.logout()">Logout</a></li>
+        </ul>
+    </aside>
 </div>

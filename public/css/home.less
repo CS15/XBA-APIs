@@ -1,0 +1,30 @@
+@import 'global.less';
+
+#home-wrapper {
+  padding-top: @height-navigation-bar;
+  position: relative;
+  background-color: @primary-color;
+  min-height: 100vh;
+
+  .login-wrapper {
+    display: inline-block;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    -moz-transform: translate3d(-50%, -50%, 0);
+    -ms-transform: translate3d(-50%, -50%, 0);
+    -o-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+    
+    span {
+      display: block;
+      color: @font-color-accent;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+  }
+}
