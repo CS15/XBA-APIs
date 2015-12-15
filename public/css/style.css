@@ -144,6 +144,11 @@ a:hover {
   background-color: #097c9c;
   min-height: 100vh;
 }
+#home-wrapper i:first-child {
+  color: #f9d406;
+  display: block;
+  text-align: center;
+}
 #home-wrapper .login-wrapper {
   display: inline-block;
   padding: 20px;
