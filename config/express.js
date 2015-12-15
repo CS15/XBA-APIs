@@ -28,6 +28,7 @@ module.exports = function () {
 
     // static roots
     app.use('/css', express.static(path.resolve('./public/css')));
+    app.use('/lib', express.static(path.resolve('./public/lib')));
     app.use('/js', express.static(path.resolve('./public/js')));
     app.use('/scripts', express.static(path.resolve('./node_modules')));
     app.use('/views', express.static(path.resolve('./public/views')));
