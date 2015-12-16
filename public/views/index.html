@@ -34,7 +34,7 @@
 <body ng-cloak>
 
 <div ng-controller="NavbarController as vm" ng-show="vm.displayNavigationBar">
-    <header class="navigation-bar">
+    <header id="navigation-bar" class="navigation-bar">
         <div class="container">
             <div class="navigation-brand">
                 <a href="/">
@@ -79,6 +79,68 @@
 <script src="/js/controllers/dashboard-controller.js"></script>
 <script src="/js/controllers/game-info-controller.js"></script>
 <script src="/js/controllers/browse-controller.js"></script>
+
+<script type="text/javascript">
+    (function() {
+      'use strict';
+    
+      var NavbarUtils = (function() {
+    
+        var utils = {
+          hideOnScroll: function(opts) {
+            var $nav = $('#' + opts.id);
+            var lastPosition = 0;
+            var isScrolled = false;
+            var delta = opts.delta || 5;
+            var speed = opts.speed || 200;
+    
+            $(window).scroll(function() {
+              isScrolled = true;
+            });
+    
+            function onHasScrolled() {
+              var top = $(window).scrollTop();
+    
+              if (Math.abs(lastPosition - top) <= delta)
+                return;
+    
+              if ((top > lastPosition) && (top > $nav.outerHeight())) {
+                $nav.animate({
+                  top: '-' + Number($nav.outerHeight() + 10) + 'px'
+                }, speed);
+              } else {
+                if (top + $(window).height() < $(document).height()) {
+                  $nav.animate({
+                    top: '0px'
+                  }, speed);
+                }
+              }
+    
+              lastPosition = top;
+            }
+    
+            setInterval(function() {
+    
+              if (isScrolled) {
+                onHasScrolled();
+    
+                isScrolled = false;
+              }
+    
+            }, 250);
+          }
+        }
+    
+        return utils;
+      })();
+    
+      NavbarUtils.hideOnScroll({
+        id: 'navigation-bar',
+        delta: 10
+      });
+    
+    })();
+</script>
 
 </body>
 </html>
