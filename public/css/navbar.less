@@ -4,13 +4,15 @@
   position: fixed;
   top: 0;
   left: 0;
-  border-bottom: 1px solid @accent-color;
+  box-sizing: border-box;
   background-color: @primary-color;
   color: @font-color-light;
   height: @height-navigation-bar;
-  min-width: 100%;
+  width: 100%;
   overflow: hidden;
   z-index: 200;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   
   .navigation-brand {
     font-weight: 100;
@@ -77,6 +79,10 @@
       box-sizing: border-box;
       padding: 30px;
       border-bottom: 1px solid @accent-color;
+      
+      &:first-child {
+        border-top: 1px solid @accent-color;
+      }
 
       a {
         font-size: @font-size-semi-large;
