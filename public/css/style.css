@@ -47,7 +47,7 @@
   top: 0;
   right: -100%;
   bottom: 0;
-  min-height: 100%;
+  min-height: 100vh;
   width: 100%;
   background-color: #097c9c;
   z-index: 199;
@@ -153,7 +153,6 @@ a.primary-color:hover {
   border: 1px solid #c7aa05;
 }
 #home-wrapper {
-  padding-top: 70px;
   position: relative;
   background-color: #097c9c;
   min-height: 100vh;
@@ -213,6 +212,9 @@ a.primary-color:hover {
   color: #f9d406;
   padding: 8px;
   text-align: center;
+}
+#dashboard-wrapper {
+  padding-top: 70px;
 }
 html,
 body {

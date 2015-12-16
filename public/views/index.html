@@ -33,6 +33,31 @@
 
 <body ng-cloak>
 
+<div ng-controller="NavbarController as vm" ng-show="vm.displayNavigationBar">
+    <header class="navigation-bar">
+        <div class="container">
+            <div class="navigation-brand">
+                <a href="#">
+                    <span class="navigation-brand-title animated fadeIn">releet</span>
+                </a>
+            </div>
+            <div class="navigation-menu">
+                <span class="navigation-menu-icon animated fadeIn" ng-click="vm.toggleSideBar()">
+                    <i class="pe-7s-more pe-rotate-90 pe-lg pe-va"></i>
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <aside class="side-bar" ng-class="vm.isSideBarOpen ? 'side-bar-toggle-show' : ''">
+        <ul>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/browse">Browse</a></li>
+            <li><a href="" target="_self" ng-click="vm.logout()">Logout</a></li>
+        </ul>
+    </aside>
+</div>
+
 <div id="ng-view-main" ng-view></div>
 
 <!-- Scripts -->
@@ -44,6 +69,7 @@
 <script src="/scripts/angular-loading-bar/build/loading-bar.min.js"></script>
 <script src="/scripts/angular-ui-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="/js/application.js"></script>
+<script src="/js/services/navigation-services.js"></script>
 <script src="/js/services/xa-services.js"></script>
 <script src="/js/services/parse-services.js"></script>
 <script src="/js/services/giant-bomb-services.js"></script>

@@ -1,35 +1,35 @@
-<div ng-include="'/views/navbar.html'"></div>
+<div id="dashboard-wrapper">
+    <div class="container" ng-controller="DashboardController as vm">
+        <h2 class="page-header">Latest Achievements - XBA</h2>
 
-<div class="container container-bg" ng-controller="DashboardController as vm">
-    <h2 class="page-header">Latest Achievements - XBA</h2>
-
-    <div class="row">
-        <div class="col-md-4" ng-repeat="ach in vm.latestAchievements">
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object" ng-src="{{ach.imageUrl}}" alt="Cover">
-                    </a>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="ach in vm.latestAchievements">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" ng-src="{{ach.imageUrl}}" alt="Cover">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ach.title}}</h4>
+                        <p>{{ach.achievementsAdded}}</p>
+                        <a class="primary-color" href="/game-info/{{ach.gamePermalink}}">Game Info</a>
+                    </div>
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading">{{ach.title}}</h4>
-                    <p>{{ach.achievementsAdded}}</p>
-                    <a class="primary-color" href="/game-info/{{ach.gamePermalink}}">Game Info</a>
-                </div>
+                <br/>
             </div>
-            <br/>
         </div>
-    </div>
 
-    <div class="btn-group" role="group" style="margin-top: 20px;">
-        <button type="button" class="btn btn-default"
-                ng-disabled="vm.currentPage === 0 || vm.currentPage === 1"
-                ng-click="vm.getPrevious()">Previous
-        </button>
-        <button type="button" class="btn btn-default"
-                ng-click="vm.getNext()">Next
-        </button>
+        <div class="btn-group" role="group" style="margin-top: 20px;">
+            <button type="button" class="btn btn-default"
+                    ng-disabled="vm.currentPage === 0 || vm.currentPage === 1"
+                    ng-click="vm.getPrevious()">Previous
+            </button>
+            <button type="button" class="btn btn-default"
+                    ng-click="vm.getNext()">Next
+            </button>
+        </div>
+        <br>
+        <br>
     </div>
-    <br>
-    <br>
 </div>

@@ -36,10 +36,16 @@
                 cfpLoadingBarProvider.includeSpinner = false;
             }
 
-        ]).run(['$rootScope', '$location',
-            function($rootScope, $location) {
+        ]).run(['$rootScope', '$location', 'NavigationServices',
+            function($rootScope, $location, NavigationServices) {
 
                 $rootScope.$on('$routeChangeStart', function(event, next, current) {
+
+                    if ($location.url() === '/' || $location.url() === '/no-access')
+                        NavigationServices.displayNavigationBar(false);
+                    else
+                        NavigationServices.displayNavigationBar(true);
+
                     if (Parse.User.current()) {
                         var query = (new Parse.Query(Parse.Role));
                         query.equalTo("name", "Admin");
@@ -52,6 +58,8 @@
                     } else {
                         $location.path('/');
                     }
+
+                    NavigationServices.closeSideBar()
                 });
             }
         ]);
